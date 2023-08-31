@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1004110826380",
+    "project_id": "apppolite",
+    "storage_bucket": "apppolite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004110826380:android:aaee58dbc0d615d9cca4a9",
+        "android_client_info": {
+          "package_name": "com.example.polite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004110826380-8dg0vvklsb8nu3329hn3nrkbfiqaa1hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuf5hu2F8jawq8eae_0boAInBh9eJE6B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004110826380-8dg0vvklsb8nu3329hn3nrkbfiqaa1hg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
