@@ -3,6 +3,7 @@ import 'package:polite/LilbraryScreen/Eat_Screen.dart';
 import 'package:polite/LilbraryScreen/Nutrition_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Video_Screen.dart';
+import 'package:polite/Screens/test.dart';
 
 class Lilbraryscreen extends StatelessWidget {
   @override
@@ -195,10 +196,8 @@ class Lilbraryscreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => articlescreen()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => testapp()));
                       },
                       child: SizedBox(
                         width: 400.0,

@@ -1,6 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:intl/intl.dart';
+import 'package:polite/Screens/wiget.dart';
+import 'package:polite/class/UserID.dart';
 import '../model/Profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Sigup extends StatefulWidget {
   const Sigup({super.key});
@@ -10,9 +15,50 @@ class Sigup extends StatefulWidget {
 }
 
 class _Sigup extends State<Sigup> {
-  final _formKey = GlobalKey<FormState>();
+  CollectionReference user = FirebaseFirestore.instance.collection("UserID");
+  final formKey = GlobalKey<FormState>();
   final bool _obscureText = true;
   Profile profile = Profile();
+  TextEditingController _dateController = TextEditingController();
+  final DateFormat _dateFormat =
+      DateFormat('dd-MM-yyyy'); // รูปแบบวันที่ที่ต้องการ
+
+  Future<void> sendUserDataToDB(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      await FirebaseFirestore.instance.collection('users').add({
+        'fname': fname.text,
+        'pass': pass.text,
+        'okpass': okpass.text,
+        'telno': telno.text,
+        'email': email.text,
+        'datatime': _dateController.text,
+        'sex': sex.text,
+      });
+
+      // บันทึกสำเร็จ ไปยังหน้า HomeScreen
+      Navigator.pop(context);
+    } else {
+      // แจ้งเตือนว่าข้อมูลไม่ครบ
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('กรุณากรอกข้อมูลให้ครบ'),
+          duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+        ),
+      );
+    }
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+    user = FirebaseFirestore.instance.collection("UserID");
+  }
+
+  TextEditingController fname = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  TextEditingController okpass = TextEditingController();
+  TextEditingController telno = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController sex = TextEditingController();
 
   Future<void> _selectDateFromPicker(BuildContext context, value) async {
     final DateTime? picked = await showDatePicker(
@@ -54,99 +100,55 @@ class _Sigup extends State<Sigup> {
               //crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'ชื่อ-นามสกุล',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        validator: RequiredValidator(
-                            errorText: "กรุณาป้อนชื่อ-นามสกุลด้วย"),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration:
-                            const InputDecoration(hintText: 'ชื่อ-นามสกุล'),
-                      ),
+                      textbox(fname, 'erorrtext', 'ชื่อนามสกุล',
+                          'กรุณากรอกชื่อ-นามสกุล'),
                       const SizedBox(height: 24),
-                      Text(
-                        'รหัสผ่าน',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        validator:
-                            RequiredValidator(errorText: "กรุณาป้อนรหัสด้วย"),
-                        obscureText: _obscureText,
-                        decoration: const InputDecoration(
-                          hintText: 'รหัสผ่าน',
-                        ),
-                      ),
+                      textbox(
+                          pass, 'erorrtext', 'รหัสผ่าน', 'กรุณากรอกรหัสผ่าน'),
                       const SizedBox(height: 24),
-                      Text(
-                        'รหัสผ่านอีกครั้ง',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        validator: RequiredValidator(
-                            errorText: "กรุณาป้อนรหัสอีกครั้งด้วย"),
-                        obscureText: _obscureText,
-                        decoration: const InputDecoration(
-                          hintText: 'รหัสผ่านอีกครั้ง',
-                        ),
-                      ),
+                      textbox(okpass, 'erorrtext', 'ยืนยันรหัสผ่าน',
+                          'กรุณากรอกยืนยันรหัสผ่าน'),
                       const SizedBox(height: 24),
-                      Text(
-                        'หมายเลขโทรศัพท์',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        validator: RequiredValidator(
-                            errorText: "กรุณาป้อนหมายเลขโทรศัพท์ด้วย"),
-                        obscureText: _obscureText,
-                        decoration: const InputDecoration(
-                          hintText: 'หมายเลขโทรศัพท์',
-                        ),
-                      ),
+                      textbox(telno, 'erorrtext', 'เบอร์โทรศัพท์',
+                          'กรุณากรอกเบอร์โทรศัพท์'),
                       const SizedBox(height: 24),
-                      Text(
-                        'อีเมลล์',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
+                      textbox(
+                          email, 'erorrtext', 'อีเมลล์', 'กรุณากรอกอีเมลล์'),
+                      const SizedBox(height: 24),
                       TextFormField(
+                        controller: _dateController,
                         validator: RequiredValidator(
                             errorText: "กรุณาป้อนอีเมลล์ด้วย"),
-                        keyboardType: TextInputType.emailAddress,
+                        onTap: () async {
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2101),
+                          );
+
+                          if (selectedDate != null) {
+                            _dateController.text =
+                                _dateFormat.format(selectedDate);
+                          }
+                        },
+                        readOnly: true,
                         decoration: const InputDecoration(
-                          hintText: 'อีเมลล์',
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        'วันเกิด',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        validator: RequiredValidator(
-                            errorText: "กรุณาป้อนอีเมลล์ด้วย"),
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: 'วันเกิด',
-                        ),
+                            hintText: 'กรอกวันที่ (dd-mm-yyyy)',
+                            labelText: 'วัน เดือน ปีเกิด'),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    sendUserDataToDB(context);
+                  },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 48)),

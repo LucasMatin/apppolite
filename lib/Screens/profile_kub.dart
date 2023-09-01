@@ -82,92 +82,92 @@ class _ProfileScreenAVState extends State<ProfileScreenAV> {
             return Text("ไม่มีข้อมูล");
           }),
 
-      // SingleChildScrollView(
-      //   child: Container(
-      //     child: Column(
-      //       children: [
-      //         const SizedBox(height: 30),
-      //         Stack(
-      //           children: [
-      //             SizedBox(
-      //               width: 130,
-      //               height: 130,
-      //               child: ClipRRect(
-      //                 borderRadius: BorderRadius.circular(100),
-      //                 child: Image.asset('images/proflie.jpg'),
+      //  return SingleChildScrollView(
+      //     child: Container(
+      //       child: Column(
+      //         children: [
+      //           const SizedBox(height: 30),
+      //           Stack(
+      //             children: [
+      //               SizedBox(
+      //                 width: 130,
+      //                 height: 130,
+      //                 child: ClipRRect(
+      //                   borderRadius: BorderRadius.circular(100),
+      //                   child: Image.asset('images/proflie.jpg'),
+      //                 ),
       //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         const SizedBox(height: 10),
-      //         Text(
-      //           "LalalisA",
-      //           style: TextStyle(fontSize: 21),
-      //         ),
-      //         const SizedBox(height: 10),
-      //         Text(
-      //           "Lisa.eiei@gmail.com",
-      //           style: TextStyle(fontSize: 22),
-      //         ),
-      //         Form(
-      //           key: formKey,
-      //           child: TextFormField(
-      //             controller: userid,
-      //             decoration: InputDecoration(
-      //                 labelText: 'กรอกชื่อ', hintText: 'กรุณากรอกชื่อ'),
-      //             validator: (value) {
-      //               if (value == null || value.isEmpty) {
-      //                 return 'textwarning';
-      //               }
-      //               return null;
-      //             },
+      //             ],
       //           ),
-      //         ),
-      //         OutlinedButton(
-      //             onPressed: () {
-      //               sendUserDataToDB();
-      //             },
-      //             child: const Text('save')),
-      //         const SizedBox(height: 20),
-      //         SizedBox(
-      //             width: 200,
-      //             child: ElevatedButton(
-      //               onPressed: () {
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) => const editscreen(),
-      //                   ),
-      //                 );
+      //           const SizedBox(height: 10),
+      //           Text(
+      //             "LalalisA",
+      //             style: TextStyle(fontSize: 21),
+      //           ),
+      //           const SizedBox(height: 10),
+      //           Text(
+      //             "Lisa.eiei@gmail.com",
+      //             style: TextStyle(fontSize: 22),
+      //           ),
+      //           Form(
+      //             key: formKey,
+      //             child: TextFormField(
+      //               controller: userid,
+      //               decoration: InputDecoration(
+      //                   labelText: 'กรอกชื่อ', hintText: 'กรุณากรอกชื่อ'),
+      //               validator: (value) {
+      //                 if (value == null || value.isEmpty) {
+      //                   return 'textwarning';
+      //                 }
+      //                 return null;
       //               },
-      //               child: const Text("แก้ไขโปรไฟล์"),
-      //               style: ElevatedButton.styleFrom(
-      //                   // backgroundColor:
-      //                   ),
-      //             )),
-      //         const SizedBox(height: 10),
-      //         SizedBox(
-      //             width: 200,
-      //             child: ElevatedButton(
+      //             ),
+      //           ),
+      //           OutlinedButton(
       //               onPressed: () {
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) => const LoginScreen(),
-      //                   ),
-      //                 );
+      //                 sendUserDataToDB();
       //               },
-      //               child: const Text("ออกจากระบบ"),
-      //               style: ElevatedButton.styleFrom(
-      //                   // backgroundColor:
-      //                   ),
-      //             )),
-      //         const SizedBox(height: 10),
-      //         const Divider(),
-      //       ],
+      //               child: const Text('save')),
+      //           const SizedBox(height: 20),
+      //           SizedBox(
+      //               width: 200,
+      //               child: ElevatedButton(
+      //                 onPressed: () {
+      //                   Navigator.push(
+      //                     context,
+      //                     MaterialPageRoute(
+      //                       builder: (context) => const editscreen(),
+      //                     ),
+      //                   );
+      //                 },
+      //                 child: const Text("แก้ไขโปรไฟล์"),
+      //                 style: ElevatedButton.styleFrom(
+      //                     // backgroundColor:
+      //                     ),
+      //               )),
+      //           const SizedBox(height: 10),
+      //           SizedBox(
+      //               width: 200,
+      //               child: ElevatedButton(
+      //                 onPressed: () {
+      //                   Navigator.push(
+      //                     context,
+      //                     MaterialPageRoute(
+      //                       builder: (context) => const LoginScreen(),
+      //                     ),
+      //                   );
+      //                 },
+      //                 child: const Text("ออกจากระบบ"),
+      //                 style: ElevatedButton.styleFrom(
+      //                     // backgroundColor:
+      //                     ),
+      //               )),
+      //           const SizedBox(height: 10),
+      //           const Divider(),
+      //         ],
+      //       ),
       //     ),
       //   ),
-      // ),
     );
   }
 }
