@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:polite/LilbraryScreen/Open_Nutrition_Screen.dart';
 
-class NutritionSreen extends StatelessWidget {
+class NutritionSreen extends StatefulWidget {
   const NutritionSreen({super.key});
 
+  @override
+  State<NutritionSreen> createState() => _NutritionSreenState();
+}
+
+class _NutritionSreenState extends State<NutritionSreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,154 +16,381 @@ class NutritionSreen extends StatelessWidget {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'กินอย่างไรให้สุขภาพดี',
+          'แนะนำเกี่ยวกับโภชนาการ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
       ),
-    );
-  }
-}
-
-class bottomscreen extends StatefulWidget {
-  const bottomscreen({super.key});
-
-  @override
-  State<bottomscreen> createState() => _bottomscreen();
-}
-
-class _bottomscreen extends State<bottomscreen> {
-  int currentIndex = 0;
-
-  void _navigateBottomBar(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
-  final List<Widget> _pages = [];
-
-  @override
-  Widget build(BuildContext context) {
-    double displayWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: _pages[currentIndex],
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(displayWidth * .05),
-        height: displayWidth * .155,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.1),
-                blurRadius: 30,
-                offset: Offset(0, 10),
-              ),
-            ],
-            borderRadius: BorderRadius.circular(50)),
-        child: ListView.builder(
-          itemCount: 4,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: displayWidth * .02),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(() {
-                currentIndex = index;
-                HapticFeedback.lightImpact();
-              });
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .32
-                      : displayWidth * .18,
-                  alignment: Alignment.center,
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    height: index == currentIndex ? displayWidth * .12 : 0,
-                    width: index == currentIndex ? displayWidth * .32 : 0,
-                    decoration: BoxDecoration(
-                      color: index == currentIndex
-                          ? Colors.blueAccent.withOpacity(.2)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .31
-                      : displayWidth * .18,
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .13 : 0,
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                child: Wrap(
+                  spacing: 20.0,
+                  runSpacing: 20.0,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
                           ),
-                          AnimatedOpacity(
-                            opacity: index == currentIndex ? 1 : 0,
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            child: Text(
-                              index == currentIndex
-                                  ? '${listDfStrings[index]}'
-                                  : '',
-                              style: TextStyle(
-                                color: Colors.brown[400],
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15,
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .03 : 20,
                           ),
-                          Icon(
-                            listofIcons[index],
-                            size: displayWidth * .076,
-                            color: index == currentIndex
-                                ? Colors.brown[300]
-                                : Colors.black26,
-                          )
-                        ],
+                        ),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Opennutritionscreen(),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 380.0,
+                        height: 70.0,
+                        child: Card(
+                          color: Color.fromARGB(255, 143, 113, 102),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "โรค",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        )),
       ),
     );
   }
-
-  List<String> listDfStrings = [
-    'Home',
-    'Lilbarary',
-  ];
-  List<IconData> listofIcons = [
-    Icons.home_rounded,
-    Icons.book_rounded,
-  ];
 }

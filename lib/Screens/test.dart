@@ -1,63 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-void main() {
-  runApp(testapp());
+class GenderSelectionScreen extends StatefulWidget {
+  @override
+  _GenderSelectionScreenState createState() => _GenderSelectionScreenState();
 }
 
-class testapp extends StatelessWidget {
+class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
+  // สร้างตัวแปรเพื่อเก็บค่าเพศที่ถูกเลือก
+  String sex = '';
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Date Input Example')),
-        body: DateTextField(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('เลือกเพศ'),
       ),
-    );
-  }
-}
-
-class DateTextField extends StatefulWidget {
-  @override
-  _DateTextFieldState createState() => _DateTextFieldState();
-}
-
-class _DateTextFieldState extends State<DateTextField> {
-  TextEditingController _dateController = TextEditingController();
-  final DateFormat _dateFormat =
-      DateFormat('dd-MM-yyyy'); // รูปแบบวันที่ที่ต้องการ
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: TextField(
-          controller: _dateController,
-          decoration: InputDecoration(
-            hintText: 'กรอกวันที่ (dd-mm-yyyy)',
+      body: Column(
+        children: <Widget>[
+          RadioListTile(
+            title: Text('ชาย'),
+            value: 'ชาย',
+            groupValue: sex,
+            onChanged: (value) {
+              setState(() {
+                sex = value!;
+              });
+            },
           ),
-          onTap: () async {
-            DateTime? selectedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2101),
-            );
-
-            if (selectedDate != null) {
-              _dateController.text = _dateFormat.format(selectedDate);
-            }
-          },
-          readOnly: true,
-        ),
+          RadioListTile(
+            title: Text('หญิง'),
+            value: 'หญิง',
+            groupValue: sex,
+            onChanged: (value) {
+              setState(() {
+                sex = value!;
+              });
+            },
+          ),
+          SizedBox(height: 16.0),
+          Text('เพศที่เลือก: $sex'),
+        ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _dateController.dispose();
-    super.dispose();
   }
 }

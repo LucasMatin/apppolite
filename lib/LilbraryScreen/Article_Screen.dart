@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polite/LilbraryScreen/OPen_Article_Screen.dart';
 
 class articlescreen extends StatelessWidget {
   @override
@@ -63,7 +64,14 @@ class articlescreen extends StatelessWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OpenArticlescreen(),
+                          ),
+                        );
+                      },
                       child: SizedBox(
                         width: 400.0,
                         height: 140.0,
@@ -171,7 +179,14 @@ class articlescreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OpenArticlescreen(),
+                          ),
+                        );
+                      },
                       child: SizedBox(
                         width: 400.0,
                         height: 140.0,

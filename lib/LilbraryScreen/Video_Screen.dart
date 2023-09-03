@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:polite/LilbraryScreen/Open_Video_Screen.dart';
+
 class videoscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,14 @@ class videoscreen extends StatelessWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Openvideoscreen(),
+                          ),
+                        );
+                      },
                       child: SizedBox(
                         width: 400.0,
                         height: 130.0,

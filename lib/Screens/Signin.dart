@@ -1,3 +1,6 @@
+//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:polite/Screens/Bottom.dart';
 import 'package:polite/Screens/Signup.dart';
 import 'package:flutter/gestures.dart';
@@ -12,25 +15,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool _obscureText = true;
-
-  String? _emailValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-        .hasMatch(value)) {
-      return 'Please enter a valid email';
-    }
-    return null;
-  }
-
-  String? _passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,40 +46,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'บัญชี',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
                       const SizedBox(height: 12),
                       TextFormField(
+                        validator: RequiredValidator(
+                            errorText: 'กรุณากรอกหมายเลขโทรศัพท์'),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                            hintText: 'อีเมลล์หรือหมายเลขโทรศัพท์'),
-                        validator: _emailValidator,
+                            hintText: 'หมายเลขโทรศัพท์', labelText: 'บัญชี'),
                       ),
                       const SizedBox(height: 24),
-                      Text(
-                        'รหัสผ่าน',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
                       const SizedBox(height: 12),
                       TextFormField(
-                        obscureText: _obscureText,
+                        validator: RequiredValidator(
+                            errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText: 'รหัสผ่าน',
-                          suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                        ),
-                        validator: _passwordValidator,
+                            hintText: 'รหัสผ่าน', labelText: 'รหัสผ่าน'),
                       ),
                       Align(
                         alignment: Alignment.centerRight,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/Screens/wiget.dart';
-import 'package:polite/class/UserID.dart';
 import '../model/Profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,7 +16,6 @@ class Sigup extends StatefulWidget {
 class _Sigup extends State<Sigup> {
   CollectionReference user = FirebaseFirestore.instance.collection("UserID");
   final formKey = GlobalKey<FormState>();
-  final bool _obscureText = true;
   Profile profile = Profile();
   TextEditingController _dateController = TextEditingController();
   final DateFormat _dateFormat =
@@ -25,7 +23,7 @@ class _Sigup extends State<Sigup> {
 
   Future<void> sendUserDataToDB(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      await FirebaseFirestore.instance.collection('users').add({
+      await FirebaseFirestore.instance.collection('UserID').add({
         'fname': fname.text,
         'pass': pass.text,
         'okpass': okpass.text,
