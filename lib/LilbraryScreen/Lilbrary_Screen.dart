@@ -3,9 +3,6 @@ import 'package:polite/LilbraryScreen/Nutrition_Screen.dart';
 import 'package:polite/LilbraryScreen/Eat_Screen%20.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Video_Screen.dart';
-import 'package:polite/Test/profile_kub.dart';
-
-import '../Test/test.dart';
 import '../Test/testBar.dart';
 
 class Lilbraryscreen extends StatelessWidget {
