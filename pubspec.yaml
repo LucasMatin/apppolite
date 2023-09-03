@@ -45,6 +45,7 @@ dependencies:
   firebase_auth: ^4.8.0
   firebase_database: ^10.2.5
   firebase_storage: ^11.2.6
+  syncfusion_flutter_charts: ^21.2.4
 flutter_icons: 
   android: true 
   image_path: "images/logo.png"

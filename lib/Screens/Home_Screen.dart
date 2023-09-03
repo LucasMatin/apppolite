@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:polite/Screens/Foodscreen.dart';
+import 'package:polite/FoodSceen/Foodscreen.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,8 +57,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-Widget buttom() => Stack(
-      alignment: Alignment.center,
-      children: [Container()],
-    );

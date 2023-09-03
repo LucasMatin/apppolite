@@ -1,7 +1,7 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
-import 'package:polite/Screens/Bottom.dart';
+import 'package:polite/Screens/Bottom_Screen.dart';
 import 'package:polite/Screens/Signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

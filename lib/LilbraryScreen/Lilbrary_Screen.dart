@@ -3,7 +3,10 @@ import 'package:polite/LilbraryScreen/Nutrition_Screen.dart';
 import 'package:polite/LilbraryScreen/Eat_Screen%20.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Video_Screen.dart';
-import 'package:polite/Screens/profile_kub.dart';
+import 'package:polite/Test/profile_kub.dart';
+
+import '../Test/test.dart';
+import '../Test/testBar.dart';
 
 class Lilbraryscreen extends StatelessWidget {
   @override
@@ -196,10 +199,8 @@ class Lilbraryscreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfileScreenAV()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MyApp()));
                       },
                       child: SizedBox(
                         width: 400.0,

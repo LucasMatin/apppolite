@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:polite/Screens/Editprofile.dart';
+import 'package:polite/Screens/Editprofile_Screen.dart';
 import 'package:polite/Screens/Signin.dart';
 import 'package:flutter/material.dart';
 

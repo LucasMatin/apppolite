@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/Screens/wiget.dart';
-import '../model/Profile.dart';
+import '../ModelCalss/Profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Sigup extends StatefulWidget {
