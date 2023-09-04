@@ -61,11 +61,6 @@ class _FoodscreenState extends State<Foodscreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Icon(
-                              Icons.sunny,
-                              size: 60,
-                              color: Color.fromARGB(255, 235, 135, 5),
-                            ),
                             SizedBox(height: 5.0),
                             Text(
                               "แนะนำเกี่ยวกับโภชนาการ",
@@ -106,10 +101,6 @@ class _FoodscreenState extends State<Foodscreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Image.asset(
-                              "images/nutrition.png",
-                              width: 65.0,
-                            ),
                             SizedBox(height: 5.0),
                             Text(
                               "แนะนำเกี่ยวกับโภชนาการ",
@@ -150,10 +141,6 @@ class _FoodscreenState extends State<Foodscreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Image.asset(
-                              "images/nutrition.png",
-                              width: 65.0,
-                            ),
                             SizedBox(height: 5.0),
                             Text(
                               "แนะนำเกี่ยวกับโภชนาการ",
@@ -164,6 +151,46 @@ class _FoodscreenState extends State<Foodscreen> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(),
+                child: Center(
+                  child: SizedBox(
+                    width: 300,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        'รายการอาหารทั้งหมด',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(),
+                child: Center(
+                  child: SizedBox(
+                    width: 300,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        'รายการอาหารทั้งหมด',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
