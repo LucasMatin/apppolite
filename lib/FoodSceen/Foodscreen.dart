@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polite/FoodSceen/Open_Food_Screen.dart';
 
 class Foodscreen extends StatefulWidget {
   const Foodscreen({super.key});
@@ -40,12 +41,12 @@ class _FoodscreenState extends State<Foodscreen> {
               const SizedBox(height: 14),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const OpenArticlescreen(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Openfoodscreen(),
+                    ),
+                  );
                 },
                 child: SizedBox(
                   width: 400.0,
