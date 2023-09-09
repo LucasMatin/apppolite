@@ -24,7 +24,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('UserID')
-              .doc('BK6RWLD6m8rwr6Jh5uwK')
+              .doc('')
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {

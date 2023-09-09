@@ -38,10 +38,127 @@ class _OpenfoodscreenState extends State<Openfoodscreen> {
                           borderSide: const BorderSide())),
                 ),
               ),
+              // buttom กรอก และ บันทึก
+              Padding(
+                padding: const EdgeInsets.only(),
+              ),
+
+              textcolumn("textcol", "texts"),
+              textview("aaaaaaa"),
+              textview("aaaaaaaaaaaaaaa"),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget textview(
+  textedit,
+) {
+  int number = 0; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 25.0),
+        child: Container(
+          // alignment: FractionalOffset.topLeft,
+          child: Stack(
+            children: [
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    textedit,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: () {
+                            (() {
+                              number--;
+                            });
+                          },
+                        ),
+                        Text(
+                          '$number',
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            (() {
+                              number++;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      const Divider(
+        thickness: 2,
+        color: Colors.grey,
+        indent: 25,
+        endIndent: 25,
+      ),
+    ],
+  );
+}
+
+Widget textcolumn(textcol, texts) {
+  return Container(
+    child: Column(
+      children: [
+        // ประเทภของหัวข้อ
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0),
+          child: Container(
+            alignment: FractionalOffset.topLeft,
+            child: Text(
+              textcol,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.brown),
+            ),
+          ),
+        ),
+        // ประเภทของ อาหาร
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0),
+          child: Container(
+            alignment: FractionalOffset.topLeft,
+            child: Text(
+              texts,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(
+          thickness: 4,
+          color: Color.fromARGB(255, 175, 136, 122),
+          indent: 25,
+          endIndent: 25,
+        ),
+      ],
+    ),
+  );
 }

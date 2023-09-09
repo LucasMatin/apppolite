@@ -1,21 +1,16 @@
-//import 'package:firebase_auth/firebase_auth.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-import 'package:polite/Screens/Bottom_Screen.dart';
-import 'package:polite/Screens/Signup.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:polite/AdminScreen/Bottom_Admin_Screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Loginadmin extends StatefulWidget {
+  const Loginadmin({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Loginadmin> createState() => _LoginadminState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginadminState extends State<Loginadmin> {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Text(
-                  '"โภชนาการของผู้สูงวัย"',
+                  'ADMIN',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
@@ -48,45 +43,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 12),
                       TextFormField(
-                        validator: RequiredValidator(
-                            errorText: 'กรุณากรอกหมายเลขโทรศัพท์'),
+                        validator: RequiredValidator(errorText: 'กรุณากรอกID'),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                            hintText: 'หมายเลขโทรศัพท์', labelText: 'บัญชี'),
+                            hintText: 'บัญชีผู้พัฒนา', labelText: 'บัญชี'),
                       ),
                       const SizedBox(height: 24),
                       const SizedBox(height: 12),
                       TextFormField(
                         validator: RequiredValidator(
                             errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             hintText: 'รหัสผ่าน', labelText: 'รหัสผ่าน'),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            // Implement forgot password
-                          },
-                          child: const Text(
-                            'ลืมรหัสผ่าน?',
-                            style: TextStyle(color: Color(0xFF3D80DE)),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {}
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const bottomsceen(),
+                        builder: (context) => const bottomadminsceen(),
                       ),
                     );
                   },
@@ -97,27 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('เข้าสู่ระบบ'),
                 ),
                 const SizedBox(height: 16),
-                RichText(
-                  text: TextSpan(
-                    text: "คุณยังไม่ได้ลงทะเบียนใช่หรือไม่? ",
-                    style: const TextStyle(color: Colors.black),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'ลงทะเบียน',
-                        style: const TextStyle(color: Color(0xFF3D80DE)),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Sigup(),
-                              ),
-                            );
-                          },
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),

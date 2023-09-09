@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:polite/Screens/wiget.dart';
 import '../ModelCalss/Profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Sigup extends StatefulWidget {
   const Sigup({super.key});
@@ -14,49 +16,71 @@ class Sigup extends StatefulWidget {
 }
 
 class _Sigup extends State<Sigup> {
-  CollectionReference user = FirebaseFirestore.instance.collection("UserID");
   final formKey = GlobalKey<FormState>();
-  Profile profile = Profile();
-  TextEditingController _dateController = TextEditingController();
   final DateFormat _dateFormat =
       DateFormat('dd-MM-yyyy'); // รูปแบบวันที่ที่ต้องการ
 
-  Future<void> sendUserDataToDB(BuildContext context) async {
-    if (formKey.currentState!.validate()) {
-      await FirebaseFirestore.instance.collection('UserID').add({
-        'fname': fname.text,
-        'pass': pass.text,
-        'okpass': okpass.text,
-        'telno': telno.text,
-        'email': email.text,
-        'datatime': _dateController.text,
-        'sex': sex.text,
-      });
+  // Future<void> sendUserDataToDB(BuildContext context) async {
+  //   if (formKey.currentState!.validate()) {
+  //     await FirebaseFirestore.instance.collection('UserID').add({
+  //       'fname': fname.text,
+  //       'pass': pass.text,
+  //       'okpass': okpass.text,
+  //       'telno': telno.text,
+  //       'email': email.text,
+  //       'datatime': _dateController.text,
+  //       'sex': sex.text,
+  //     });
+  //     // บันทึกสำเร็จ ไปยังหน้า HomeScreen
+  //     Navigator.pop(context);
+  //   } else {
+  //     // แจ้งเตือนว่าข้อมูลไม่ครบ
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('กรุณากรอกข้อมูลให้ครบ'),
+  //         duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+  //       ),
+  //     );
+  //   }
+  // }
 
-      // บันทึกสำเร็จ ไปยังหน้า HomeScreen
-      Navigator.pop(context);
-    } else {
-      // แจ้งเตือนว่าข้อมูลไม่ครบ
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('กรุณากรอกข้อมูลให้ครบ'),
-          duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
-        ),
-      );
-    }
-  }
-
-  Future<void> initializeFirebase() async {
-    await Firebase.initializeApp();
-    user = FirebaseFirestore.instance.collection("UserID");
-  }
-
-  TextEditingController fname = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController okpass = TextEditingController();
-  TextEditingController telno = TextEditingController();
+  TextEditingController fullname = TextEditingController();
+  TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController telno = TextEditingController();
+  TextEditingController birthday = TextEditingController();
+  TextEditingController bisease = TextEditingController();
   TextEditingController sex = TextEditingController();
+
+  // Future sig_up() async {
+  //   String url = "http://127.0.0.1/api/register.php";
+  //   final respone = await http.post(Uri.parse(url), body: {
+  //     'fullname': fullname.text,
+  //     'password': password.text,
+  //     'email': email.text,
+  //     'telno': telno.text,
+  //     'birthday': birthday.text,
+  //     'bisease': bisease.text,
+  //     'sex': sex.text,
+  //   });
+  //   print(respone.statusCode);
+  //   var data = json.decode(respone.body);
+  //   if (data == "error") {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const Sigup(),
+  //       ),
+  //     );
+  //   } else {
+  //     Navigator.of(context).pop();
+  //   }
+  // }
+  // Future testapi() async {
+  //   String url = "https://jsonplaceholder.typicode.com/posts";
+  //   final respone = await http.get(Uri.parse(url));
+  //   print(respone.statusCode);
+  // }
 
   Future<void> _selectDateFromPicker(BuildContext context, value) async {
     final DateTime? picked = await showDatePicker(
@@ -102,23 +126,13 @@ class _Sigup extends State<Sigup> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textbox(fname, 'erorrtext', 'ชื่อนามสกุล',
+                      textbox(fullname, 'erorrtext', 'ชื่อนามสกุล',
                           'กรุณากรอกชื่อ-นามสกุล'),
                       const SizedBox(height: 24),
-                      textbox(
-                          pass, 'erorrtext', 'รหัสผ่าน', 'กรุณากรอกรหัสผ่าน'),
-                      const SizedBox(height: 24),
-                      textbox(okpass, 'erorrtext', 'ยืนยันรหัสผ่าน',
-                          'กรุณากรอกยืนยันรหัสผ่าน'),
-                      const SizedBox(height: 24),
-                      textbox(telno, 'erorrtext', 'เบอร์โทรศัพท์',
-                          'กรุณากรอกเบอร์โทรศัพท์'),
-                      const SizedBox(height: 24),
-                      textbox(
-                          email, 'erorrtext', 'อีเมลล์', 'กรุณากรอกอีเมลล์'),
+                      textbox(sex, 'erorrtext', 'เพศ', 'กรุณากรอกเพศ'),
                       const SizedBox(height: 24),
                       TextFormField(
-                        controller: _dateController,
+                        controller: birthday,
                         validator: RequiredValidator(
                             errorText: "กรุณาป้อนอีเมลล์ด้วย"),
                         onTap: () async {
@@ -130,8 +144,7 @@ class _Sigup extends State<Sigup> {
                           );
 
                           if (selectedDate != null) {
-                            _dateController.text =
-                                _dateFormat.format(selectedDate);
+                            birthday.text = _dateFormat.format(selectedDate);
                           }
                         },
                         readOnly: true,
@@ -139,13 +152,26 @@ class _Sigup extends State<Sigup> {
                             hintText: 'กรอกวันที่ (dd-mm-yyyy)',
                             labelText: 'วัน เดือน ปีเกิด'),
                       ),
+                      const SizedBox(height: 24),
+                      textbox(
+                          email, 'erorrtext', 'อีเมลล์', 'กรุณากรอกอีเมลล์'),
+                      const SizedBox(height: 24),
+                      textbox(bisease, 'erorrtext', 'โรคประจำตัว',
+                          'กรุณากรอกโรคประจำตัว'),
+                      const SizedBox(height: 24),
+                      textbox(telno, 'erorrtext', 'เบอร์โทรศัพท์',
+                          'กรุณากรอกเบอร์โทรศัพท์'),
+                      const SizedBox(height: 24),
+                      textbox(password, 'erorrtext', 'รหัสผ่าน',
+                          'กรุณากรอกรหัสผ่าน'),
                     ],
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ElevatedButton(
                   onPressed: () {
-                    sendUserDataToDB(context);
+                    // sig_up();
+                    // testapi();
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(

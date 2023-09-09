@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:polite/Screens/Editprofile_Screen.dart';
-import 'package:polite/Screens/Signin.dart';
+import 'package:polite/Screens/Login_Screen.dart';
 import 'package:flutter/material.dart';
 
 class Profilescreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class Profilescreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('UserID')
-              .doc('BK6RWLD6m8rwr6Jh5uwK')
+              .doc('')
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -56,7 +56,7 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['fname'],
+                          Text(documents['telno'],
                               style: TextStyle(fontSize: 21)),
                         ],
                       ),
@@ -65,6 +65,14 @@ class Profilescreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(documents['datatime'],
+                              style: TextStyle(fontSize: 21)),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(documents['fname'],
                               style: TextStyle(fontSize: 21)),
                         ],
                       ),
@@ -103,7 +111,11 @@ class Profilescreen extends StatelessWidget {
                                 ),
                           )),
                       const SizedBox(height: 10),
-                      const Divider(),
+                      const Divider(
+                        thickness: 2,
+                        indent: 25,
+                        endIndent: 25,
+                      ),
                     ],
                   ),
                 ),

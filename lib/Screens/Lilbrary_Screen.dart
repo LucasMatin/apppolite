@@ -3,7 +3,6 @@ import 'package:polite/LilbraryScreen/Nutrition_Screen.dart';
 import 'package:polite/LilbraryScreen/Eat_Screen%20.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Video_Screen.dart';
-import '../Test/testBar.dart';
 
 class Lilbraryscreen extends StatelessWidget {
   @override
@@ -117,7 +116,7 @@ class Lilbraryscreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => articlescreen()));
+                                builder: (context) => Articlescreen()));
                       },
                       child: SizedBox(
                         width: 400.0,
@@ -181,45 +180,6 @@ class Lilbraryscreen extends StatelessWidget {
                                   SizedBox(height: 10.0),
                                   Text(
                                     "วิดิโอเพื่อสุภาพ",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => MyApp()));
-                      },
-                      child: SizedBox(
-                        width: 400.0,
-                        height: 140.0,
-                        child: Card(
-                          color: Color.fromARGB(255, 143, 113, 102),
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    "images/article.png",
-                                    width: 98.0,
-                                  ),
-                                  SizedBox(height: 10.0),
-                                  Text(
-                                    "บทความเพื่อสุขภาพ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,

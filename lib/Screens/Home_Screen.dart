@@ -21,40 +21,42 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           centerTitle: true,
         ),
-        body: SafeArea(
-          child: Column(children: [
-            Container(
-              height: 75,
-              color: Color.fromARGB(255, 228, 203, 184),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 520),
-              child: Container(
-                width: 260,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Foodscreen(),
-                      ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(const Size(
-                      double.infinity,
-                      48,
-                    )),
-                  ),
-                  child: const Text(
-                    'บันทึกเมนูอาหาร',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(children: [
+              Container(
+                height: 75,
+                color: Color.fromARGB(255, 228, 203, 184),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 520),
+                child: Container(
+                  width: 260,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Foodscreen(),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size(
+                        double.infinity,
+                        48,
+                      )),
+                    ),
+                    child: const Text(
+                      'บันทึกเมนูอาหาร',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
                   ),
                 ),
-              ),
-            )
-          ]),
+              )
+            ]),
+          ),
         ));
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_Food_Screen.dart';
+import 'package:polite/Test/testtext.dart';
 
 class Foodscreen extends StatefulWidget {
   const Foodscreen({super.key});
@@ -21,7 +23,7 @@ class _FoodscreenState extends State<Foodscreen> {
         ),
         centerTitle: true,
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
@@ -50,7 +52,7 @@ class _FoodscreenState extends State<Foodscreen> {
                 },
                 child: SizedBox(
                   width: 400.0,
-                  height: 140.0,
+                  height: 100.0,
                   child: Card(
                     color: Color.fromARGB(255, 143, 113, 102),
                     elevation: 2.0,
@@ -64,7 +66,47 @@ class _FoodscreenState extends State<Foodscreen> {
                           children: [
                             SizedBox(height: 5.0),
                             Text(
-                              "แนะนำเกี่ยวกับโภชนาการ",
+                              "อาหารเช้า",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => textapp(),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  width: 400.0,
+                  height: 100.0,
+                  child: Card(
+                    color: Color.fromARGB(255, 143, 113, 102),
+                    elevation: 2.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5.0),
+                            Text(
+                              "อาหารกลางวัน",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -90,7 +132,7 @@ class _FoodscreenState extends State<Foodscreen> {
                 },
                 child: SizedBox(
                   width: 400.0,
-                  height: 140.0,
+                  height: 100.0,
                   child: Card(
                     color: Color.fromARGB(255, 143, 113, 102),
                     elevation: 2.0,
@@ -104,47 +146,7 @@ class _FoodscreenState extends State<Foodscreen> {
                           children: [
                             SizedBox(height: 5.0),
                             Text(
-                              "แนะนำเกี่ยวกับโภชนาการ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 23,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const OpenArticlescreen(),
-                  //   ),
-                  // );
-                },
-                child: SizedBox(
-                  width: 400.0,
-                  height: 140.0,
-                  child: Card(
-                    color: Color.fromARGB(255, 143, 113, 102),
-                    elevation: 2.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5.0),
-                            Text(
-                              "แนะนำเกี่ยวกับโภชนาการ",
+                              "อาหารเย็น",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -162,11 +164,42 @@ class _FoodscreenState extends State<Foodscreen> {
               Padding(
                 padding: const EdgeInsets.only(),
                 child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "แคลลอรี่รวม: 37000 แคลลอรี่",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                        ),
+                      ),
+                      Text(
+                        "แคลลอรี่อยู่ในโซน อันตราย",
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(),
+                child: Center(
                   child: SizedBox(
                     width: 300,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Openview(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'รายการอาหารทั้งหมด',
                         style: TextStyle(
@@ -186,11 +219,13 @@ class _FoodscreenState extends State<Foodscreen> {
                     width: 300,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
-                        'รายการอาหารทั้งหมด',
+                        'บันทึก',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

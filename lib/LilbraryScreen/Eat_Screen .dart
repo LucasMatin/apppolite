@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import '../AdminScreen/alert_delete.dart';
 //import 'package:flutter/services.dart';
 
 class EatScreen extends StatefulWidget {
@@ -10,6 +13,19 @@ class EatScreen extends StatefulWidget {
 }
 
 class _EatScreenState extends State<EatScreen> {
+  CollectionReference eat =
+      FirebaseFirestore.instance.collection("SaveEatSreen");
+  @override
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+    eat = FirebaseFirestore.instance.collection("SaveEatSreen");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +38,8 @@ class _EatScreenState extends State<EatScreen> {
         ),
         centerTitle: true,
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('UserID')
-              .doc('BK6RWLD6m8rwr6Jh5uwK')
-              .snapshots(),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: eat.snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -39,105 +52,54 @@ class _EatScreenState extends State<EatScreen> {
               );
             }
             if (snapshot.hasData) {
-              final documents = snapshot.data!.data() as Map<String, dynamic>;
-
-              return SingleChildScrollView(
-                child: SafeArea(
+              final documents = snapshot.data!.docs;
+              if (documents.isEmpty) {
+                return const Center(
                   child: Column(
-                    children: [
-                      const SizedBox(height: 14),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(documents['fname'],
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(documents['email'],
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("aaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("aaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("aaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("aaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("aaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                            style: TextStyle(fontSize: 21)),
-                      ),
-                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('ยังไม่มีข้อมูล')],
                   ),
-                ),
+                );
+              }
+              return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: (context, index) {
+                  final document = documents[index];
+                  final t1 = document['title1'] ?? '';
+                  final t2 = document["title2"] ?? '';
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(),
+                                child: Text(
+                                  t1,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(),
+                                child: Text(
+                                  t2,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               );
             }
             return Text("ไม่มีข้อมูล");
