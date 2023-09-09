@@ -10,11 +10,3 @@ Widget textbox(controller, String text, String labal, String hint) {
     decoration: InputDecoration(hintText: hint, labelText: labal),
   );
 }
-
-Widget Dropdownsex() {
-  String dropdownsex;
-  List listItem = ["ชาย", "หญิง"];
-  return Column(
-    children: [],
-  );
-}

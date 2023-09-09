@@ -1,12 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/Screens/wiget.dart';
-import '../ModelCalss/Profile.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Sigup extends StatefulWidget {
   const Sigup({super.key});
@@ -23,13 +19,13 @@ class _Sigup extends State<Sigup> {
   // Future<void> sendUserDataToDB(BuildContext context) async {
   //   if (formKey.currentState!.validate()) {
   //     await FirebaseFirestore.instance.collection('UserID').add({
-  //       'fname': fname.text,
-  //       'pass': pass.text,
-  //       'okpass': okpass.text,
-  //       'telno': telno.text,
-  //       'email': email.text,
-  //       'datatime': _dateController.text,
-  //       'sex': sex.text,
+  //       'Fullname': fullname.text,
+  //       'Password': password.text,
+  //       'Email': email.text,
+  //       'Telno': telno.text,
+  //       'Birthday': birthday.text,
+  //       'Bisease': bisease.text,
+  //       'Sex': sex.text,
   //     });
   //     // บันทึกสำเร็จ ไปยังหน้า HomeScreen
   //     Navigator.pop(context);
@@ -43,6 +39,74 @@ class _Sigup extends State<Sigup> {
   //     );
   //   }
   // }
+
+  Future<void> sendUserDataToDB(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      // ตรวจสอบว่าอีเมลหรือหมายเลขโทรศัพท์ไม่ซ้ำกันใน Firestore
+      bool isEmailUnique = await isEmailUniqueInFirestore(email.text);
+      bool isTelnoUnique = await isTelnoUniqueInFirestore(telno.text);
+
+      if (isEmailUnique && isTelnoUnique) {
+        // บันทึกข้อมูลลงใน Firestore
+        await FirebaseFirestore.instance.collection('UserID').add({
+          'Fullname': fullname.text,
+          'Password': password.text,
+          'Email': email.text,
+          'Telno': telno.text,
+          'Birthday': birthday.text,
+          'Bisease': bisease.text,
+          'Sex': sex.text,
+        });
+        // บันทึกสำเร็จ ไปยังหน้า HomeScreen
+        Navigator.pop(context);
+      } else {
+        // แจ้งเตือนว่ามีบัญชีนี้อยู่แล้ว
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('มีบัญชีนี้อยู่แล้ว'),
+            duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+          ),
+        );
+      }
+    } else {
+      // แจ้งเตือนว่าข้อมูลไม่ครบ
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('กรุณากรอกข้อมูลให้ครบ'),
+          duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+        ),
+      );
+    }
+  }
+
+  Future<bool> isEmailUniqueInFirestore(String email) async {
+    try {
+      QuerySnapshot query = await FirebaseFirestore.instance
+          .collection('UserID')
+          .where('Email', isEqualTo: email)
+          .get();
+
+      return query.docs.isEmpty; // ถ้าไม่มีเอกสารในคำขอ แสดงว่าอีเมลไม่ซ้ำกัน
+    } catch (e) {
+      print('Error: $e');
+      return false; // เกิดข้อผิดพลาดในการตรวจสอบ
+    }
+  }
+
+  Future<bool> isTelnoUniqueInFirestore(String telno) async {
+    try {
+      QuerySnapshot query = await FirebaseFirestore.instance
+          .collection('UserID')
+          .where('Telno', isEqualTo: telno)
+          .get();
+
+      return query
+          .docs.isEmpty; // ถ้าไม่มีเอกสารในคำขอ แสดงว่าหมายเลขโทรศัพท์ไม่ซ้ำกัน
+    } catch (e) {
+      print('Error: $e');
+      return false; // เกิดข้อผิดพลาดในการตรวจสอบ
+    }
+  }
 
   TextEditingController fullname = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -96,6 +160,8 @@ class _Sigup extends State<Sigup> {
     }
   }
 
+  String selectedGender = 'ชาย'; // ค่าเริ่มต้น
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,15 +192,15 @@ class _Sigup extends State<Sigup> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textbox(fullname, 'erorrtext', 'ชื่อนามสกุล',
-                          'กรุณากรอกชื่อ-นามสกุล'),
+                      textbox(fullname, 'กรุณาป้อนชื่อนามสกุลด้วย',
+                          'ชื่อนามสกุล', 'กรุณากรอกชื่อ-นามสกุล'),
                       const SizedBox(height: 24),
-                      textbox(sex, 'erorrtext', 'เพศ', 'กรุณากรอกเพศ'),
+                      textbox(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
                       const SizedBox(height: 24),
                       TextFormField(
                         controller: birthday,
                         validator: RequiredValidator(
-                            errorText: "กรุณาป้อนอีเมลล์ด้วย"),
+                            errorText: "กรุณาป้อนวัน เดือน ปีเกิดด้วย"),
                         onTap: () async {
                           DateTime? selectedDate = await showDatePicker(
                             context: context,
@@ -153,16 +219,16 @@ class _Sigup extends State<Sigup> {
                             labelText: 'วัน เดือน ปีเกิด'),
                       ),
                       const SizedBox(height: 24),
-                      textbox(
-                          email, 'erorrtext', 'อีเมลล์', 'กรุณากรอกอีเมลล์'),
+                      textbox(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมลล์',
+                          'กรุณากรอกอีเมลล์'),
                       const SizedBox(height: 24),
-                      textbox(bisease, 'erorrtext', 'โรคประจำตัว',
-                          'กรุณากรอกโรคประจำตัว'),
+                      textbox(bisease, 'กรุณาป้อนโรคประจำตัวด้วย',
+                          'โรคประจำตัว', 'กรุณากรอกโรคประจำตัว'),
                       const SizedBox(height: 24),
-                      textbox(telno, 'erorrtext', 'เบอร์โทรศัพท์',
-                          'กรุณากรอกเบอร์โทรศัพท์'),
+                      textbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
+                          'เบอร์โทรศัพท์', 'กรุณากรอกเบอร์โทรศัพท์'),
                       const SizedBox(height: 24),
-                      textbox(password, 'erorrtext', 'รหัสผ่าน',
+                      textbox(password, 'กรุณาป้อนรหัสผ่านด้วย', 'รหัสผ่าน',
                           'กรุณากรอกรหัสผ่าน'),
                     ],
                   ),
@@ -170,8 +236,9 @@ class _Sigup extends State<Sigup> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ElevatedButton(
                   onPressed: () {
-                    // sig_up();
-                    // testapi();
+                    if (formKey.currentState!.validate()) {
+                      sendUserDataToDB(context);
+                    }
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(
