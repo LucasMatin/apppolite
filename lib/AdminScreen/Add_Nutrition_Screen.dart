@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add_Eat_Sreen.dart';
 import 'package:polite/AdminScreen/alert_delete.dart';
 import 'package:polite/LilbraryScreen/Nutrition_Screen.dart';
+import 'package:polite/ModelCalss/classnutrition.dart';
 
 class Addnutrition extends StatefulWidget {
   const Addnutrition({super.key});
@@ -200,13 +201,16 @@ class _TablenutritionState extends State<Tablenutrition> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         const Editeatsreeen(),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Nutritionclass(
+                                              documentReference:
+                                                  document.reference),
+                                          settings: RouteSettings(
+                                              arguments: document),
+                                        ),
+                                      );
                                     },
                                     subtitle: Column(
                                       children: [
@@ -254,7 +258,7 @@ class _TablenutritionState extends State<Tablenutrition> {
                                                   setState(() {
                                                     FirebaseFirestore.instance
                                                         .collection(
-                                                            'SaveEatSreen')
+                                                            'NutritionScreen')
                                                         .doc(document.id)
                                                         .delete()
                                                         .then((_) {})
@@ -280,6 +284,81 @@ class _TablenutritionState extends State<Tablenutrition> {
             }
             return Text("ไม่มีข้อมูล");
           }),
+    );
+  }
+}
+
+// แสดง หน้าต่าง
+class Nutritionclass extends StatefulWidget {
+  final DocumentReference documentReference;
+
+  const Nutritionclass({Key? key, required this.documentReference})
+      : super(key: key);
+
+  @override
+  State<Nutritionclass> createState() => _NutritionclassState();
+}
+
+class _NutritionclassState extends State<Nutritionclass> {
+  late Stream<DocumentSnapshot> documentStream;
+  DocumentSnapshot? currentDocument;
+  @override
+  void initState() {
+    super.initState();
+    documentStream = widget.documentReference.snapshots();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: documentStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (!snapshot.hasData || snapshot.hasError) {
+            return const Center(
+              child: Text('Error fetching data'),
+            );
+          }
+
+          final document = snapshot.data!;
+          currentDocument = document;
+
+          final lable = document['Lablenutrition'] ?? '';
+
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.brown[300],
+              elevation: 0,
+              title: Text(
+                lable,
+                style: TextStyle(color: Colors.white, fontSize: 23),
+              ),
+              centerTitle: true,
+            ),
+            body: SingleChildScrollView(
+              child: Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      "หน้า $lable",
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              )),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -18,37 +18,37 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final DatabaseReference database =
-      FirebaseDatabase.instance.reference().child('UserID');
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final DatabaseReference database =
+  //     FirebaseDatabase.instance.reference().child('UserID');
 
-  TextEditingController telnoController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  String errorMessage = '';
+  // TextEditingController telnoController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+  // String errorMessage = '';
 
-  Future<void> _login() async {
-    final String telno = telnoController.text.trim();
-    final String password = passwordController.text.trim();
+  // Future<void> _login() async {
+  //   final String telno = telnoController.text.trim();
+  //   final String password = passwordController.text.trim();
 
-    try {
-      final UserCredential userCredential =
-          await _auth.signInWithEmailAndPassword(
-        email: telno,
-        password: password,
-      );
+  //   try {
+  //     final UserCredential userCredential =
+  //         await _auth.signInWithEmailAndPassword(
+  //       email: telno,
+  //       password: password,
+  //     );
 
-      if (userCredential.user != null) {
-        // เข้าสู่ระบบสำเร็จ
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => bottomsceen()));
-      }
-    } catch (e) {
-      // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
-      setState(() {
-        errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
-      });
-    }
-  }
+  //     if (userCredential.user != null) {
+  //       // เข้าสู่ระบบสำเร็จ
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => bottomsceen()));
+  //     }
+  //   } catch (e) {
+  //     // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
+  //     setState(() {
+  //       errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 12),
                       TextFormField(
-                        controller: telnoController,
+                        // controller: telnoController,
                         validator: RequiredValidator(
                             errorText: 'กรุณากรอกหมายเลขโทรศัพท์'),
                         keyboardType: TextInputType.emailAddress,
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
                       const SizedBox(height: 12),
                       TextFormField(
-                        controller: passwordController,
+                        // controller: passwordController,
                         validator: RequiredValidator(
                             errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'),
                         keyboardType: TextInputType.text,
@@ -125,7 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _login();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => bottomsceen()));
                     }
                   },
                   style: ButtonStyle(
@@ -156,10 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                Text(
-                  errorMessage,
-                  style: TextStyle(color: Colors.red),
-                ),
+                // Text(
+                //   errorMessage,
+                //   style: TextStyle(color: Colors.red),
+                // ),
               ],
             ),
           ),
