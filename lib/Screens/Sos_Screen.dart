@@ -6,7 +6,7 @@ class Sos extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
         elevation: 0,
         title: Text(
           'เหตุฉุกเฉิน',

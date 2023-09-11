@@ -110,81 +110,56 @@ class _ArticlescreenState extends State<Articlescreen> {
                       itemCount: documents.length,
                       itemBuilder: (context, index) {
                         final document = documents[index];
-                        final lable1 = document['Labal'] ?? '';
+                        final lable1 = document['Lable'] ?? '';
 
                         return Padding(
-                          padding: const EdgeInsets.only(
-                            left: 15,
-                            right: 12,
-                            top: 10,
-                          ),
-                          child: Column(
-                            children: [
-                              Card(
-                                elevation: 2,
-                                child: SizedBox(
-                                  height: 90,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Stack(
-                                          children: [
-                                            ListTile(
-                                              isThreeLine: false,
-                                              onTap: () {
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         const Editeatsreeen(),
-                                                //   ),
-                                                // );
-                                              },
-                                              subtitle: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                          child: Text(
-                                                            lable1
-                                                                        .toString()
-                                                                        .length >
-                                                                    20
-                                                                ? lable1
-                                                                        .toString()
-                                                                        .substring(
-                                                                            0,
-                                                                            30) +
-                                                                    '...'
-                                                                : lable1,
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black87),
-                                                          ))
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: SafeArea(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const Openvideoscreen(),
+                                //   ),
+                                // );
+                              },
+                              child: SizedBox(
+                                width: 400.0,
+                                height: 100.0,
+                                child: Card(
+                                  color:
+                                      const Color.fromARGB(255, 143, 113, 102),
+                                  elevation: 2.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, left: 15),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 10.0),
+                                          Text(
+                                            lable1.toString().length > 20
+                                                ? lable1
+                                                        .toString()
+                                                        .substring(0, 29) +
+                                                    '...'
+                                                : lable1,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          )
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         );
                       },

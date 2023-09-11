@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/Add_Eat_Sreen.dart';
 import 'package:polite/AdminScreen/alert_delete.dart';
-
-import '../LilbraryScreen/Article_Screen.dart';
 
 class Addarticale extends StatefulWidget {
   const Addarticale({super.key});
@@ -14,29 +11,121 @@ class Addarticale extends StatefulWidget {
 }
 
 class _AddarticaleState extends State<Addarticale> {
-  final formKey = GlobalKey<FormState>();
-  Future<void> sendUserDataToDB() async {
-    if (formKey.currentState!.validate()) {
-      await FirebaseFirestore.instance.collection('ArticleScreen').add({
-        'Labal': labal.text,
-      });
-      // บันทึกสำเร็จ ไปยังหน้า HomeScreen
-    } else {
-      // แจ้งเตือนว่าข้อมูลไม่ครบ
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('กรุณากรอกข้อมูลให้ครบ'),
-          duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
-        ),
-      );
-    }
-  }
-
-  void _resetForm() {
-    formKey.currentState?.reset();
-  }
-
+  // text field controller
   TextEditingController labal = TextEditingController();
+
+  CollectionReference _items =
+      FirebaseFirestore.instance.collection('ArticleScreen');
+  @override
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+    _items = FirebaseFirestore.instance.collection("ArticleScreen");
+  }
+
+  String searchText = '';
+  // for create operation
+  Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    "เพิ่มหัวข้อหัว",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                TextField(
+                  controller: labal,
+                  decoration: const InputDecoration(
+                      labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final String name = labal.text;
+                      await _items.add({
+                        "Lable": name,
+                      });
+                      labal.text = '';
+
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("ยืนยัน"))
+              ],
+            ),
+          );
+        });
+  }
+
+  // for Update operation
+  Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
+    if (documentSnapshot != null) {
+      labal.text = documentSnapshot['Lable'];
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    "แก้ไข",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                TextField(
+                  controller: labal,
+                  decoration: const InputDecoration(
+                      labelText: 'หัวข้อ', hintText: 'eg.Elon'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final String name = labal.text;
+
+                      await _items
+                          .doc(documentSnapshot!.id)
+                          .update({"Lable": name});
+                      labal.text = '';
+
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Update"))
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,111 +138,8 @@ class _AddarticaleState extends State<Addarticale> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Center(
-            child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                "หน้าบทความเพื่อสุขภาพ",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: editbox(labal, "หัวเรื่อง", "หัวเรื่อง", 1,
-                            "กรุณากรอกหัวเรื่อง")),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              sendUserDataToDB();
-                              formKey.currentState!.reset();
-                            }
-                          },
-                          child: Text("บันทึก")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TableArticle(),
-                              ),
-                            );
-                          },
-                          child: Text("เช็ค")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Articlescreen(),
-                              ),
-                            );
-                          },
-                          child: Text("ตรวจสอบ")),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        )),
-      ),
-    );
-  }
-}
-
-// ส่วนแสดง table
-class TableArticle extends StatefulWidget {
-  const TableArticle({super.key});
-
-  @override
-  State<TableArticle> createState() => _TableArticleState();
-}
-
-class _TableArticleState extends State<TableArticle> {
-  CollectionReference article =
-      FirebaseFirestore.instance.collection("ArticleScreen");
-  @override
-  void initState() {
-    super.initState();
-    initializeFirebase();
-  }
-
-  Future<void> initializeFirebase() async {
-    await Firebase.initializeApp();
-    article = FirebaseFirestore.instance.collection("ArticleScreen");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.brown[300],
-        elevation: 0,
-        title: Text(
-          'จัดการแก้ไข',
-          style: TextStyle(color: Colors.white, fontSize: 23),
-        ),
-        centerTitle: true,
-      ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: article.snapshots(),
+          stream: _items.snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -179,7 +165,7 @@ class _TableArticleState extends State<TableArticle> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final document = documents[index];
-                  final lable1 = document['Labal'] ?? '';
+                  final lable1 = document['Lable'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -188,7 +174,7 @@ class _TableArticleState extends State<TableArticle> {
                       top: 10,
                     ),
                     child: Card(
-                      elevation: 2,
+                      elevation: 1,
                       child: SizedBox(
                         height: 90,
                         child: Column(
@@ -201,66 +187,99 @@ class _TableArticleState extends State<TableArticle> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         const Editeatsreeen(),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Editarticle(
+                                              documentReference:
+                                                  document.reference),
+                                          settings: RouteSettings(
+                                              arguments: document),
+                                        ),
+                                      );
                                     },
                                     subtitle: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.6,
-                                                child: Text(
-                                                  lable1.toString().length > 20
-                                                      ? lable1
-                                                              .toString()
-                                                              .substring(
-                                                                  0, 30) +
-                                                          '...'
-                                                      : lable1,
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ))
-                                          ],
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    lable1.toString().length >
+                                                            20
+                                                        ? lable1
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 20) +
+                                                            '...'
+                                                        : lable1,
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ))
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
                                     trailing: SizedBox(
                                       width: 40,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                      child: Column(
                                         children: [
-                                          InkWell(
-                                              //TO DO DELETE
-                                              onTap: () async {
-                                                final action = await AlertDialogs
-                                                    .yesorCancel(context, 'ลบ',
-                                                        'คุณต้องการลบข้อมูลนี้หรือไม่');
-                                                if (action ==
-                                                    DialogsAction.yes) {
-                                                  setState(() {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'ArticleScreen')
-                                                        .doc(document.id)
-                                                        .delete()
-                                                        .then((_) {})
-                                                        .catchError((error) {});
-                                                  });
-                                                }
-                                              },
-                                              child: const Icon(Icons.delete)),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                  //TO DO DELETE
+                                                  onTap: () async {
+                                                    await _update();
+                                                  },
+                                                  child:
+                                                      const Icon(Icons.edit)),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                  //TO DO DELETE
+                                                  onTap: () async {
+                                                    final action =
+                                                        await AlertDialogs
+                                                            .yesorCancel(
+                                                                context,
+                                                                'ลบ',
+                                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                                    if (action ==
+                                                        DialogsAction.yes) {
+                                                      setState(() {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'ArticleScreen')
+                                                            .doc(document.id)
+                                                            .delete()
+                                                            .then((_) {})
+                                                            .catchError(
+                                                                (error) {});
+                                                      });
+                                                    }
+                                                  },
+                                                  child:
+                                                      const Icon(Icons.delete)),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -278,6 +297,81 @@ class _TableArticleState extends State<TableArticle> {
             }
             return Text("ไม่มีข้อมูล");
           }),
+      // Create new project button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _create(),
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class Editarticle extends StatefulWidget {
+  final DocumentReference documentReference;
+
+  const Editarticle({Key? key, required this.documentReference})
+      : super(key: key);
+
+  @override
+  State<Editarticle> createState() => _EditarticleState();
+}
+
+class _EditarticleState extends State<Editarticle> {
+  late Stream<DocumentSnapshot> documentStream;
+  DocumentSnapshot? currentDocument;
+  @override
+  void initState() {
+    super.initState();
+    documentStream = widget.documentReference.snapshots();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: documentStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (!snapshot.hasData || snapshot.hasError) {
+            return const Center(
+              child: Text('Error fetching data'),
+            );
+          }
+
+          final document = snapshot.data!;
+          currentDocument = document;
+
+          final lable = document['Lable'] ?? '';
+
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.brown[300],
+              elevation: 0,
+              title: Text(
+                lable,
+                style: TextStyle(color: Colors.white, fontSize: 23),
+              ),
+              centerTitle: true,
+            ),
+            body: SingleChildScrollView(
+              child: Center(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                  ),
+                ],
+              )),
+            ),
+          );
+        },
+      ),
     );
   }
 }
