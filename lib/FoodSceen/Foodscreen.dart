@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_Food_Screen.dart';
 import 'package:polite/Test/testtext.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Foodscreen extends StatefulWidget {
   const Foodscreen({super.key});
@@ -11,6 +13,13 @@ class Foodscreen extends StatefulWidget {
 }
 
 class _FoodscreenState extends State<Foodscreen> {
+  String formattedDate = "";
+  void initState() {
+    super.initState();
+    initializeDateFormatting('th', null);
+    formattedDate = DateFormat.yMMMd().format(DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +40,10 @@ class _FoodscreenState extends State<Foodscreen> {
                 height: 75,
                 color: Color.fromARGB(255, 228, 203, 184),
                 child: Center(
-                  child: Text(
-                    "วันที่",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 23,
-                    ),
-                  ),
-                ),
+                    child: Text(
+                  formattedDate,
+                  style: TextStyle(fontSize: 18),
+                )),
               ),
               const SizedBox(height: 14),
               GestureDetector(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Opencallory extends StatefulWidget {
-  const Opencallory({super.key});
+class Addfood extends StatefulWidget {
+  const Addfood({super.key});
 
   @override
-  State<Opencallory> createState() => _OpencalloryState();
+  State<Addfood> createState() => _AddfoodState();
 }
 
-class _OpencalloryState extends State<Opencallory> {
+class _AddfoodState extends State<Addfood> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +15,7 @@ class _OpencalloryState extends State<Opencallory> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'ปริมาณแคลอรี่',
+          'เพิ่มข้อมูลอาหาร',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,

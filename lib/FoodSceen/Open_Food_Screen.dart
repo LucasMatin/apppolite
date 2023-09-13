@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Openfoodscreen extends StatefulWidget {
   const Openfoodscreen({super.key});
@@ -8,6 +9,7 @@ class Openfoodscreen extends StatefulWidget {
 }
 
 class _OpenfoodscreenState extends State<Openfoodscreen> {
+  String formattedDate = DateFormat.yMMMd().format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +46,8 @@ class _OpenfoodscreenState extends State<Openfoodscreen> {
               ),
 
               textcolumn("textcol", "texts"),
-              textview("aaaaaaa"),
-              textview("aaaaaaaaaaaaaaa"),
+              MyWidget(textedit: "aaaaaaaaaaaa"),
+              MyWidget(textedit: "aaaaaaaaaaaa"),
             ],
           ),
         ),
@@ -54,69 +56,82 @@ class _OpenfoodscreenState extends State<Openfoodscreen> {
   }
 }
 
-Widget textview(
-  textedit,
-) {
+class MyWidget extends StatefulWidget {
+  final String textedit;
+
+  MyWidget({required this.textedit});
+
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
   int number = 0; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 25.0),
-        child: Container(
-          // alignment: FractionalOffset.topLeft,
-          child: Stack(
-            children: [
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    textedit,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.textedit,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            (() {
-                              number--;
-                            });
-                          },
-                        ),
-                        Text(
-                          '$number',
-                          style: TextStyle(fontSize: 24.0),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            (() {
-                              number++;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 25, left: 270),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                          setState(() {
+                            number--;
+                          });
+                        },
+                      ),
+                      Text(
+                        '$number',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          setState(() {
+                            number++;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
+          const Divider(
+            thickness: 2,
+            color: Colors.grey,
+            indent: 25,
+            endIndent: 25,
+          ),
+        ],
       ),
-      const Divider(
-        thickness: 2,
-        color: Colors.grey,
-        indent: 25,
-        endIndent: 25,
-      ),
-    ],
-  );
+    );
+  }
 }
 
 Widget textcolumn(textcol, texts) {

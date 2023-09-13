@@ -1,8 +1,9 @@
-import 'package:polite/AdminScreen/Add_Article_Screen.dart';
-import 'package:polite/AdminScreen/Add_Eat_Sreen.dart';
+import 'package:polite/AdminScreen/Add/Add_Article_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Eat_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Video_Screen.dart';
+
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/Add_Nutrition_Screen.dart';
-import 'package:polite/AdminScreen/Add_Video_Screen.dart';
 
 class Lilbraryadminscreen extends StatelessWidget {
   const Lilbraryadminscreen({super.key});

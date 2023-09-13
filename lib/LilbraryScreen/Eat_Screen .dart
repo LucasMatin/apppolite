@@ -10,8 +10,7 @@ class EatScreen extends StatefulWidget {
 }
 
 class _EatScreenState extends State<EatScreen> {
-  CollectionReference eat =
-      FirebaseFirestore.instance.collection("SaveEatSreen");
+  CollectionReference eat = FirebaseFirestore.instance.collection("EatScreen");
   @override
   void initState() {
     super.initState();
@@ -20,7 +19,7 @@ class _EatScreenState extends State<EatScreen> {
 
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
-    eat = FirebaseFirestore.instance.collection("SaveEatSreen");
+    eat = FirebaseFirestore.instance.collection("EatScreen");
   }
 
   @override
@@ -62,34 +61,41 @@ class _EatScreenState extends State<EatScreen> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final document = documents[index];
-                  final t1 = document['title1'] ?? '';
-                  final t2 = document["title2"] ?? '';
+                  final t1 = document['Title1'] ?? '';
+                  final t2 = document["Title2"] ?? '';
 
                   return SingleChildScrollView(
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.only(),
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(),
-                                child: Text(
-                                  t1,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Text(
+                                      t1,
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(),
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
                                   t2,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 20),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),

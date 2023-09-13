@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Openview extends StatefulWidget {
   const Openview({super.key});
@@ -8,6 +9,8 @@ class Openview extends StatefulWidget {
 }
 
 class _OpenviewState extends State<Openview> {
+  String formattedDate =
+      DateFormat.yMMMd().format(DateTime.now()); //วันปัจจุบัน
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,14 +32,10 @@ class _OpenviewState extends State<Openview> {
                   height: 75,
                   color: Color.fromARGB(255, 228, 203, 184),
                   child: Center(
-                    child: Text(
-                      "วันที่",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 23,
-                      ),
-                    ),
-                  ),
+                      child: Text(
+                    '$formattedDate',
+                    style: TextStyle(fontSize: 18),
+                  )),
                 ),
                 textbar("textbar1"),
                 textview("textview1", "textview2", "textview3")

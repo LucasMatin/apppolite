@@ -1,4 +1,4 @@
-import 'package:polite/AdminScreen/Add_admin.dart';
+import 'package:polite/AdminScreen/Add/Add_Admin.dart';
 import 'package:polite/AdminScreen/Home_Admin.dart';
 import 'package:polite/AdminScreen/Lilbrary_Admin.dart';
 import 'package:polite/AdminScreen/Profile_Admin.dart';

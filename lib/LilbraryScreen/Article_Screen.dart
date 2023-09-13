@@ -10,6 +10,7 @@ class Articlescreen extends StatefulWidget {
 }
 
 class _ArticlescreenState extends State<Articlescreen> {
+  TextEditingController searchTextController = TextEditingController();
   CollectionReference article =
       FirebaseFirestore.instance.collection("ArticleScreen");
   @override
@@ -21,6 +22,27 @@ class _ArticlescreenState extends State<Articlescreen> {
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
     article = FirebaseFirestore.instance.collection("ArticleScreen");
+  }
+
+  void searchInFirebase(String searchText) {
+    // ใช้คำสั่งค้นหาข้อมูลใน Firestore
+    FirebaseFirestore.instance
+        .collection("ArticleScreen")
+        .where("Lable", isEqualTo: searchText)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      // ตรวจสอบว่ามีข้อมูลหรือไม่
+      if (querySnapshot.docs.isNotEmpty) {
+        // มีข้อมูล
+        querySnapshot.docs.forEach((DocumentSnapshot document) {
+          // ทำอะไรกับข้อมูลที่ค้นพบที่นี่
+          print(document.data());
+        });
+      } else {
+        // ไม่มีข้อมูลที่ค้นหา
+        print("ไม่พบข้อมูล");
+      }
+    });
   }
 
   @override
@@ -70,13 +92,21 @@ class _ArticlescreenState extends State<Articlescreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 10),
-                                  hintText: "ค้นหา...",
-                                  suffixIcon: const Icon(Icons.search),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: const BorderSide())),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10),
+                                hintText: "ค้นหา...",
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.search),
+                                  onPressed: () {
+                                    // เรียกใช้งานฟังก์ชันค้นหาเมื่อกดปุ่มค้นหา
+                                    searchInFirebase(searchTextController.text);
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: const BorderSide(),
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 15),
@@ -134,24 +164,29 @@ class _ArticlescreenState extends State<Articlescreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  child: Center(
+                                  child: SafeArea(
                                     child: Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 10, left: 15),
+                                          top: 30, left: 10, right: 10),
                                       child: Column(
                                         children: [
-                                          SizedBox(height: 10.0),
-                                          Text(
-                                            lable1.toString().length > 20
-                                                ? lable1
-                                                        .toString()
-                                                        .substring(0, 29) +
-                                                    '...'
-                                                : lable1,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                lable1.toString().length > 20
+                                                    ? lable1
+                                                            .toString()
+                                                            .substring(0, 29) +
+                                                        '...'
+                                                    : lable1,
+                                                style: TextStyle(
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                            ],
                                           )
                                         ],
                                       ),

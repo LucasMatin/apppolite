@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/alert_delete.dart';
+import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
-class Addarticale extends StatefulWidget {
-  const Addarticale({super.key});
+class Addnutrition extends StatefulWidget {
+  const Addnutrition({super.key});
 
   @override
-  State<Addarticale> createState() => _AddarticaleState();
+  State<Addnutrition> createState() => _AddnutritionState();
 }
 
-class _AddarticaleState extends State<Addarticale> {
+class _AddnutritionState extends State<Addnutrition> {
   // text field controller
   TextEditingController labal = TextEditingController();
 
   CollectionReference _items =
-      FirebaseFirestore.instance.collection('ArticleScreen');
+      FirebaseFirestore.instance.collection('NutritionScreen');
   @override
   void initState() {
     super.initState();
@@ -24,7 +24,7 @@ class _AddarticaleState extends State<Addarticale> {
 
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
-    _items = FirebaseFirestore.instance.collection("ArticleScreen");
+    _items = FirebaseFirestore.instance.collection("NutritionScreen");
   }
 
   String searchText = '';
@@ -62,64 +62,13 @@ class _AddarticaleState extends State<Addarticale> {
                     onPressed: () async {
                       final String name = labal.text;
                       await _items.add({
-                        "Lable": name,
+                        "Lablenutrition": name,
                       });
                       labal.text = '';
 
                       Navigator.of(context).pop();
                     },
                     child: const Text("ยืนยัน"))
-              ],
-            ),
-          );
-        });
-  }
-
-  // for Update operation
-  Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
-    if (documentSnapshot != null) {
-      labal.text = documentSnapshot['Lable'];
-    }
-    await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 20,
-                right: 20,
-                left: 20,
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Text(
-                    "แก้ไข",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                TextField(
-                  controller: labal,
-                  decoration: const InputDecoration(
-                      labelText: 'หัวข้อ', hintText: 'eg.Elon'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      final String name = labal.text;
-
-                      await _items
-                          .doc(documentSnapshot!.id)
-                          .update({"Lable": name});
-                      labal.text = '';
-
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text("Update"))
               ],
             ),
           );
@@ -165,7 +114,7 @@ class _AddarticaleState extends State<Addarticale> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final document = documents[index];
-                  final lable1 = document['Lable'] ?? '';
+                  final lable1 = document['Lablenutrition'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -187,16 +136,16 @@ class _AddarticaleState extends State<Addarticale> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Editarticle(
-                                              documentReference:
-                                                  document.reference),
-                                          settings: RouteSettings(
-                                              arguments: document),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => Editarticle(
+                                      //         documentReference:
+                                      //             document.reference),
+                                      //     settings: RouteSettings(
+                                      //         arguments: document),
+                                      //   ),
+                                      // );
                                     },
                                     subtitle: Column(
                                       children: [
@@ -239,14 +188,11 @@ class _AddarticaleState extends State<Addarticale> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    await _update();
+                                                    // await _update();
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),
                                             ],
-                                          ),
-                                          SizedBox(
-                                            height: 3,
                                           ),
                                           Row(
                                             crossAxisAlignment:
@@ -267,7 +213,7 @@ class _AddarticaleState extends State<Addarticale> {
                                                         FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                'ArticleScreen')
+                                                                'NutritionScreen')
                                                             .doc(document.id)
                                                             .delete()
                                                             .then((_) {})
@@ -302,75 +248,6 @@ class _AddarticaleState extends State<Addarticale> {
         onPressed: () => _create(),
         backgroundColor: const Color.fromARGB(255, 161, 136, 127),
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class Editarticle extends StatefulWidget {
-  final DocumentReference documentReference;
-
-  const Editarticle({Key? key, required this.documentReference})
-      : super(key: key);
-
-  @override
-  State<Editarticle> createState() => _EditarticleState();
-}
-
-class _EditarticleState extends State<Editarticle> {
-  late Stream<DocumentSnapshot> documentStream;
-  DocumentSnapshot? currentDocument;
-  @override
-  void initState() {
-    super.initState();
-    documentStream = widget.documentReference.snapshots();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: documentStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (!snapshot.hasData || snapshot.hasError) {
-            return const Center(
-              child: Text('Error fetching data'),
-            );
-          }
-
-          final document = snapshot.data!;
-          currentDocument = document;
-
-          final lable = document['Lable'] ?? '';
-
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.brown[300],
-              elevation: 0,
-              title: Text(
-                lable,
-                style: TextStyle(color: Colors.white, fontSize: 23),
-              ),
-              centerTitle: true,
-            ),
-            body: SingleChildScrollView(
-              child: Center(
-                  child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                  ),
-                ],
-              )),
-            ),
-          );
-        },
       ),
     );
   }

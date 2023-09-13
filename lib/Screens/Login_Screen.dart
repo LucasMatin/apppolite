@@ -1,5 +1,6 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:polite/AdminScreen/Login_Admin_Screen.dart';
@@ -18,12 +19,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final DatabaseReference database =
-  //     FirebaseDatabase.instance.reference().child('UserID');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference database =
+      FirebaseDatabase.instance.reference().child('UserID');
 
-  // TextEditingController telnoController = TextEditingController();
-  // TextEditingController passwordController = TextEditingController();
+  void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
+
+  TextEditingController telnoController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   // String errorMessage = '';
 
   // Future<void> _login() async {
@@ -31,8 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //   final String password = passwordController.text.trim();
 
   //   try {
-  //     final UserCredential userCredential =
-  //         await _auth.signInWithEmailAndPassword(
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
   //       email: telno,
   //       password: password,
   //     );
@@ -40,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
   //     if (userCredential.user != null) {
   //       // เข้าสู่ระบบสำเร็จ
   //       Navigator.pushReplacement(
-  //           context, MaterialPageRoute(builder: (context) => bottomsceen()));
+  //         context,
+  //         MaterialPageRoute(builder: (context) => bottomsceen()),
+  //       );
   //     }
   //   } catch (e) {
   //     // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
@@ -82,24 +89,30 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 12),
                       TextFormField(
-                        // controller: telnoController,
+                        controller: telnoController, // เพิ่ม controller
                         validator: RequiredValidator(
-                            errorText: 'กรุณากรอกหมายเลขโทรศัพท์'),
+                          errorText: 'กรุณากรอกหมายเลขโทรศัพท์',
+                        ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                            hintText: 'หมายเลขโทรศัพท์', labelText: 'บัญชี'),
+                          hintText: 'หมายเลขโทรศัพท์',
+                          labelText: 'บัญชี',
+                        ),
                       ),
                       const SizedBox(height: 24),
                       const SizedBox(height: 12),
                       TextFormField(
-                        // controller: passwordController,
+                        controller: passwordController, // เพิ่ม controller
                         validator: RequiredValidator(
-                            errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'),
+                          errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง',
+                        ),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                            hintText: 'รหัสผ่าน', labelText: 'รหัสผ่าน'),
+                          hintText: 'รหัสผ่าน',
+                          labelText: 'รหัสผ่าน',
+                        ),
                         obscureText: true,
                       ),
                       Align(
@@ -125,10 +138,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      // _login(); // เรียกใช้งาน _login()
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => bottomsceen()));
+                        context,
+                        MaterialPageRoute(builder: (context) => bottomsceen()),
+                      );
                     }
                   },
                   style: ButtonStyle(
