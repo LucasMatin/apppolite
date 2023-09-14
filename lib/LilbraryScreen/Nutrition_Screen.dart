@@ -62,7 +62,7 @@ class _NutritionSreenState extends State<NutritionSreen> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final document = documents[index];
-                  final lablenutrition = document['Lablenutrition'] ?? '';
+                  final lablenutrition = document['Lable'] ?? '';
 
                   return SingleChildScrollView(
                     child: SafeArea(

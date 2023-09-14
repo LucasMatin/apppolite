@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_Food_Screen.dart';
+import 'package:polite/FoodSceen/testfood.dart';
 import 'package:polite/Test/testtext.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -48,12 +49,12 @@ class _FoodscreenState extends State<Foodscreen> {
               const SizedBox(height: 14),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Openfoodscreen(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const Openfoodscreen(),
+                  //   ),
+                  // );
                 },
                 child: SizedBox(
                   width: 400.0,
@@ -91,7 +92,7 @@ class _FoodscreenState extends State<Foodscreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => textapp(),
+                      builder: (context) => MyHomePage(),
                     ),
                   );
                 },

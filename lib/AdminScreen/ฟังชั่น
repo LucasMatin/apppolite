@@ -1,0 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Future<void> fetchDataFromFirebase() async {
+  DocumentReference documentReference = FirebaseFirestore.instance.collection('your_collection_name').doc('your_document_id');
+  
+  try {
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    if (documentSnapshot.exists) {
+      // ข้อมูลเอกสารถูกพบ
+      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+      if (data.containsKey('sub_collection_reference')) {
+        // ดึง DocumentReference จากข้อมูลเอกสาร
+        DocumentReference subCollectionReference = data['sub_collection_reference'];
+        
+        // ดึงข้อมูลทั้งคอลเลกชันที่ติดกับ DocumentReference
+        QuerySnapshot subCollectionSnapshot = await subCollectionReference.collection('your_sub_collection_name').get();
+        
+        if (subCollectionSnapshot.docs.isNotEmpty) {
+          // มีข้อมูลในคอลเลกชัน
+          for (QueryDocumentSnapshot subDocumentSnapshot in subCollectionSnapshot.docs) {
+            Map<String, dynamic> subDocumentData = subDocumentSnapshot.data() as Map<String, dynamic>;
+            if (subDocumentData.containsKey('field_name')) {
+              // ดึงฟิลด์ที่คุณต้องการจากข้อมูลเอกสารย่อย
+              dynamic fieldValue = subDocumentData['field_name'];
+              print('Field ที่คุณต้องการ: $fieldValue');
+            } else {
+              // หากไม่พบฟิลด์ที่ต้องการในข้อมูลเอกสารย่อย
+              print('ไม่พบฟิลด์ที่ต้องการในข้อมูลเอกสารย่อย');
+            }
+          }
+        } else {
+          // ไม่มีข้อมูลในคอลเลกชัน
+          print('ไม่มีข้อมูลในคอลเลกชัน');
+        }
+      } else {
+        // ไม่พบข้อมูล sub_collection_reference ในเอกสาร
+        print('ไม่พบข้อมูล sub_collection_reference ในเอกสาร');
+      }
+    } else {
+      // ไม่พบข้อมูลเอกสาร
+      print('ไม่พบเอกสาร');
+    }
+  } catch (e) {
+    print('เกิดข้อผิดพลาด: $e');
+  }
+}

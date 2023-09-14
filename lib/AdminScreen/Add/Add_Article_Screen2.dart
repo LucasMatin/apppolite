@@ -269,12 +269,18 @@ class _EditarticleState extends State<Editarticle> {
                                                       setState(() {
                                                         FirebaseFirestore
                                                             .instance
-                                                            .collection('in')
+                                                            .collection(
+                                                                'ArticleScreen')
+                                                            .doc();
+                                                        widget.documentReference
+                                                            .collection("in")
                                                             .doc(document.id)
                                                             .delete()
-                                                            .then((_) {})
+                                                            .then((value) {})
                                                             .catchError(
-                                                                (error) {});
+                                                                (error) {
+                                                          print(error);
+                                                        });
                                                       });
                                                     }
                                                   },

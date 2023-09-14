@@ -146,14 +146,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: SafeArea(
                             child: GestureDetector(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const Openvideoscreen(),
-                                //   ),
-                                // );
-                              },
+                              onTap: () {},
                               child: SizedBox(
                                 width: 400.0,
                                 height: 100.0,

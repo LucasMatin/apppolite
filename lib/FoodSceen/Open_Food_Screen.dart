@@ -93,7 +93,7 @@ class _MyWidgetState extends State<MyWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 25, left: 270),
+                  padding: const EdgeInsets.only(right: 25, left: 250),
                   child: Row(
                     children: <Widget>[
                       IconButton(

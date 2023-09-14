@@ -1,32 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen2.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
+import 'package:polite/AdminScreen/test.dart';
 
-class Addnutrition extends StatefulWidget {
-  const Addnutrition({super.key});
+class EditNutrition extends StatefulWidget {
+  final DocumentReference documentReference;
+
+  const EditNutrition({Key? key, required this.documentReference})
+      : super(key: key);
 
   @override
-  State<Addnutrition> createState() => _AddnutritionState();
+  State<EditNutrition> createState() => _EditNutritionState();
 }
 
-class _AddnutritionState extends State<Addnutrition> {
-  // text field controller
-  TextEditingController labal = TextEditingController();
+class _EditNutritionState extends State<EditNutrition> {
+  // ...
 
-  CollectionReference _items =
-      FirebaseFirestore.instance.collection('NutritionScreen');
+  // Add a Stream to listen to the "in" subcollection
+  late Stream<QuerySnapshot> inCollectionStream;
+
   @override
   void initState() {
     super.initState();
-    initializeFirebase();
+    // Initialize the Stream for the "in" subcollection
+    inCollectionStream = widget.documentReference.collection('in').snapshots();
   }
 
-  Future<void> initializeFirebase() async {
-    await Firebase.initializeApp();
-    _items = FirebaseFirestore.instance.collection("NutritionScreen");
-  }
+  // text field controller
+  TextEditingController title = TextEditingController();
+  TextEditingController id = TextEditingController();
+  TextEditingController texts = TextEditingController();
+
+  CollectionReference _items =
+      FirebaseFirestore.instance.collection('NutritionScreen');
 
   String searchText = '';
   // for create operation
@@ -35,42 +41,81 @@ class _AddnutritionState extends State<Addnutrition> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 20,
-                right: 20,
-                left: 20,
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Text(
-                    "เพิ่มหัวข้อหัว",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 20,
+                  right: 20,
+                  left: 20,
+                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      "เพิ่มหัวข้อหัว",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                TextField(
-                  controller: labal,
-                  decoration: const InputDecoration(
-                      labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: id,
+                    decoration: const InputDecoration(
+                        labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: title,
+                    decoration: const InputDecoration(
+                      labelText: 'หัวข้อ',
+                      hintText: 'กรุณาเพิ่มหัวข้อ',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    maxLines: 10,
+                    controller: texts,
+                    decoration: const InputDecoration(
+                        labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
                     onPressed: () async {
-                      final String name = labal.text;
-                      await _items.doc(name).set({
-                        "Lable": name,
-                      });
-                      labal.text = '';
-
-                      Navigator.of(context).pop();
+                      final String number = id.text;
+                      final String name = title.text;
+                      final String text = texts.text;
+                      {
+                        // ตรวจสอบว่าชื่อไม่ว่างเปล่า
+                        await _items.doc();
+                        widget.documentReference
+                            .collection('in')
+                            .doc(number)
+                            .set({
+                          "ID": number,
+                          "Title": name,
+                          "Content": text,
+                        });
+                        id.text = '';
+                        title.text = '';
+                        texts.text = '';
+                        Navigator.of(context)
+                            .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
+                      }
                     },
-                    child: const Text("ยืนยัน"))
-              ],
+                    child: const Text("ยืนยัน"),
+                  )
+                ],
+              ),
             ),
           );
         });
@@ -79,26 +124,28 @@ class _AddnutritionState extends State<Addnutrition> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ...
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูล',
+          'เพิ่มข้อมูลเนื้อหา',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: _items.snapshots(),
+          stream: inCollectionStream,
           builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
-            }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
+              );
+            }
+
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('Error fetching data'),
               );
             }
             if (snapshot.hasData) {
@@ -115,7 +162,9 @@ class _AddnutritionState extends State<Addnutrition> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final document = documents[index];
-                  final lable1 = document['Lable'] ?? '';
+                  final lable1 = document['Title'] ?? '';
+                  final id = document['ID'] ?? '';
+                  final content = document['Content'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -140,7 +189,7 @@ class _AddnutritionState extends State<Addnutrition> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => EditNutrition(
+                                          builder: (context) => AddImage(
                                               documentReference:
                                                   document.reference),
                                           settings: RouteSettings(
@@ -151,7 +200,27 @@ class _AddnutritionState extends State<Addnutrition> {
                                     subtitle: Column(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [Text("# $id")],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                lable1,
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
                                               Container(
@@ -160,18 +229,17 @@ class _AddnutritionState extends State<Addnutrition> {
                                                           .width *
                                                       0.6,
                                                   child: Text(
-                                                    lable1.toString().length >
+                                                    content.toString().length >
                                                             20
-                                                        ? lable1
+                                                        ? content
                                                                 .toString()
                                                                 .substring(
                                                                     0, 20) +
                                                             '...'
-                                                        : lable1,
+                                                        : content,
                                                     style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                      fontSize: 15,
+                                                    ),
                                                   ))
                                             ],
                                           ),
@@ -214,12 +282,17 @@ class _AddnutritionState extends State<Addnutrition> {
                                                         FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                'NutritionScreen')
+                                                                'ArticleScreen')
+                                                            .doc();
+                                                        widget.documentReference
+                                                            .collection("in")
                                                             .doc(document.id)
                                                             .delete()
-                                                            .then((_) {})
+                                                            .then((value) {})
                                                             .catchError(
-                                                                (error) {});
+                                                                (error) {
+                                                          print(error);
+                                                        });
                                                       });
                                                     }
                                                   },

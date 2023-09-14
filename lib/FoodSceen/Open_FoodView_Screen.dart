@@ -18,7 +18,7 @@ class _OpenviewState extends State<Openview> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'รายการอาหาร',
+          'รายการอาหารวันนี้',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,

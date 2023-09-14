@@ -19,7 +19,7 @@ class Profilescreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('UserID')
-              .doc('')
+              .doc('34Eb03sz9ldPHwMhnB2f')
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -56,7 +56,7 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['telno'],
+                          Text(documents['Fullname'],
                               style: TextStyle(fontSize: 21)),
                         ],
                       ),
@@ -64,16 +64,16 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['datatime'],
-                              style: TextStyle(fontSize: 21)),
+                          Text(documents['Email'],
+                              style: TextStyle(fontSize: 18)),
                         ],
                       ),
                       const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['fname'],
-                              style: TextStyle(fontSize: 21)),
+                          Text(documents['Bisease'],
+                              style: TextStyle(fontSize: 18)),
                         ],
                       ),
                       const SizedBox(height: 20),
