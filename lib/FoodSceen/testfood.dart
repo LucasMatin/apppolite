@@ -24,8 +24,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   CollectionReference food1 = FirebaseFirestore.instance.collection("Food");
-  CollectionReference food2 = FirebaseFirestore.instance.collection("in");
-  CollectionReference food3 = FirebaseFirestore.instance.collection("into");
+  CollectionReference food2 =
+      FirebaseFirestore.instance.collection("NutritionScreen");
+  CollectionReference food3 =
+      FirebaseFirestore.instance.collection("EatScreen");
 
   @override
   void initState() {
@@ -59,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: documents.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   return ListTile(
-                    title: Text(data['ID']),
+                    title: Text(data['Lable']),
                     subtitle: Text(data['Lable']),
                   );
                 }).toList(),
@@ -78,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: documents.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   return ListTile(
-                    title: Text(data['ID']),
-                    subtitle: Text(data['Title']),
+                    title: Text(data['Lable']),
+                    subtitle: Text(data['Lable']),
                   );
                 }).toList(),
               );
@@ -97,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: documents.map((doc) {
                   final data = doc.data() as Map<String, dynamic>;
                   return ListTile(
-                    title: Text(data['name']),
-                    subtitle: Text(data['description']),
+                    title: Text(data['ID']),
+                    subtitle: Text(data['Title1']),
                   );
                 }).toList(),
               );

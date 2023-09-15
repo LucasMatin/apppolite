@@ -33,7 +33,7 @@ class _AdminuserState extends State<Adminuser> {
           backgroundColor: Colors.brown[300],
           elevation: 0,
           title: Text(
-            'เพิ่มข้อมูล',
+            'เช็คแอดมิน',
             style: TextStyle(color: Colors.white, fontSize: 23),
           ),
           centerTitle: true,

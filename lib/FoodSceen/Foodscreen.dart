@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
-import 'package:polite/FoodSceen/Open_Food_Screen.dart';
 import 'package:polite/FoodSceen/testfood.dart';
-import 'package:polite/Test/testtext.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class Foodscreen extends StatefulWidget {

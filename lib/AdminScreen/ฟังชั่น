@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> fetchDataFromFirebase() async {
-  DocumentReference documentReference = FirebaseFirestore.instance.collection('your_collection_name').doc('your_document_id');
+  DocumentReference documentReference = FirebaseFirestore.instance.collection('your_collection_name').doc(document.id);
   
   try {
     DocumentSnapshot documentSnapshot = await documentReference.get();

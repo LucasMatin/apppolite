@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/Add_FoodToday_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Food_Screen.dart';
-import 'package:polite/AdminScreen/Admin_Screen.dart';
+
 import 'package:polite/Screens/Bottom_Screen.dart';
 
 class HomeadminScreen extends StatefulWidget {
@@ -111,56 +111,6 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                         padding: const EdgeInsets.all(15.0),
                                         child: Text(
                                           "หน้าบันทึกข้อมูลอาหาร",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Adminuser(),
-                            ),
-                          );
-                        },
-                        child: SizedBox(
-                          width: 400.0,
-                          height: 100.0,
-                          child: Card(
-                            color: Color.fromARGB(255, 143, 113, 102),
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          "เช็คผู้พัฒนา",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,

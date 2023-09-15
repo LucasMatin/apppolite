@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/AdminScreen/Admin_Screen.dart';
 import 'package:polite/Screens/wiget.dart';
 
 class Addadminscreen extends StatefulWidget {
@@ -84,6 +85,47 @@ class _AddadminscreenState extends State<Addadminscreen> {
   TextEditingController userid = TextEditingController();
   TextEditingController sex = TextEditingController();
 
+  // checkadmin
+  Future<void> _check([DocumentSnapshot? documentSnapshot]) async {
+    await showModalBottomSheet(
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    "เช็คแอดมิน",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Adminuser(),
+                      ),
+                    );
+                  },
+                  child: const Text("ยืนยัน"),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,6 +204,12 @@ class _AddadminscreenState extends State<Addadminscreen> {
             ),
           ),
         ),
+      ),
+      // Create new project button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _check(),
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        child: const Icon(Icons.assignment_turned_in),
       ),
     );
   }
