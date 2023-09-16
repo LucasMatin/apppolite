@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/AdminScreen/Add/Add_Video_Screen2.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addvideo extends StatefulWidget {
@@ -61,7 +62,7 @@ class _AddvideoState extends State<Addvideo> {
                 ElevatedButton(
                     onPressed: () async {
                       final String name = labal.text;
-                      await _items.add({
+                      await _items.doc(name).set({
                         "Lablevideo": name,
                       });
                       labal.text = '';
@@ -136,16 +137,16 @@ class _AddvideoState extends State<Addvideo> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => Editarticle(
-                                      //         documentReference:
-                                      //             document.reference),
-                                      //     settings: RouteSettings(
-                                      //         arguments: document),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Addvideo2(
+                                              documentReference:
+                                                  document.reference),
+                                          settings: RouteSettings(
+                                              arguments: document),
+                                        ),
+                                      );
                                     },
                                     subtitle: Column(
                                       children: [

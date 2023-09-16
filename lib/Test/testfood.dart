@@ -111,3 +111,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+  // void _addToFirestore() async {
+  //   // สร้างเอกสารย่อยภายใต้คอลเลกชัน "UserID" โดยใช้วันที่ปัจจุบันเป็นชื่อเอกสาร
+  //   final FirebaseAuth auth = FirebaseAuth.instance;
+  //   var currentUser = auth.currentUser;
+  //   String? useruid = currentUser!.uid;
+
+  //   DocumentReference foodTodayDoc = usersCollection
+  //       .doc(useruid)
+  //       .collection("Foodtoday")
+  //       .doc("16-09-2023")
+  //       .collection("FoodMorning")
+  //       .doc(label);
+
+  //   // เพิ่มข้อมูลลงในเอกสารย่อย
+  //   await foodTodayDoc.set({
+  //     'Foodname': label,
+  //     'Callory': callory,
+  //     'Number': number,
+  //   });
+  // }

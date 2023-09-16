@@ -346,3 +346,59 @@ body: SafeArea(
           ],
         ),
       ),
+
+       // Future sig_up() async {
+  //   String url = "http://127.0.0.1/api/register.php";
+  //   final respone = await http.post(Uri.parse(url), body: {
+  //     'fullname': fullname.text,
+  //     'password': password.text,
+  //     'email': email.text,
+  //     'telno': telno.text,
+  //     'birthday': birthday.text,
+  //     'bisease': bisease.text,
+  //     'sex': sex.text,
+  //   });
+  //   print(respone.statusCode);
+  //   var data = json.decode(respone.body);
+  //   if (data == "error") {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const Sigup(),
+  //       ),
+  //     );
+  //   } else {
+  //     Navigator.of(context).pop();
+  //   }
+  // }
+  // Future testapi() async {
+  //   String url = "https://jsonplaceholder.typicode.com/posts";
+  //   final respone = await http.get(Uri.parse(url));
+  //   print(respone.statusCode);
+  // }
+
+
+  
+  // Future<void> sendUserDataToDB(BuildContext context) async {
+  //   if (formKey.currentState!.validate()) {
+  //     await FirebaseFirestore.instance.collection('UserID').add({
+  //       'Fullname': fullname.text,
+  //       'Password': password.text,
+  //       'Email': email.text,
+  //       'Telno': telno.text,
+  //       'Birthday': birthday.text,
+  //       'Bisease': bisease.text,
+  //       'Sex': sex.text,
+  //     });
+  //     // บันทึกสำเร็จ ไปยังหน้า HomeScreen
+  //     Navigator.pop(context);
+  //   } else {
+  //     // แจ้งเตือนว่าข้อมูลไม่ครบ
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('กรุณากรอกข้อมูลให้ครบ'),
+  //         duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+  //       ),
+  //     );
+  //   }
+  // }

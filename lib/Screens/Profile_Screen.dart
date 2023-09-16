@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:polite/Screens/Editprofile_Screen.dart';
 import 'package:polite/Screens/Login_Screen.dart';
 import 'package:flutter/material.dart';
 
 class Profilescreen extends StatelessWidget {
+  final currrenUser = FirebaseAuth.instance.currentUser!;
+  final userCollection = FirebaseFirestore.instance.collection('UserID');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class Profilescreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('UserID')
-              .doc('34Eb03sz9ldPHwMhnB2f')
+              .doc(currrenUser.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -33,7 +36,7 @@ class Profilescreen extends StatelessWidget {
               );
             }
             if (snapshot.hasData) {
-              final documents = snapshot.data!.data() as Map<String, dynamic>;
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
 
               return SingleChildScrollView(
                 child: Container(
@@ -56,7 +59,7 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['Fullname'],
+                          Text(userData['Fullname'],
                               style: TextStyle(fontSize: 21)),
                         ],
                       ),
@@ -64,7 +67,7 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['Email'],
+                          Text(userData['Email'],
                               style: TextStyle(fontSize: 18)),
                         ],
                       ),
@@ -72,7 +75,7 @@ class Profilescreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(documents['Bisease'],
+                          Text(userData['Bisease'],
                               style: TextStyle(fontSize: 18)),
                         ],
                       ),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:polite/Screens/Home_Screen.dart';
 import 'package:polite/Screens/Lilbrary_Screen.dart';
 import 'package:polite/Screens/Profile_Screen.dart';
@@ -14,6 +15,7 @@ class bottomsceen extends StatefulWidget {
 }
 
 class _bottomsceenState extends State<bottomsceen> {
+  final currrenUser = FirebaseAuth.instance.currentUser!;
   int currentIndex = 0;
 
   void _navigateBottomBar(int index) {

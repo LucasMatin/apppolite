@@ -1,0 +1,135 @@
+final DateTime currentDateTime = getCurrentDateTime();
+final CollectionReference foodMorningCollection = FirebaseFirestore.instance
+    .collection("UserID")
+    .doc(useruid)
+    .collection("Foodtoday")
+    .doc(currentDateTime)
+    .collection("FoodMorning");
+
+final CollectionReference foodDayTimeCollection = FirebaseFirestore.instance
+    .collection("UserID")
+    .doc(useruid)
+    .collection("Foodtoday")
+    .doc(currentDateTime)
+    .collection("FoodDayTime");
+
+final CollectionReference foodEveningCollection = FirebaseFirestore.instance
+    .collection("UserID")
+    .doc(useruid)
+    .collection("Foodtoday")
+    .doc(currentDateTime)
+    .collection("FoodEvening");
+
+QuerySnapshot foodMorningSnapshot = await foodMorningCollection
+    .where('Foodname', isEqualTo: label)
+    .get();
+
+QuerySnapshot foodDayTimeSnapshot = await foodDayTimeCollection
+    .where('Foodname', isEqualTo: label)
+    .get();
+
+QuerySnapshot foodEveningSnapshot = await foodEveningCollection
+    .where('Foodname', isEqualTo: label)
+    .get();
+
+// เมื่อคุณได้ snapshots ของทุกโคลเลกชันแล้ว คุณสามารถรวมข้อมูลได้
+int totalCallory = 0;
+
+foodMorningSnapshot.docs.forEach((doc) {
+  totalCallory += doc['Callory'] ?? 0;
+});
+
+foodDayTimeSnapshot.docs.forEach((doc) {
+  totalCallory += doc['Callory'] ?? 0;
+});
+
+foodEveningSnapshot.docs.forEach((doc) {
+  totalCallory += doc['Callory'] ?? 0;
+});
+
+print("Total Callory: $totalCallory");
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class TotalCalloryPage extends StatelessWidget {
+  // TotalCalloryPage({required this.useruid, required this.lable});
+
+  Future<int> getTotalCallory() async {
+    int totalCallory = 0;
+
+    try {
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      var currentUser = auth.currentUser;
+      String? useruid = currentUser!.uid;
+      // ดึงข้อมูล Callory จากเอกสารทั้งหมดในโคลเล็กชัน "FoodMorning" ที่มีชื่อเหมือนกับ 'lable'
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection("UserID")
+          .doc(useruid)
+          .collection("Foodtoday")
+          .doc(getCurrentDateTime())
+          .collection("FoodMorning") //FoodMorning,FoodDayTime,FoodEvening
+          .where('Foodname')
+          .get();
+
+      // นับค่า Callory และบวกเพิ่มใน totalCallory
+      snapshot.docs.forEach((doc) {
+        final callory = doc['Callory'];
+        if (callory is int) {
+          totalCallory += callory;
+        } else if (callory is String) {
+          totalCallory += int.tryParse(callory) ?? 0;
+        }
+      });
+
+      return totalCallory;
+    } catch (e) {
+      print("เกิดข้อผิดพลาดในการดึงข้อมูล: $e");
+      return 0;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("รวมค่าแคลอรี่ของ "),
+      ),
+      body: FutureBuilder<int>(
+        future: getTotalCallory(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("เกิดข้อผิดพลาด: ${snapshot.error}"),
+            );
+          }
+
+          int totalCallory = snapshot.data ?? 0;
+
+          return Center(
+            child: Text(
+              "รวมค่าแคลอรี่: $totalCallory แคลลอรี่",
+              style: TextStyle(fontSize: 20),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    final formatter = DateFormat('dd-MM-yyyy');
+    final formattedDate = formatter.format(now);
+    return formattedDate;
+  }
+}

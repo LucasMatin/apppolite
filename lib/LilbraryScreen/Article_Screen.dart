@@ -10,7 +10,7 @@ class Articlescreen extends StatefulWidget {
 }
 
 class _ArticlescreenState extends State<Articlescreen> {
-  TextEditingController searchTextController = TextEditingController();
+  TextEditingController searchtext = TextEditingController();
   CollectionReference article =
       FirebaseFirestore.instance.collection("ArticleScreen");
   @override
@@ -24,23 +24,37 @@ class _ArticlescreenState extends State<Articlescreen> {
     article = FirebaseFirestore.instance.collection("ArticleScreen");
   }
 
-  void searchInFirebase(String searchText) {
+  List<DocumentSnapshot> searchResults = []; // เพิ่มตัวแปร searchResults นี้
+
+  void searchInFirebase(String searchtext) {
+    // แปลง searchText เป็นตัวพิมพ์เล็กทั้งหมด
+    searchtext = searchtext.toLowerCase();
+
     // ใช้คำสั่งค้นหาข้อมูลใน Firestore
     FirebaseFirestore.instance
         .collection("ArticleScreen")
-        .where("Lable", isEqualTo: searchText)
+        .where("Lable", isGreaterThanOrEqualTo: searchtext)
+        .where("Lable",
+            isLessThan:
+                searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
         .get()
         .then((QuerySnapshot querySnapshot) {
       // ตรวจสอบว่ามีข้อมูลหรือไม่
       if (querySnapshot.docs.isNotEmpty) {
         // มีข้อมูล
-        querySnapshot.docs.forEach((DocumentSnapshot document) {
-          // ทำอะไรกับข้อมูลที่ค้นพบที่นี่
-          print(document.data());
+        final documents = querySnapshot.docs;
+
+        // อัปเดต UI โดยการเรียก setState
+        setState(() {
+          // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
+          searchResults = documents;
         });
       } else {
         // ไม่มีข้อมูลที่ค้นหา
-        print("ไม่พบข้อมูล");
+        setState(() {
+          // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
+          searchResults = [];
+        });
       }
     });
   }
@@ -91,6 +105,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
+                              controller: searchtext,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 10),
@@ -99,7 +114,13 @@ class _ArticlescreenState extends State<Articlescreen> {
                                   icon: const Icon(Icons.search),
                                   onPressed: () {
                                     // เรียกใช้งานฟังก์ชันค้นหาเมื่อกดปุ่มค้นหา
-                                    searchInFirebase(searchTextController.text);
+                                    if (searchtext.text.isEmpty) {
+                                      searchInFirebase(
+                                          ""); // เรียกด้วยค่าว่างเพื่อให้แสดงทั้งหมด
+                                    } else {
+                                      searchInFirebase(searchtext
+                                          .text); // เรียกด้วยข้อความค้นหา
+                                    }
                                   },
                                 ),
                                 border: OutlineInputBorder(

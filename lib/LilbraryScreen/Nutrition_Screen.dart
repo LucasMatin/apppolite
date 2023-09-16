@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/LilbraryScreen/Open_Nutrition_Screen.dart';
 
 class NutritionSreen extends StatefulWidget {
   const NutritionSreen({super.key});
@@ -78,13 +79,17 @@ class _NutritionSreenState extends State<NutritionSreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         const Opennutritionscreen(),
-                                    //   ),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Opennutritionscreen(
+                                                documentReference:
+                                                    document.reference),
+                                        settings:
+                                            RouteSettings(arguments: document),
+                                      ),
+                                    );
                                   },
                                   child: SizedBox(
                                     width: 380.0,

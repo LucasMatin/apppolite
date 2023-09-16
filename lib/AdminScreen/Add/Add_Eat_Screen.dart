@@ -258,7 +258,7 @@ class _SaveeatState extends State<Saveeat> {
                                                         FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                'EatSreen')
+                                                                'EatScreen')
                                                             .doc(document.id)
                                                             .delete()
                                                             .then((_) {})

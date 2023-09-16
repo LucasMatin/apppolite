@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/Add/Add_Food_Screen2.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addfood extends StatefulWidget {
@@ -14,7 +13,7 @@ class Addfood extends StatefulWidget {
 class _AddfoodState extends State<Addfood> {
   // text field controller
   TextEditingController labal = TextEditingController();
-  TextEditingController id = TextEditingController();
+  TextEditingController callory = TextEditingController();
 
   CollectionReference _items = FirebaseFirestore.instance.collection('Food');
   @override
@@ -28,6 +27,7 @@ class _AddfoodState extends State<Addfood> {
     _items = FirebaseFirestore.instance.collection("Food");
   }
 
+  String selectedCategory = 'อาหาร'; // ค่าเริ่มต้น
   String searchText = '';
   // for create operation
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
@@ -55,17 +55,40 @@ class _AddfoodState extends State<Addfood> {
                   height: 20,
                 ),
                 TextField(
-                  controller: id,
+                  controller: labal,
                   decoration: const InputDecoration(
-                      labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                      labelText: 'ชื่ออาหาร', hintText: 'อาหาร'),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextField(
-                  controller: labal,
+                  controller: callory,
                   decoration: const InputDecoration(
-                      labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
+                      labelText: 'จำนวนแคลอรี่', hintText: 'แคลอรี่'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<String>(
+                    value: selectedCategory,
+                    onChanged: (newValue) {
+                      // เมื่อผู้ใช้เลือกประเภทใหม่
+                      setState(() {
+                        selectedCategory = newValue!;
+                      });
+                    },
+                    items: <String>[
+                      'อาหาร',
+                      'เครื่องดื่ม',
+                      'ขนมของหวาน',
+                      'ผลไม้'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -73,12 +96,14 @@ class _AddfoodState extends State<Addfood> {
                 ElevatedButton(
                   onPressed: () async {
                     final String name = labal.text;
-                    final String num = id.text;
+                    final String callorys = callory.text;
                     if (name.isNotEmpty) {
                       // ตรวจสอบว่าชื่อไม่ว่างเปล่า
-                      await _items.doc(num).set({
+                      await _items.doc(name).set({
                         "Lable": name,
-                        "ID": num,
+                        "Callory": callorys,
+                        "Category":
+                            selectedCategory, // เพิ่มค่าประเภทที่ผู้ใช้เลือก
                       });
                       labal.text = '';
                       Navigator.of(context)
@@ -141,7 +166,8 @@ class _AddfoodState extends State<Addfood> {
                 itemBuilder: (context, index) {
                   final document = documents[index];
                   final lable1 = document['Lable'] ?? '';
-                  final id = document['ID'] ?? '';
+                  final callory = document['Callory'] ?? '';
+                  final id = document['Category'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -163,26 +189,21 @@ class _AddfoodState extends State<Addfood> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddFood2(
-                                              documentReference:
-                                                  document.reference),
-                                          settings: RouteSettings(
-                                              arguments: document),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => AddFood2(
+                                      //         documentReference:
+                                      //             document.reference),
+                                      //     settings: RouteSettings(
+                                      //         arguments: document),
+                                      //   ),
+                                      // );
                                     },
                                     subtitle: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text("# $id"),
-                                          ],
-                                        ),
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
                                               Container(
@@ -204,6 +225,17 @@ class _AddfoodState extends State<Addfood> {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                " $callory แคลลอรี่   หมวด : $id",
+                                                style: TextStyle(fontSize: 16),
+                                              ),
                                             ],
                                           ),
                                         ),

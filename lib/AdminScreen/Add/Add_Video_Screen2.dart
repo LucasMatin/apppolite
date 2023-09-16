@@ -2,18 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
-class AddFood3 extends StatefulWidget {
+class Addvideo2 extends StatefulWidget {
   final DocumentReference documentReference;
 
-  const AddFood3({Key? key, required this.documentReference}) : super(key: key);
+  const Addvideo2({Key? key, required this.documentReference})
+      : super(key: key);
 
   @override
-  State<AddFood3> createState() => _AddFood3State();
+  State<Addvideo2> createState() => _Addvideo2State();
 }
 
-class _AddFood3State extends State<AddFood3> {
-  // ...
-
+class _Addvideo2State extends State<Addvideo2> {
   // Add a Stream to listen to the "in" subcollection
   late Stream<QuerySnapshot> inCollectionStream;
 
@@ -22,16 +21,15 @@ class _AddFood3State extends State<AddFood3> {
     super.initState();
     // Initialize the Stream for the "in" subcollection
     inCollectionStream = widget.documentReference.collection('in').snapshots();
-    inCollectionStream =
-        widget.documentReference.collection('into').snapshots();
   }
 
   // text field controller
   TextEditingController title = TextEditingController();
+  TextEditingController id = TextEditingController();
+  TextEditingController texts = TextEditingController();
 
-  TextEditingController callory = TextEditingController();
-
-  CollectionReference _items = FirebaseFirestore.instance.collection('Food');
+  CollectionReference _items =
+      FirebaseFirestore.instance.collection('VideoScreen');
 
   String searchText = '';
   // for create operation
@@ -61,47 +59,52 @@ class _AddFood3State extends State<AddFood3> {
                   const SizedBox(
                     height: 10,
                   ),
+                  TextField(
+                    controller: id,
+                    decoration: const InputDecoration(
+                        labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: title,
                     decoration: const InputDecoration(
-                      labelText: 'อาหาร',
-                      hintText: 'ชื่ออาหาร',
+                      labelText: 'หัวข้อ',
+                      hintText: 'กรุณาเพิ่มหัวข้อ',
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextField(
-                    controller: callory,
+                    maxLines: 10,
+                    controller: texts,
                     decoration: const InputDecoration(
-                        labelText: 'จำนวนแคลอรี่', hintText: 'แคลอรี่'),
+                        labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
                     onPressed: () async {
+                      final String number = id.text;
                       final String name = title.text;
-                      final String callorys = callory.text;
-
+                      final String text = texts.text;
                       {
                         // ตรวจสอบว่าชื่อไม่ว่างเปล่า
                         await _items.doc();
-                        widget.documentReference.collection('in').doc();
                         widget.documentReference
-                            .collection('into')
-                            .doc(name)
+                            .collection('in')
+                            .doc(number)
                             .set({
+                          "ID": number,
                           "Title": name,
-                          "Callory": callorys,
+                          "Content": text,
                         });
-
+                        id.text = '';
                         title.text = '';
-                        callory.text = '';
-
+                        texts.text = '';
                         Navigator.of(context)
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
@@ -123,7 +126,7 @@ class _AddFood3State extends State<AddFood3> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูลอาหาร',
+          'เพิ่มข้อมูลเนื้อหา',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -157,8 +160,8 @@ class _AddFood3State extends State<AddFood3> {
                 itemBuilder: (context, index) {
                   final document = documents[index];
                   final lable1 = document['Title'] ?? '';
-
-                  final callory = document['Callory'] ?? '';
+                  final id = document['ID'] ?? '';
+                  final content = document['Content'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -179,9 +182,26 @@ class _AddFood3State extends State<AddFood3> {
                                 children: [
                                   ListTile(
                                     isThreeLine: false,
-                                    onTap: () {},
+                                    onTap: () {
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => AddImage(
+                                      //         documentReference:
+                                      //             document.reference),
+                                      //     settings: RouteSettings(
+                                      //         arguments: document),
+                                      //   ),
+                                      // );
+                                    },
                                     subtitle: Column(
                                       children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [Text("# $id")],
+                                          ),
+                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(),
                                           child: Row(
@@ -200,12 +220,24 @@ class _AddFood3State extends State<AddFood3> {
                                           padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
-                                              Text(
-                                                "$callory แคลลอรี่",
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                ),
-                                              )
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    content.toString().length >
+                                                            20
+                                                        ? content
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10) +
+                                                            '...'
+                                                        : content,
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ))
                                             ],
                                           ),
                                         ),
@@ -247,13 +279,10 @@ class _AddFood3State extends State<AddFood3> {
                                                         FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                'ArticleScreen')
+                                                                'VideoScreen')
                                                             .doc();
                                                         widget.documentReference
                                                             .collection("in")
-                                                            .doc();
-                                                        widget.documentReference
-                                                            .collection("into")
                                                             .doc(document.id)
                                                             .delete()
                                                             .then((value) {})

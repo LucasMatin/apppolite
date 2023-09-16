@@ -1,16 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
-class Openview extends StatefulWidget {
-  const Openview({super.key});
-
+class FoodListPage extends StatefulWidget {
   @override
-  State<Openview> createState() => _OpenviewState();
+  _FoodListPageState createState() => _FoodListPageState();
 }
 
-class _OpenviewState extends State<Openview> {
-  String formattedDate =
-      DateFormat.yMMMd().format(DateTime.now()); //วันปัจจุบัน
+class _FoodListPageState extends State<FoodListPage> {
+  late final User _currentUser;
+  late final String _userUid;
+  late final String _currentDate;
+  late final CollectionReference _foodMorningCollection;
+  late final CollectionReference _foodDayTimeCollection;
+  late final CollectionReference _foodEveningCollection;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser = FirebaseAuth.instance.currentUser!;
+    _userUid = _currentUser.uid;
+    _currentDate = getCurrentDateTime();
+    _foodMorningCollection = FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodMorning");
+
+    _foodDayTimeCollection = FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodDayTime");
+
+    _foodEveningCollection = FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodEvening");
+  }
+
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    final formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(now);
+  }
+
+  Future<QuerySnapshot> _getFoodCollectionSnapshot(
+      CollectionReference collection) async {
+    final snapshot = await collection.where('Foodname').get();
+    return snapshot;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,119 +69,169 @@ class _OpenviewState extends State<Openview> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  height: 75,
-                  color: Color.fromARGB(255, 228, 203, 184),
-                  child: Center(
-                      child: Text(
-                    '$formattedDate',
-                    style: TextStyle(fontSize: 18),
-                  )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 75,
+              color: Color.fromARGB(255, 228, 203, 184),
+              child: Center(
+                child: Text(
+                  '${getCurrentDateTime()}',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
-                textbar("textbar1"),
-                textview("textview1", "textview2", "textview3")
-              ],
+              ),
             ),
-          ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'ตอนเช้า',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: _getFoodCollectionSnapshot(_foodMorningCollection),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
+                } else {
+                  final docs = snapshot.data!.docs;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: docs.map((doc) {
+                      final foodname = doc['Foodname'];
+                      final callory = doc['Callory'];
+                      final number = doc['Number'];
+                      return ListTile(
+                        title: Text(
+                          '$foodname',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          '$callory แคลลอรี่ x $number',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
+            const Divider(
+              thickness: 2,
+              color: Colors.grey,
+              indent: 25,
+              endIndent: 25,
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'กลางวัน',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: _getFoodCollectionSnapshot(_foodDayTimeCollection),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนกลางวัน');
+                } else {
+                  final docs = snapshot.data!.docs;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: docs.map((doc) {
+                      final foodname = doc['Foodname'];
+                      final callory = doc['Callory'];
+                      final number = doc['Number'];
+                      return ListTile(
+                        title: Text(
+                          '$foodname',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          '$callory แคลลอรี่ x $number',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
+            const Divider(
+              thickness: 2,
+              color: Colors.grey,
+              indent: 25,
+              endIndent: 25,
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'ตอนเย็น',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: _getFoodCollectionSnapshot(_foodEveningCollection),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเย็น');
+                } else {
+                  final docs = snapshot.data!.docs;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: docs.map((doc) {
+                      final foodname = doc['Foodname'];
+                      final callory = doc['Callory'];
+                      final number = doc['Number'];
+                      return ListTile(
+                        title: Text(
+                          '$foodname',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          '$callory แคลลอรี่ x $number',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
+            const Divider(
+              thickness: 2,
+              color: Colors.grey,
+              indent: 25,
+              endIndent: 25,
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-Widget textbar(textbar1) {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 25.0, top: 10),
-        child: Container(
-          alignment: FractionalOffset.topLeft,
-          child: Text(
-            textbar1,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
-          ),
-        ),
-      ),
-      const SizedBox(height: 10),
-      const Divider(
-        thickness: 4,
-        color: Colors.black,
-        indent: 25,
-        endIndent: 25,
-      ),
-    ],
-  );
-}
-
-Widget textview(textview1, textview2, textview3) {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 25.0, top: 10),
-        child: Container(
-          alignment: FractionalOffset.topLeft,
-          child: Row(
-            children: [
-              Text(
-                textview1,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                textview2,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(),
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 25),
-                    child: Column(
-                      children: [
-                        Text(
-                          textview2,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      const Divider(
-        thickness: 2,
-        color: Colors.grey,
-        indent: 25,
-        endIndent: 25,
-      ),
-    ],
-  );
 }

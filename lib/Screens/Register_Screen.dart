@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
+import 'package:polite/Screens/Login_Screen.dart';
+
 import 'package:polite/Screens/wiget.dart';
 
 class Sigup extends StatefulWidget {
@@ -13,32 +16,9 @@ class Sigup extends StatefulWidget {
 
 class _Sigup extends State<Sigup> {
   final formKey = GlobalKey<FormState>();
+
   final DateFormat _dateFormat =
       DateFormat('dd-MM-yyyy'); // รูปแบบวันที่ที่ต้องการ
-
-  // Future<void> sendUserDataToDB(BuildContext context) async {
-  //   if (formKey.currentState!.validate()) {
-  //     await FirebaseFirestore.instance.collection('UserID').add({
-  //       'Fullname': fullname.text,
-  //       'Password': password.text,
-  //       'Email': email.text,
-  //       'Telno': telno.text,
-  //       'Birthday': birthday.text,
-  //       'Bisease': bisease.text,
-  //       'Sex': sex.text,
-  //     });
-  //     // บันทึกสำเร็จ ไปยังหน้า HomeScreen
-  //     Navigator.pop(context);
-  //   } else {
-  //     // แจ้งเตือนว่าข้อมูลไม่ครบ
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('กรุณากรอกข้อมูลให้ครบ'),
-  //         duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
-  //       ),
-  //     );
-  //   }
-  // }
 
   Future<void> sendUserDataToDB(BuildContext context) async {
     if (formKey.currentState!.validate()) {
@@ -47,18 +27,47 @@ class _Sigup extends State<Sigup> {
       bool isTelnoUnique = await isTelnoUniqueInFirestore(telno.text);
 
       if (isEmailUnique && isTelnoUnique) {
-        // บันทึกข้อมูลลงใน Firestore
-        await FirebaseFirestore.instance.collection('UserID').add({
-          'Fullname': fullname.text,
-          'Password': password.text,
-          'Email': email.text,
-          'Telno': telno.text,
-          'Birthday': birthday.text,
-          'Bisease': bisease.text,
-          'Sex': sex.text,
-        });
-        // บันทึกสำเร็จ ไปยังหน้า HomeScreen
-        Navigator.pop(context);
+        try {
+          // สร้างบัญชีผู้ใช้ใน Firebase Authentication
+          UserCredential userCredential =
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email.text,
+            password: password.text,
+          );
+          // รับ User UID จาก Authentication
+          String userUid = userCredential.user!.uid;
+
+          // บันทึกข้อมูลลงใน Firestore
+          await FirebaseFirestore.instance
+              .collection('UserID')
+              .doc(userUid)
+              .set({
+            'Fullname': fullname.text,
+            'Password': password.text,
+            'Email': email.text,
+            'Telno': telno.text,
+            'Birthday': birthday.text,
+            'Bisease': bisease.text,
+            'Sex': sex.text,
+            'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
+          });
+
+          print("บันทึกสำเร็จ");
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false,
+          );
+        } catch (e) {
+          print("Error creating user: $e");
+          // แจ้งเตือนว่ามีข้อผิดพลาดในการสร้างบัญชีผู้ใช้
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('มีข้อผิดพลาดในการสร้างบัญชีผู้ใช้'),
+              duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+            ),
+          );
+        }
       } else {
         // แจ้งเตือนว่ามีบัญชีนี้อยู่แล้ว
         ScaffoldMessenger.of(context).showSnackBar(
@@ -116,35 +125,17 @@ class _Sigup extends State<Sigup> {
   TextEditingController bisease = TextEditingController();
   TextEditingController sex = TextEditingController();
 
-  // Future sig_up() async {
-  //   String url = "http://127.0.0.1/api/register.php";
-  //   final respone = await http.post(Uri.parse(url), body: {
-  //     'fullname': fullname.text,
-  //     'password': password.text,
-  //     'email': email.text,
-  //     'telno': telno.text,
-  //     'birthday': birthday.text,
-  //     'bisease': bisease.text,
-  //     'sex': sex.text,
-  //   });
-  //   print(respone.statusCode);
-  //   var data = json.decode(respone.body);
-  //   if (data == "error") {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const Sigup(),
-  //       ),
-  //     );
-  //   } else {
-  //     Navigator.of(context).pop();
-  //   }
-  // }
-  // Future testapi() async {
-  //   String url = "https://jsonplaceholder.typicode.com/posts";
-  //   final respone = await http.get(Uri.parse(url));
-  //   print(respone.statusCode);
-  // }
+  @override
+  void dispose() {
+    fullname.dispose();
+    password.dispose();
+    email.dispose();
+    telno.dispose();
+    birthday.dispose();
+    bisease.dispose();
+    sex.dispose();
+    super.dispose();
+  }
 
   Future<void> _selectDateFromPicker(BuildContext context, value) async {
     final DateTime? picked = await showDatePicker(
@@ -159,8 +150,6 @@ class _Sigup extends State<Sigup> {
       });
     }
   }
-
-  String selectedGender = 'ชาย'; // ค่าเริ่มต้น
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +184,8 @@ class _Sigup extends State<Sigup> {
                       textbox(fullname, 'กรุณาป้อนชื่อนามสกุลด้วย',
                           'ชื่อนามสกุล', 'กรุณากรอกชื่อ-นามสกุล'),
                       const SizedBox(height: 24),
-                      textbox(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
+                      // textbox(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
+                      SexDropdownFormField(controller: sex),
                       const SizedBox(height: 24),
                       TextFormField(
                         controller: birthday,
@@ -260,5 +250,46 @@ class _Sigup extends State<Sigup> {
   }
 }
 
- // สร้างตัวแปรเพื่อเก็บสถานะการมองเห็นรหัสผ่าน
+class SexDropdownFormField extends StatefulWidget {
+  final TextEditingController controller;
 
+  SexDropdownFormField({required this.controller});
+
+  @override
+  _SexDropdownFormFieldState createState() => _SexDropdownFormFieldState();
+}
+
+class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
+  String selectedGender = 'ชาย'; // ค่าเริ่มต้น
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = selectedGender;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      decoration: InputDecoration(
+        labelText: 'เพศ',
+        suffixIcon: DropdownButton<String>(
+          value: selectedGender,
+          onChanged: (newValue) {
+            setState(() {
+              selectedGender = newValue!;
+              widget.controller.text = newValue!;
+            });
+          },
+          items: <String>['ชาย', 'หญิง'].map((String gender) {
+            return DropdownMenuItem<String>(
+              value: gender,
+              child: Text(gender),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}

@@ -14,8 +14,6 @@ class EditNutrition extends StatefulWidget {
 }
 
 class _EditNutritionState extends State<EditNutrition> {
-  // ...
-
   // Add a Stream to listen to the "in" subcollection
   late Stream<QuerySnapshot> inCollectionStream;
 
@@ -186,16 +184,16 @@ class _EditNutritionState extends State<EditNutrition> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddImage(
-                                              documentReference:
-                                                  document.reference),
-                                          settings: RouteSettings(
-                                              arguments: document),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => AddImage(
+                                      //         documentReference:
+                                      //             document.reference),
+                                      //     settings: RouteSettings(
+                                      //         arguments: document),
+                                      //   ),
+                                      // );
                                     },
                                     subtitle: Column(
                                       children: [
@@ -234,7 +232,7 @@ class _EditNutritionState extends State<EditNutrition> {
                                                         ? content
                                                                 .toString()
                                                                 .substring(
-                                                                    0, 20) +
+                                                                    0, 10) +
                                                             '...'
                                                         : content,
                                                     style: TextStyle(

@@ -20,7 +20,7 @@ class Profiladminescreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('AdminID')
-              .doc('ZFqr9SSxQSLpuM2bGhuW')
+              .doc()
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {

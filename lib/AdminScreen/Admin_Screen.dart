@@ -67,7 +67,6 @@ class _AdminuserState extends State<Adminuser> {
                     final document = documents[index];
                     final email = document['Email'] ?? '';
                     final name = document['Fullname'] ?? '';
-                    final user = document['UserAdminID'] ?? '';
 
                     return Padding(
                       padding: const EdgeInsets.only(
@@ -96,21 +95,7 @@ class _AdminuserState extends State<Adminuser> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "ID : $user",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "ชื่อพัฒนา : $name",
+                                                  "แอดมิน : $name",
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                   ),

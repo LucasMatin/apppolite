@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Admin_Screen.dart';
+import 'package:polite/AdminScreen/Login_Admin_Screen.dart';
 import 'package:polite/Screens/wiget.dart';
 
 class Addadminscreen extends StatefulWidget {
@@ -19,16 +21,40 @@ class _AddadminscreenState extends State<Addadminscreen> {
       bool isTelnoUnique = await isTelnoUniqueInFirestore(telno.text);
 
       if (isEmailUnique && isTelnoUnique) {
-        // บันทึกข้อมูลลงใน Firestore
-        await FirebaseFirestore.instance.collection('AdminID').add({
-          'Fullname': fullname.text,
-          'Password': password.text,
-          'Email': email.text,
-          'Telno': telno.text,
-          'UserAdminID': userid.text,
-          'Sex': sex.text,
-        });
-        // บันทึกสำเร็จ ไปยังหน้า HomeScreen
+        try {
+          // สร้างบัญชีผู้ใช้ใน Firebase Authentication
+          UserCredential userCredential =
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email.text,
+            password: password.text,
+          );
+          // รับ User UID จาก Authentication
+          String userUid = userCredential.user!.uid;
+
+          // บันทึกข้อมูลลงใน Firestore
+          await FirebaseFirestore.instance
+              .collection('AdminID')
+              .doc(userUid)
+              .set({
+            'Fullname': fullname.text,
+            'Password': password.text,
+            'Email': email.text,
+            'Telno': telno.text,
+            'Sex': sex.text,
+            'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
+          });
+
+          print("บันทึกสำเร็จ");
+        } catch (e) {
+          print("Error creating user: $e");
+          // แจ้งเตือนว่ามีข้อผิดพลาดในการสร้างบัญชีผู้ใช้
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('มีข้อผิดพลาดในการสร้างบัญชีผู้ใช้'),
+              duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
+            ),
+          );
+        }
       } else {
         // แจ้งเตือนว่ามีบัญชีนี้อยู่แล้ว
         ScaffoldMessenger.of(context).showSnackBar(
@@ -52,7 +78,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
   Future<bool> isEmailUniqueInFirestore(String email) async {
     try {
       QuerySnapshot query = await FirebaseFirestore.instance
-          .collection('UserID')
+          .collection('AdminID')
           .where('Email', isEqualTo: email)
           .get();
 
@@ -66,7 +92,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
   Future<bool> isTelnoUniqueInFirestore(String telno) async {
     try {
       QuerySnapshot query = await FirebaseFirestore.instance
-          .collection('UserID')
+          .collection('AdminID')
           .where('Telno', isEqualTo: telno)
           .get();
 
@@ -163,9 +189,6 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       const SizedBox(height: 10),
                       boxadmin(fullname, 'กรุณาป้อนชื่อนามสกุลด้วย',
                           'ชื่อนามสกุล', 'กรุณากรอกชื่อ-นามสกุล'),
-                      const SizedBox(height: 24),
-                      boxadmin(userid, 'กรุณาป้อนIDADMIN', 'ผู้พัฒนาID',
-                          'กรุณาผู้พัฒนาID'),
                       const SizedBox(height: 24),
                       boxadmin(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
                       const SizedBox(height: 24),

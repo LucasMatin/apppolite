@@ -1,6 +1,7 @@
 //import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:polite/AdminScreen/Login_Admin_Screen.dart';
@@ -20,42 +21,55 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final DatabaseReference database =
-      FirebaseDatabase.instance.reference().child('UserID');
 
-  void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-  }
-
-  TextEditingController telnoController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
 
   Future<void> _login() async {
-    final String telno = telnoController.text.trim(); // ลบช่องว่างที่อาจมีอยู่
-    final String password =
-        passwordController.text.trim(); // ลบช่องว่างที่อาจมีอยู่
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
 
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: telno,
+        email: email,
         password: password,
       );
 
       if (userCredential.user != null) {
         // เข้าสู่ระบบสำเร็จ
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => bottomsceen()),
-        );
+        String userUid = userCredential.user!.uid;
+        // เข้าสู่ระบบสำเร็จ
+        // ตรวจสอบว่าผู้ใช้อยู่ใน Collection "UserID" โดยเช็ค UserUid
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('UserID')
+            .where('UserUid', isEqualTo: userUid)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // ถ้ามีผู้ใช้ใน Collection "UserID" ที่ UserUid ตรงกัน
+          // ให้นำผู้ใช้ไปหน้าที่ต้องการในกรณีนี้คือ bottomsceen()
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => bottomsceen()),
+          );
+        } else {
+          // ถ้าไม่มี UserUid ที่ตรงกัน
+          // ให้แสดงข้อความข้อผิดพลาด
+          errorMessage = "ไม่สามารถเข้าสู่ระบบได้";
+        }
       }
     } catch (e) {
       // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
-      setState(() {
-        errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
-      });
+      errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
     }
+
+    // รีเซ็ตค่าในฟอร์ม
+    emailController.text = '';
+    passwordController.text = '';
+
+    // อัพเดท UI
+    setState(() {});
   }
 
   @override
@@ -90,14 +104,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 12),
                       TextFormField(
-                        controller: telnoController, // เพิ่ม controller
+                        controller: emailController, // เพิ่ม controller
                         validator: RequiredValidator(
-                          errorText: 'กรุณากรอกหมายเลขโทรศัพท์',
+                          errorText: 'กรุณากรอกอีเมล์',
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                          hintText: 'หมายเลขโทรศัพท์',
+                          hintText: 'อีเมลล์',
                           labelText: 'บัญชี',
                         ),
                       ),
