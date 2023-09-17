@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-Widget textbox(controller, String text, String labal, String hint) {
+Widget textbox(
+  controller,
+  String text,
+  String labal,
+  String hint,
+) {
   return TextFormField(
-    controller: controller,
-    validator: RequiredValidator(errorText: text),
-    keyboardType: TextInputType.emailAddress,
-    textInputAction: TextInputAction.next,
-    decoration: InputDecoration(hintText: hint, labelText: labal),
-  );
+      controller: controller,
+      validator: RequiredValidator(errorText: text),
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        hintText: hint,
+        labelText: labal,
+      ));
 }
 
 Widget boxadmin(controller, String text, String labal, String hint) {

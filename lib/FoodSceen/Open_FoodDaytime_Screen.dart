@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:polite/FoodSceen/Foodscreen.dart';
 
 class Addfooddaytime extends StatefulWidget {
   const Addfooddaytime({super.key});
@@ -106,6 +107,16 @@ class _AddfooddaytimeState extends State<Addfooddaytime> {
             }
             return Text("ไม่มีข้อมูล");
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const Foodscreen()),
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        child: const Icon(Icons.save_as),
+      ),
     );
   }
 }

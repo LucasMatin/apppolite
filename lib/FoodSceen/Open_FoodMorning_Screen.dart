@@ -107,6 +107,16 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
             }
             return Text("ไม่มีข้อมูล");
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const Foodscreen()),
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        child: const Icon(Icons.save_as),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
+import 'package:polite/AdminScreen/test.dart';
 
 class Editarticle extends StatefulWidget {
   final DocumentReference documentReference;
@@ -184,7 +185,18 @@ class _EditarticleState extends State<Editarticle> {
                                 children: [
                                   ListTile(
                                     isThreeLine: false,
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddImage(
+                                              documentReference:
+                                                  document.reference),
+                                          settings: RouteSettings(
+                                              arguments: document),
+                                        ),
+                                      );
+                                    },
                                     subtitle: Column(
                                       children: [
                                         Padding(

@@ -25,6 +25,7 @@ class _bottomsceenState extends State<bottomsceen> {
   }
 
   final List<Widget> _pages = [
+    // ignore: prefer_const_constructors
     HomeScreen(),
     Lilbraryscreen(),
     Sos(),

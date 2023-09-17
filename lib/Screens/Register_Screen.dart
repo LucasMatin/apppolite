@@ -36,6 +36,8 @@ class _Sigup extends State<Sigup> {
           );
           // รับ User UID จาก Authentication
           String userUid = userCredential.user!.uid;
+          String image =
+              "https://firebasestorage.googleapis.com/v0/b/apppolite.appspot.com/o/images%2Fpeople-icon-vector-person-sing-250nw-707883430.webp?alt=media&token=a042325b-d34d-4e85-a86d-fb82f4e00700";
 
           // บันทึกข้อมูลลงใน Firestore
           await FirebaseFirestore.instance
@@ -50,6 +52,7 @@ class _Sigup extends State<Sigup> {
             'Bisease': bisease.text,
             'Sex': sex.text,
             'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
+            'Image': image, // เพิ่ม Image ลงใน Firestore
           });
 
           print("บันทึกสำเร็จ");

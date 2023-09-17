@@ -7,6 +7,8 @@ import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodMorning_Screen.dart';
 import 'package:polite/FoodSceen/Open_Foodevening_Screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:polite/Screens/Bottom_Screen.dart';
+import 'package:polite/Screens/Home_Screen.dart';
 
 class Foodscreen extends StatefulWidget {
   const Foodscreen({super.key});
@@ -320,7 +322,11 @@ class _FoodscreenState extends State<Foodscreen> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const bottomsceen()),
+                        );
                       },
                       child: Text(
                         'บันทึก',
