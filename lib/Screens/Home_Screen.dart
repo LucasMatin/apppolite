@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _mounted = false;
   // เพิ่มตัวแปรเก็บค่าแคลอรี่ทั้งหมด
   double totalCalories = 0.0;
   late final User _currentUser;
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _mounted = true;
     _currentUser = FirebaseAuth.instance.currentUser!;
     _userUid = _currentUser.uid;
     _currentDate = getCurrentDateTime();
@@ -52,6 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection("FoodEvening");
     // เรียก _calculateTotalCalories() เมื่อหน้า HomeScreen ถูกโหลด
     _calculateTotalCalories();
+  }
+
+  @override
+  void dispose() {
+    _mounted = false;
+    super.dispose();
   }
 
   String getCurrentDateTime() {
@@ -93,10 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
     double dayTimeCalories = await _getTotalCalories(_foodDayTimeCollection);
     double eveningCalories = await _getTotalCalories(_foodEveningCollection);
 
-    setState(() {
-      // รวมค่าแคลอรี่ทั้งหมดและกำหนดค่าให้กับ totalCalories
-      totalCalories = morningCalories + dayTimeCalories + eveningCalories;
-    });
+    if (_mounted) {
+      setState(() {
+        // รวมค่าแคลอรี่ทั้งหมดและกำหนดค่าให้กับ totalCalories
+        totalCalories = morningCalories + dayTimeCalories + eveningCalories;
+      });
+    }
   }
 
   Future<double> _getTotalCalories(CollectionReference collection) async {

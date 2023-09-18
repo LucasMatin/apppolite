@@ -1,7 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Sos extends StatelessWidget {
+class Sos extends StatefulWidget {
+  @override
+  State<Sos> createState() => _SosState();
+}
+
+class _SosState extends State<Sos> {
+  // เบอร์โทรฉุกเฉินที่คุณต้องการให้โทรไป
+  final String emergencyPhoneNumber = '1669';
+
+  void callEmergency() async {
+    final String url = 'tel:$emergencyPhoneNumber';
+
+    try {
+      await launch(url);
+    } catch (e) {
+      // Handle errors here if needed
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Unable to make a call.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,81 +55,50 @@ class Sos extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          title: Center(child: Text('แจ้งเหตุฉุกเฉินหรือไม่')),
+                          actions: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween, // จัดตำแหน่งซ้าย-ขวาสุด
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(
+                                        Size(120, 40)),
+                                  ),
+                                  child: Text('ใช่'),
+                                  onPressed: () {
+                                    callEmergency();
+                                  },
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(
+                                        Size(120, 40)),
+                                  ),
+                                  child: Text('ไม่ใช่'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
                             ),
-                            title:
-                                Center(child: Text('แจ้งเหตุฉุกเฉินหรือไม่')),
-                            actions: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween, // จัดตำแหน่งซ้าย-ขวาสุด
-                                children: [
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(120, 40)),
-                                    ),
-                                    child: Text('ใช่'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(120, 40)),
-                                    ),
-                                    child: Text('ไม่ใช่'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Image.asset('images/Sos.png'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 260,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const Foodscreen(),
-                        //   ),
-                        // );
+                          ],
+                        );
                       },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size(
-                          double.infinity,
-                          48,
-                        )),
-                      ),
-                      child: const Text(
-                        'เปิดใช้งานฟังชั่นSOS',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
-                    ),
-                  ),
-                )
+                    );
+                  },
+                  child: Image.asset('images/Sos.png'),
+                ),
               ],
             ),
           ),
@@ -102,3 +107,5 @@ class Sos extends StatelessWidget {
     );
   }
 }
+
+FlatButton({required Text child, required Null Function() onPressed}) {}

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/AdminScreen/Add/Add_Video_Screen2.dart';
+import 'package:polite/Test/Add_Video_Screen2.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addvideo extends StatefulWidget {
@@ -14,6 +14,7 @@ class Addvideo extends StatefulWidget {
 class _AddvideoState extends State<Addvideo> {
   // text field controller
   TextEditingController labal = TextEditingController();
+  TextEditingController urlvideo = TextEditingController();
 
   CollectionReference _items =
       FirebaseFirestore.instance.collection('VideoScreen');
@@ -54,7 +55,16 @@ class _AddvideoState extends State<Addvideo> {
                 TextField(
                   controller: labal,
                   decoration: const InputDecoration(
-                      labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
+                      labelText: 'หัวข้อ', hintText: 'กรุณาหัวข้อ'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: urlvideo,
+                  decoration: const InputDecoration(
+                      labelText: 'URL วิดีโอ YouTrue',
+                      hintText: 'กรุณาURL วิดีโอ YouTrue'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -62,10 +72,13 @@ class _AddvideoState extends State<Addvideo> {
                 ElevatedButton(
                     onPressed: () async {
                       final String name = labal.text;
+                      final String urlvideos = urlvideo.text;
                       await _items.doc(name).set({
                         "Lablevideo": name,
+                        'URLYoutrue': urlvideos,
                       });
                       labal.text = '';
+                      urlvideo.text = '';
 
                       Navigator.of(context).pop();
                     },
@@ -116,6 +129,7 @@ class _AddvideoState extends State<Addvideo> {
                 itemBuilder: (context, index) {
                   final document = documents[index];
                   final lable1 = document['Lablevideo'] ?? '';
+                  final urlvideos = document['URLYoutrue'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -137,16 +151,13 @@ class _AddvideoState extends State<Addvideo> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Addvideo2(
-                                              documentReference:
-                                                  document.reference),
-                                          settings: RouteSettings(
-                                              arguments: document),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) =>
+                                      //         VideoListScreen(), // หน้าแสดงรายการวิดีโอ
+                                      //   ),
+                                      // );
                                     },
                                     subtitle: Column(
                                       children: [
@@ -172,6 +183,33 @@ class _AddvideoState extends State<Addvideo> {
                                                         fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.bold),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(1),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    urlvideos
+                                                                .toString()
+                                                                .length >
+                                                            20
+                                                        ? urlvideos
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 20) +
+                                                            '...'
+                                                        : urlvideos,
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
                                                   ))
                                             ],
                                           ),

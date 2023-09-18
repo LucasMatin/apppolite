@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:polite/LilbraryScreen/Open_Video_Screen.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class videoscreen extends StatefulWidget {
   const videoscreen({super.key});
@@ -113,18 +114,21 @@ class _videoscreenState extends State<videoscreen> {
                       itemBuilder: (context, index) {
                         final document = documents[index];
                         final lable1 = document['Lablevideo'] ?? '';
+                        final url = document['URLYoutrue'] ?? '';
 
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SafeArea(
                             child: GestureDetector(
                               onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const Openvideoscreen(),
-                                //   ),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Openvideoscreen(
+                                      documentSnapshot: document,
+                                    ),
+                                  ),
+                                );
                               },
                               child: SizedBox(
                                 width: 400.0,
@@ -157,10 +161,15 @@ class _videoscreenState extends State<videoscreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0), // กำหนดขอบของรูปภาพ
-                                                  child: Image.asset(
-                                                    "images/iconplay.png",
-                                                    fit: BoxFit
-                                                        .cover, // ใช้ fit: BoxFit.cover เพื่อให้รูปภาพเต็มกรอบและไม่เกินขอบ
+                                                  child: YoutubePlayer(
+                                                    controller:
+                                                        YoutubePlayerController(
+                                                      initialVideoId:
+                                                          YoutubePlayer
+                                                                  .convertUrlToId(
+                                                                      url) ??
+                                                              '',
+                                                    ),
                                                   ),
                                                 ),
                                               ),

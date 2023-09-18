@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Openvideoscreen extends StatefulWidget {
-  const Openvideoscreen({super.key});
+  final DocumentSnapshot documentSnapshot; // เพิ่มตัวแปรนี้
+
+  const Openvideoscreen({Key? key, required this.documentSnapshot})
+      : super(key: key);
 
   @override
   State<Openvideoscreen> createState() => _OpenvideoscreenState();
@@ -10,6 +15,9 @@ class Openvideoscreen extends StatefulWidget {
 class _OpenvideoscreenState extends State<Openvideoscreen> {
   @override
   Widget build(BuildContext context) {
+    final document = widget.documentSnapshot;
+    final lable = document['Lablevideo'] ?? '';
+    final url = document['URLYoutrue'] ?? '';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
@@ -20,59 +28,51 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
         ),
         centerTitle: true,
       ),
-      body: SafeArea(
-          child: Container(
-        child: Column(
-          children: [
-            const SizedBox(height: 90),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: SizedBox(
-                    width: 400.0,
-                    height: 210.0,
-                    child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 25),
-            Text(
-              "aaaaaaaaaaaaaaa",
-              style: TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 70, right: 10, left: 10),
+            child: YoutubePlayer(
+              controller: YoutubePlayerController(
+                initialVideoId: YoutubePlayer.convertUrlToId(url) ?? '',
               ),
             ),
-            const SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0),
-              child: Container(
-                alignment: FractionalOffset.topLeft,
-                child: Text(
-                  'แหล่งอ้างอิง :',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Text(
+                lable,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 25),
-            Text(
-              "aaaaaaaaaaaaaaa",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Text(
+                "แหล่งข้อมูล",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
-          ],
-        ),
-      )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Text(
+                url,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
