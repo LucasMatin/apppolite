@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 import 'package:polite/AdminScreen/test.dart';
 
@@ -15,7 +19,9 @@ class Editarticle extends StatefulWidget {
 
 class _EditarticleState extends State<Editarticle> {
   // ...
-
+  String imageUrl = '';
+  List<File> image = [];
+  ImagePicker picker = ImagePicker();
   // Add a Stream to listen to the "in" subcollection
   late Stream<QuerySnapshot> inCollectionStream;
 
@@ -87,10 +93,88 @@ class _EditarticleState extends State<Editarticle> {
                         labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
                   ),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  ListTile(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+
+                      print('${file?.path}');
+
+                      if (file == null) return;
+
+                      String uniqueFileName =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference referenceRoot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                          referenceRoot.child('images');
+
+                      Reference referenceImageToUpload =
+                          referenceDirImages.child(uniqueFileName);
+
+                      try {
+                        await referenceImageToUpload.putFile(File(file.path));
+
+                        imageUrl =
+                            await referenceImageToUpload.getDownloadURL();
+                        // แสดงข้อมูลหลังจากอัปโหลดรูปภาพสำเร็จ
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('อัปโหลดรูปภาพสำเร็จ'),
+                              content: Column(
+                                children: [
+                                  Image.network(
+                                      imageUrl), // แสดงรูปภาพที่อัปโหลด
+                                  Text('URL ของรูปภาพ: $imageUrl'),
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ปิด'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        setState(() {});
+                      } catch (error) {
+                        // แสดงข้อความหรือผลลัพธ์อื่น ๆ หากมีข้อผิดพลาด
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: $error'),
+                          ),
+                        );
+                      }
+                    },
+                    leading: Icon(Icons.add_a_photo_rounded),
+                    title: const Text('เลือกรูปภาพ'),
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
                     onPressed: () async {
+                      // if (imageUrl == null ||
+                      //     imageUrl.isEmpty ||
+                      //     imageUrl.trim() == "") {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     const SnackBar(
+                      //       content: Text('กรุณาอัปโหลดรูปภาพ'),
+                      //     ),
+                      //   );
+                      //   return;
+                      // }
+
                       final String number = id.text;
                       final String name = title.text;
                       final String text = texts.text;
@@ -104,10 +188,12 @@ class _EditarticleState extends State<Editarticle> {
                           "ID": number,
                           "Title": name,
                           "Content": text,
+                          'Image': imageUrl,
                         });
                         id.text = '';
                         title.text = '';
                         texts.text = '';
+                        imageUrl = "";
                         Navigator.of(context)
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
@@ -165,6 +251,7 @@ class _EditarticleState extends State<Editarticle> {
                   final lable1 = document['Title'] ?? '';
                   final id = document['ID'] ?? '';
                   final content = document['Content'] ?? '';
+                  final Image = document['Image'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -175,7 +262,7 @@ class _EditarticleState extends State<Editarticle> {
                     child: Card(
                       elevation: 1,
                       child: SizedBox(
-                        height: 90,
+                        height: 120,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -186,16 +273,16 @@ class _EditarticleState extends State<Editarticle> {
                                   ListTile(
                                     isThreeLine: false,
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddImage(
-                                              documentReference:
-                                                  document.reference),
-                                          settings: RouteSettings(
-                                              arguments: document),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => AddImage(
+                                      //         documentReference:
+                                      //             document.reference),
+                                      //     settings: RouteSettings(
+                                      //         arguments: document),
+                                      //   ),
+                                      // );
                                     },
                                     subtitle: Column(
                                       children: [
@@ -209,13 +296,25 @@ class _EditarticleState extends State<Editarticle> {
                                           padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
-                                              Text(
-                                                lable1,
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    lable1.toString().length >
+                                                            20
+                                                        ? lable1
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 20) +
+                                                            '...'
+                                                        : lable1,
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ))
                                             ],
                                           ),
                                         ),
@@ -237,6 +336,29 @@ class _EditarticleState extends State<Editarticle> {
                                                                     0, 20) +
                                                             '...'
                                                         : content,
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    Image.toString().length > 20
+                                                        ? Image.toString()
+                                                                .substring(
+                                                                    0, 20) +
+                                                            '...'
+                                                        : Image,
                                                     style: TextStyle(
                                                       fontSize: 15,
                                                     ),

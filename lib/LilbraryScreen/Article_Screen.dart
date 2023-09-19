@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/LilbraryScreen/Open_Article_Screen.dart';
 
 class Articlescreen extends StatefulWidget {
   const Articlescreen({super.key});
@@ -167,7 +168,17 @@ class _ArticlescreenState extends State<Articlescreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: SafeArea(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OpenArticlescreen(
+                                        documentReference: document.reference),
+                                    settings:
+                                        RouteSettings(arguments: document),
+                                  ),
+                                );
+                              },
                               child: SizedBox(
                                 width: 400.0,
                                 height: 100.0,
