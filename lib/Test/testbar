@@ -1,0 +1,139 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:polite/LilbraryScreen/Open_Article_Screen.dart';
+
+class Articlescreen extends StatefulWidget {
+  const Articlescreen({super.key});
+
+  @override
+  State<Articlescreen> createState() => _ArticlescreenState();
+}
+
+class _ArticlescreenState extends State<Articlescreen> {
+  TextEditingController searchtext = TextEditingController();
+  CollectionReference article =
+      FirebaseFirestore.instance.collection("ArticleScreen");
+  bool isSearching = false; // เพิ่มตัวแปร isSearching เพื่อตรวจสอบสถานะการค้นหา
+
+  @override
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+    article = FirebaseFirestore.instance.collection("ArticleScreen");
+  }
+
+  List<DocumentSnapshot> searchResults = []; 
+
+  void searchInFirebase(String searchtext) {
+    searchtext = searchtext.toLowerCase();
+
+    if (searchtext.isEmpty) {
+      setState(() {
+        searchResults.clear();
+        isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีการค้นหา
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection("ArticleScreen")
+          .where("Lable", isEqualTo: searchtext)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        if (querySnapshot.docs.isNotEmpty) {
+          final documents = querySnapshot.docs;
+
+          setState(() {
+            searchResults = documents;
+            isSearching = true; // ปรับสถานะการค้นหาเป็น true เมื่อมีการค้นหา
+          });
+        } else {
+          setState(() {
+            searchResults.clear();
+            isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีผลลัพธ์การค้นหา
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown[300],
+        elevation: 0,
+        title: Text(
+          'บทความเพื่อสุขภาพ',
+          style: TextStyle(color: Colors.white, fontSize: 23),
+        ),
+        centerTitle: true,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: article.snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.hasData) {
+              final documents = snapshot.data!.docs;
+              if (documents.isEmpty) {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('ยังไม่มีข้อมูล')],
+                  ),
+                );
+              }
+
+              // สร้างรายการที่จะแสดง
+              final itemsToDisplay =
+                  isSearching ? searchResults : documents;
+
+              return Column(
+                children: [
+                  Stack(
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          //search bar
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: searchtext,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10),
+                                hintText: "ค้นหา...",
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.search),
+                                  onPressed: () {
+                                    if (searchtext.text.isEmpty) {
+                                      searchInFirebase("");
+                                    } else {
+                                      searchInFirebase(searchtext.text);
+                                    }
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: const BorderSide(),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          //text
+                          Padding(
+                            padding: const

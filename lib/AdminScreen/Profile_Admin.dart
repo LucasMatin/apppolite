@@ -1,10 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:polite/Screens/Login_Screen.dart';
 import 'package:flutter/material.dart';
 
-class Profiladminescreen extends StatelessWidget {
+class Profiladminescreen extends StatefulWidget {
   const Profiladminescreen({super.key});
 
+  @override
+  State<Profiladminescreen> createState() => _ProfiladminescreenState();
+}
+
+class _ProfiladminescreenState extends State<Profiladminescreen> {
+  final currrenUser = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +27,7 @@ class Profiladminescreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('AdminID')
-              .doc()
+              .doc(currrenUser.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {

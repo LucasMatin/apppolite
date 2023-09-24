@@ -14,6 +14,7 @@ class _ArticlescreenState extends State<Articlescreen> {
   TextEditingController searchtext = TextEditingController();
   CollectionReference article =
       FirebaseFirestore.instance.collection("ArticleScreen");
+  bool isSearching = false; // เพิ่มตัวแปร isSearching เพื่อตรวจสอบสถานะการค้นหา
   @override
   void initState() {
     super.initState();
@@ -30,34 +31,43 @@ class _ArticlescreenState extends State<Articlescreen> {
   void searchInFirebase(String searchtext) {
     // แปลง searchText เป็นตัวพิมพ์เล็กทั้งหมด
     searchtext = searchtext.toLowerCase();
+    if (searchtext.isEmpty) {
+      setState(() {
+        searchResults.clear();
+        isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีการค้นหา
+      });
+    } else {
+      // ใช้คำสั่งค้นหาข้อมูลใน Firestore
+      FirebaseFirestore.instance
+          .collection("ArticleScreen")
+          .where("Lable", isGreaterThanOrEqualTo: searchtext)
+          .where("Lable",
+              isLessThan:
+                  searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        // ตรวจสอบว่ามีข้อมูลหรือไม่
+        if (querySnapshot.docs.isNotEmpty) {
+          // มีข้อมูล
+          final documents = querySnapshot.docs;
 
-    // ใช้คำสั่งค้นหาข้อมูลใน Firestore
-    FirebaseFirestore.instance
-        .collection("ArticleScreen")
-        .where("Lable", isGreaterThanOrEqualTo: searchtext)
-        .where("Lable",
-            isLessThan:
-                searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      // ตรวจสอบว่ามีข้อมูลหรือไม่
-      if (querySnapshot.docs.isNotEmpty) {
-        // มีข้อมูล
-        final documents = querySnapshot.docs;
-
-        // อัปเดต UI โดยการเรียก setState
-        setState(() {
-          // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
-          searchResults = documents;
-        });
-      } else {
-        // ไม่มีข้อมูลที่ค้นหา
-        setState(() {
-          // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
-          searchResults = [];
-        });
-      }
-    });
+          // อัปเดต UI โดยการเรียก setState
+          setState(() {
+            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
+            searchResults = documents;
+            isSearching = true; // ปรับสถานะการค้นหาเป็น true เมื่อมีการค้นหา
+          });
+        } else {
+          // ไม่มีข้อมูลที่ค้นหา
+          setState(() {
+            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
+            searchResults.clear();
+            isSearching =
+                false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีผลลัพธ์การค้นหา
+          });
+        }
+      });
+    }
   }
 
   @override
@@ -95,6 +105,10 @@ class _ArticlescreenState extends State<Articlescreen> {
                   ),
                 );
               }
+              // สร้างรายการที่จะแสดง
+              final itemsToDisplay = isSearching && searchtext.text.isNotEmpty
+                  ? searchResults
+                  : documents;
               return Column(
                 children: [
                   Stack(
@@ -159,9 +173,9 @@ class _ArticlescreenState extends State<Articlescreen> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: documents.length,
+                      itemCount: itemsToDisplay.length,
                       itemBuilder: (context, index) {
-                        final document = documents[index];
+                        final document = itemsToDisplay[index];
                         final lable1 = document['Lable'] ?? '';
 
                         return Padding(

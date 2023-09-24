@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/FoodSceen/Open_CheckFood_Screen2.dart';
-import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
+// import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 
 class Checkfood extends StatefulWidget {
   const Checkfood({super.key});

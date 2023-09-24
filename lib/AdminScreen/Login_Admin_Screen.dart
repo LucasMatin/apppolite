@@ -122,13 +122,13 @@ class _LoginadminState extends State<Loginadmin> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // _login();
+                      _login();
                     }
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => bottomadminsceen()),
-                    );
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => bottomadminsceen()),
+                    // );
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(
