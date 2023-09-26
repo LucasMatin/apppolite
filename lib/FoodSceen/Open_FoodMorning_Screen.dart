@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Foodscreen.dart';
@@ -11,8 +12,99 @@ class Addfoodmorning extends StatefulWidget {
   State<Addfoodmorning> createState() => _AddfoodmorningState();
 }
 
+enum foodstatus {
+  all,
+  drink,
+  food,
+  dessert,
+  fruit,
+  puff,
+  fry,
+  grill,
+  boiled,
+  curry,
+  soup,
+}
+
 class _AddfoodmorningState extends State<Addfoodmorning> {
+  TextEditingController searchtext = TextEditingController();
   CollectionReference _items = FirebaseFirestore.instance.collection('Food');
+  bool isSearching = false; // เพิ่มตัวแปร isSearching เพื่อตรวจสอบสถานะการค้นหา
+  @override
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+    _items = FirebaseFirestore.instance.collection("Food");
+  }
+
+  Widget buildStatusButton(foodstatus status, String label, Color color) {
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          selectedStatus = status;
+        });
+      },
+      style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: color),
+      child: Text(
+        '  $label  ',
+        style: const TextStyle(color: Colors.black),
+      ),
+    );
+  }
+
+  foodstatus selectedStatus = foodstatus.all;
+
+  List<DocumentSnapshot> searchResults = []; // เพิ่มตัวแปร searchResults นี้
+
+  void searchInFirebase(String searchtext) {
+    // แปลง searchText เป็นตัวพิมพ์เล็กทั้งหมด
+    searchtext = searchtext.toLowerCase();
+    if (searchtext.isEmpty) {
+      setState(() {
+        searchResults.clear();
+        isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีการค้นหา
+      });
+    } else {
+      // ใช้คำสั่งค้นหาข้อมูลใน Firestore
+      FirebaseFirestore.instance
+          .collection("Food")
+          .where("Lable", isGreaterThanOrEqualTo: searchtext)
+          .where("Lable",
+              isLessThan:
+                  searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        // ตรวจสอบว่ามีข้อมูลหรือไม่
+        if (querySnapshot.docs.isNotEmpty) {
+          // มีข้อมูล
+          final documents = querySnapshot.docs;
+
+          // อัปเดต UI โดยการเรียก setState
+          setState(() {
+            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
+            searchResults = documents;
+            isSearching = true; // ปรับสถานะการค้นหาเป็น true เมื่อมีการค้นหา
+          });
+        } else {
+          // ไม่มีข้อมูลที่ค้นหา
+          setState(() {
+            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
+            searchResults.clear();
+            isSearching =
+                false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีผลลัพธ์การค้นหา
+          });
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +141,9 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                   ),
                 );
               }
+              final itemsToDisplay = isSearching && searchtext.text.isNotEmpty
+                  ? searchResults
+                  : documents;
               return Column(
                 children: [
                   Stack(
@@ -60,6 +155,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
+                              controller: searchtext,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 10),
@@ -68,7 +164,13 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                                   icon: const Icon(Icons.search),
                                   onPressed: () {
                                     // เรียกใช้งานฟังก์ชันค้นหาเมื่อกดปุ่มค้นหา
-                                    // searchInFirebase(searchTextController.text);
+                                    if (searchtext.text.isEmpty) {
+                                      searchInFirebase(
+                                          ""); // เรียกด้วยค่าว่างเพื่อให้แสดงทั้งหมด
+                                    } else {
+                                      searchInFirebase(searchtext
+                                          .text); // เรียกด้วยข้อความค้นหา
+                                    }
                                   },
                                 ),
                                 border: OutlineInputBorder(
@@ -81,18 +183,179 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                           SizedBox(
                             height: 8,
                           ),
+                          SizedBox(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedStatus = foodstatus.all;
+                                      });
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      backgroundColor:
+                                          selectedStatus == foodstatus.all
+                                              ? const Color.fromRGBO(
+                                                  229, 227, 227, 1)
+                                              : const Color.fromRGBO(
+                                                  229, 227, 227, 1),
+                                    ),
+                                    child: const Text(
+                                      '  ทั้งหมด ',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.drink,
+                                      'เครื่องดื่ม',
+                                      const Color.fromRGBO(255, 228, 193, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(foodstatus.food, 'อาหาร',
+                                      const Color.fromRGBO(255, 253, 146, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.dessert,
+                                      'ขนมของหวาน',
+                                      const Color.fromRGBO(207, 255, 203, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(foodstatus.fruit, 'ผลไม้',
+                                      const Color.fromRGBO(218, 255, 246, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.puff,
+                                      'อาหารประเภทผัด',
+                                      const Color.fromRGBO(218, 212, 255, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.fry,
+                                      'อาหารประเภททอด',
+                                      const Color.fromRGBO(255, 226, 235, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.grill,
+                                      'อาหารประเภทย่าง',
+                                      const Color.fromRGBO(255, 228, 193, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.boiled,
+                                      'อาหารประเภทต้ม/นึง',
+                                      const Color.fromRGBO(255, 253, 146, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.curry,
+                                      'อาหารประเภทแกง',
+                                      const Color.fromRGBO(207, 255, 203, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.soup,
+                                      'อาหารประเภทซุป',
+                                      const Color.fromRGBO(218, 255, 246, 1)),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 8,
+                          ),
                         ],
                       ),
                     ],
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: documents.length,
+                      itemCount: itemsToDisplay.length,
                       itemBuilder: (context, index) {
                         final document = documents[index];
                         final lable1 = document['Lable'] ?? '';
                         final callory = document['Callory'] ?? '';
                         final id = document['Category'] ?? '';
+                        final key = document['Foodtype'] ?? '';
+
+                        switch (selectedStatus) {
+                          case foodstatus.all:
+                            break;
+                          case foodstatus.drink:
+                            if (id != 'เครื่องดื่ม') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.food:
+                            if (id != 'อาหาร') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.dessert:
+                            if (id != 'ขนมของหวาน') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.fruit:
+                            if (id != 'ผลไม้') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.puff:
+                            if (key != 'อาหารประเภทผัด') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.fry:
+                            if (key != 'อาหารประเภททอด') {
+                              return const SizedBox.shrink();
+                            }
+                          case foodstatus.grill:
+                            if (key != 'อาหารประเภทย่าง') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.boiled:
+                            if (key != 'อาหารประเภทต้ม/นึง') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.curry:
+                            if (key != 'อาหารประเภทแกง') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                          case foodstatus.soup:
+                            if (key != 'อาหารประเภทซุป') {
+                              return const SizedBox.shrink();
+                            }
+                            break;
+                        }
 
                         return Column(
                           children: [

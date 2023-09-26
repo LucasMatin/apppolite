@@ -47,20 +47,20 @@ class Lilbraryscreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Column(
                                 children: [
                                   Image.asset(
                                     "images/nutrition.png",
                                     width: 65.0,
                                   ),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 5.0),
                                   Text(
                                     "แนะนำเกี่ยวกับโภชนาการ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 25.0,
                                     ),
                                   ),
                                 ],
@@ -95,13 +95,13 @@ class Lilbraryscreen extends StatelessWidget {
                                     "images/eat.png",
                                     width: 65.0,
                                   ),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 5.0),
                                   Text(
                                     "กินอย่างไรให้สุภาพดี",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 25.0,
                                     ),
                                   ),
                                 ],
@@ -136,13 +136,13 @@ class Lilbraryscreen extends StatelessWidget {
                                     "images/article.png",
                                     width: 98.0,
                                   ),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 5.0),
                                   Text(
                                     "บทความเพื่อสุขภาพ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 25.0,
                                     ),
                                   ),
                                 ],
@@ -177,13 +177,13 @@ class Lilbraryscreen extends StatelessWidget {
                                     "images/exercise.png",
                                     width: 67.0,
                                   ),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 5.0),
                                   Text(
                                     "วิดิโอเพื่อสุภาพ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
+                                      fontSize: 25.0,
                                     ),
                                   ),
                                 ],

@@ -28,6 +28,7 @@ class _AddfoodState extends State<Addfood> {
   }
 
   String selectedCategory = 'อาหาร'; // ค่าเริ่มต้น
+  String selectedFood = ''; // ค่าเริ่มต้น
   String searchText = '';
   // for create operation
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
@@ -47,7 +48,7 @@ class _AddfoodState extends State<Addfood> {
               children: [
                 const Center(
                   child: Text(
-                    "เพิ่มหัวข้อหัว",
+                    "เพิ่มอาหาร",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -67,28 +68,62 @@ class _AddfoodState extends State<Addfood> {
                   decoration: const InputDecoration(
                       labelText: 'จำนวนแคลอรี่', hintText: 'แคลอรี่'),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButton<String>(
-                    value: selectedCategory,
-                    onChanged: (newValue) {
-                      // เมื่อผู้ใช้เลือกประเภทใหม่
-                      setState(() {
-                        selectedCategory = newValue!;
-                      });
-                    },
-                    items: <String>[
-                      'อาหาร',
-                      'เครื่องดื่ม',
-                      'ขนมของหวาน',
-                      'ผลไม้'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
+                        value: selectedCategory,
+                        onChanged: (newValue) {
+                          // เมื่อผู้ใช้เลือกประเภทใหม่
+                          setState(() {
+                            selectedCategory = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'อาหาร',
+                          'เครื่องดื่ม',
+                          'ขนมของหวาน',
+                          'ผลไม้'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Text(
+                      "/",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
+                        value: selectedFood,
+                        onChanged: (newValue) {
+                          // เมื่อผู้ใช้เลือกประเภทใหม่
+                          setState(() {
+                            selectedFood = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          '',
+                          'อาหารประเภทผัด',
+                          'อาหารประเภททอด',
+                          'อาหารประเภทย่าง',
+                          'อาหารประเภทต้ม/นึง',
+                          'อาหารประเภทแกง',
+                          'อาหารประเภทซุป',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 20,
@@ -102,6 +137,7 @@ class _AddfoodState extends State<Addfood> {
                       await _items.doc(name).set({
                         "Lable": name,
                         "Callory": callorys,
+                        "Foodtype": selectedFood,
                         "Category":
                             selectedCategory, // เพิ่มค่าประเภทที่ผู้ใช้เลือก
                       });
@@ -168,6 +204,7 @@ class _AddfoodState extends State<Addfood> {
                   final lable1 = document['Lable'] ?? '';
                   final callory = document['Callory'] ?? '';
                   final id = document['Category'] ?? '';
+                  final key = document['Foodtype'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -178,7 +215,7 @@ class _AddfoodState extends State<Addfood> {
                     child: Card(
                       elevation: 1,
                       child: SizedBox(
-                        height: 90,
+                        height: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -233,7 +270,18 @@ class _AddfoodState extends State<Addfood> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                " $callory แคลลอรี่   หมวด : $id",
+                                                " $callory แคลลอรี่   หมวด : $id ",
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "ประเภท : $key",
                                                 style: TextStyle(fontSize: 16),
                                               ),
                                             ],

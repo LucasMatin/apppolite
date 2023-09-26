@@ -152,10 +152,10 @@ class _bottomsceenState extends State<bottomsceen> {
   }
 
   List<String> listDfStrings = [
-    'Home',
-    'Lilbarary',
-    'Sos',
-    'Profile',
+    'หน้าแรก',
+    'ห้องสมุด',
+    'เหตุฉุกเฉิน',
+    'โปรไฟล์',
   ];
   List<IconData> listofIcons = [
     Icons.home_rounded,

@@ -112,12 +112,12 @@ class _editscreenState extends State<editscreen> {
                                 child: TextFormField(
                                   controller: password,
                                   decoration: const InputDecoration(
-                                      label: Text('รหัสผ่าน'),
-                                      prefixIcon:
-                                          Icon(Icons.password_outlined)),
+                                      label: Text('โรคประจำตัว'),
+                                      prefixIcon: Icon(
+                                          Icons.accessibility_new_rounded)),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'กรุณารหัสผ่าน';
+                                      return 'กรุณาโรคประจำตัว';
                                     }
                                     return null; // ไม่มีข้อผิดพลาด
                                   },
@@ -142,7 +142,7 @@ class _editscreenState extends State<editscreen> {
                                 Map<String, dynamic> updatedData = {
                                   'Fullname': name,
                                   'Telno': phone,
-                                  'Password': passwords,
+                                  'Bisease': passwords,
                                   // เพิ่มข้อมูลอื่น ๆ ที่คุณต้องการอัพเดท
                                 };
 
