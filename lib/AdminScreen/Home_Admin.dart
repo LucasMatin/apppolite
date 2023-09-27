@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/AdminScreen/Add/Add_Article_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Eat_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen.dart';
+import 'package:polite/AdminScreen/Add/Add_Video_Screen.dart';
 import 'package:polite/Test/Add_FoodToday_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Food_Screen.dart';
 
@@ -31,104 +35,204 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
           child: Center(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Addfood(),
-                            ),
-                          );
-                        },
-                        child: SizedBox(
-                          width: 400.0,
-                          height: 100.0,
-                          child: Card(
-                            color: Color.fromARGB(255, 143, 113, 102),
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          "เพิ่มข้อมูลอาหาร",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Addfood()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/food.png",
+                                width: 65.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                "อาหาร",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const bottomsceen(),
-                            ),
-                          );
-                        },
-                        child: SizedBox(
-                          width: 400.0,
-                          height: 100.0,
-                          child: Card(
-                            color: Color.fromARGB(255, 143, 113, 102),
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Center(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          "เช็คฝั่งของผู้ใช้งาน",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Addnutrition()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/nutrition.png",
+                                width: 65.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                "แนะนำเกี่ยวกับโภชนาการ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Saveeat()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/eat.png",
+                                width: 65.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                "กินอย่างไรให้สุภาพดี",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Addarticale()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/article.png",
+                                width: 98.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                "บทความเพื่อสุขภาพ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Addvideo()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/exercise.png",
+                                width: 67.0,
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                "วิดิโอเพื่อสุภาพ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

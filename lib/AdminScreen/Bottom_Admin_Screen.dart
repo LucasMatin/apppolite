@@ -1,6 +1,7 @@
 import 'package:polite/AdminScreen/Add/Add_Admin.dart';
+import 'package:polite/AdminScreen/Admin_Screen.dart';
 import 'package:polite/AdminScreen/Home_Admin.dart';
-import 'package:polite/AdminScreen/Lilbrary_Admin.dart';
+import 'package:polite/Test/Lilbrary_Admin.dart';
 import 'package:polite/AdminScreen/Profile_Admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
 
   final List<Widget> _pages = [
     HomeadminScreen(),
-    Lilbraryadminscreen(),
+    Adminuser(),
     Addadminscreen(),
     Profiladminescreen(),
   ];
@@ -145,13 +146,13 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
 
   List<String> listDfStrings = [
     'Home',
-    'Lilbarary',
+    'Check',
     'ADMIN',
     'Profile',
   ];
   List<IconData> listofIcons = [
     Icons.home_rounded,
-    Icons.book_rounded,
+    Icons.list_sharp,
     Icons.add_moderator_outlined,
     Icons.person_rounded,
   ];

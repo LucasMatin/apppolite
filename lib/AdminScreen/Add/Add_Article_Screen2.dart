@@ -214,9 +214,25 @@ class _EditarticleState extends State<Editarticle> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
-          'เพิ่มข้อมูลเนื้อหา',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+        title: StreamBuilder<DocumentSnapshot>(
+          stream: widget.documentReference.snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            if (snapshot.hasData) {
+              final documents = snapshot.data;
+              final title = documents?['Lable'] ?? '';
+              return Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: 23),
+              );
+            }
+            return Text('ไม่มีข้อมูล');
+          },
         ),
         centerTitle: true,
       ),
