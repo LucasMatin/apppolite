@@ -366,6 +366,52 @@ class _MyWidgetState extends State<MyWidget> {
   CollectionReference usersCollection =
       FirebaseFirestore.instance.collection("UserID");
 
+  String getCurrentDateTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(now);
+  }
+
+  int number = 1; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
+  String? lable;
+  String? callory;
+
+  @override
+  void initState() {
+    super.initState();
+    final parts = widget.textedit.split(' : ');
+    if (parts.length == 2) {
+      lable = parts[0];
+      callory = parts[1].replaceAll(' แคลลอรี่', '');
+    }
+  }
+
+  void increment() {
+    setState(() {
+      number++;
+      if (number >= 2) {
+        // เพิ่มค่า callory เมื่อ number เป็น 2 ขึ้นไป
+        callory = (int.parse(callory!) +
+                int.parse(widget.textedit
+                    .split(' : ')[1]
+                    .replaceAll(' แคลลอรี่', '')))
+            .toString();
+      }
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (number > 1) {
+        number--;
+        if (number == 1) {
+          // ให้ค่า callory เป็นค่าปกติของแคลอรี่ เมื่อ number เป็น 1
+          callory = widget.textedit.split(' : ')[1].replaceAll(' แคลลอรี่', '');
+        }
+      }
+    });
+  }
+
   // for create operation
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
@@ -502,52 +548,6 @@ class _MyWidgetState extends State<MyWidget> {
             ),
           );
         });
-  }
-
-  String getCurrentDateTime() {
-    var now = DateTime.now();
-    var formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
-  }
-
-  int number = 1; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
-  String? lable;
-  String? callory;
-
-  @override
-  void initState() {
-    super.initState();
-    final parts = widget.textedit.split(' : ');
-    if (parts.length == 2) {
-      lable = parts[0];
-      callory = parts[1].replaceAll(' แคลลอรี่', '');
-    }
-  }
-
-  void increment() {
-    setState(() {
-      number++;
-      if (number >= 2) {
-        // เพิ่มค่า callory เมื่อ number เป็น 2 ขึ้นไป
-        callory = (int.parse(callory!) +
-                int.parse(widget.textedit
-                    .split(' : ')[1]
-                    .replaceAll(' แคลลอรี่', '')))
-            .toString();
-      }
-    });
-  }
-
-  void decrement() {
-    setState(() {
-      if (number > 1) {
-        number--;
-        if (number == 1) {
-          // ให้ค่า callory เป็นค่าปกติของแคลอรี่ เมื่อ number เป็น 1
-          callory = widget.textedit.split(' : ')[1].replaceAll(' แคลลอรี่', '');
-        }
-      }
-    });
   }
 
   @override

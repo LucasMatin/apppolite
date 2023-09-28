@@ -162,6 +162,148 @@ class _AddfoodState extends State<Addfood> {
         });
   }
 
+// for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Lable'];
+    final String initialCallory = documentSnapshot['Callory'];
+    final String initialCategory = documentSnapshot['Category'];
+    final String initialFoodtype = documentSnapshot['Foodtype'];
+
+    labal.text = initialLabel;
+    callory.text = initialCallory;
+    selectedCategory = initialCategory;
+    selectedFood = initialFoodtype;
+
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    "แก้ไข",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: labal,
+                  decoration: const InputDecoration(
+                      labelText: 'ชื่ออาหาร', hintText: 'อาหาร'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: callory,
+                  decoration: const InputDecoration(
+                      labelText: 'จำนวนแคลอรี่', hintText: 'แคลอรี่'),
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
+                        value: selectedCategory,
+                        onChanged: (newValue) {
+                          // เมื่อผู้ใช้เลือกประเภทใหม่
+                          setState(() {
+                            selectedCategory = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'อาหาร',
+                          'เครื่องดื่ม',
+                          'ขนมของหวาน',
+                          'ผลไม้'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Text(
+                      "/",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
+                        value: selectedFood,
+                        onChanged: (newValue) {
+                          // เมื่อผู้ใช้เลือกประเภทใหม่
+                          setState(() {
+                            selectedFood = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          '',
+                          'อาหารประเภทผัด',
+                          'อาหารประเภททอด',
+                          'อาหารประเภทย่าง',
+                          'อาหารประเภทต้ม/นึง',
+                          'อาหารประเภทแกง',
+                          'อาหารประเภทซุป',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final String name = labal.text;
+                    final String callorys = callory.text;
+                    if (name.isNotEmpty) {
+                      // ตรวจสอบว่าชื่อไม่ว่างเปล่า
+                      await documentSnapshot.reference.update({
+                        "Lable": name,
+                        "Callory": callorys,
+                        "Foodtype": selectedFood,
+                        "Category":
+                            selectedCategory, // เพิ่มค่าประเภทที่ผู้ใช้เลือก
+                      });
+                      labal.text = '';
+                      Navigator.of(context)
+                          .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
+                    } else {
+                      // ในกรณีที่ชื่อว่างเปล่า คุณสามารถแจ้งเตือนผู้ใช้หรือดำเนินการเพิ่มเติมตามที่คุณต้องการ
+                      // ยกตัวอย่างเช่นแสดง SnackBar หรือ AlertDialog
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('กรุณากรอกชื่อ'),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text("ยืนยัน"),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -300,7 +442,7 @@ class _AddfoodState extends State<Addfood> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

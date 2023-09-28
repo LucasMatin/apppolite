@@ -1,11 +1,7 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:polite/Screens/Profile_Screen.dart';
 
 class editscreen extends StatefulWidget {
   @override
@@ -62,6 +58,10 @@ class _editscreenState extends State<editscreen> {
             }
             if (snapshot.hasData) {
               final userData = snapshot.data!.data() as Map<String, dynamic>;
+              // Update the TextEditingController values with user data
+              fullname.text = userData['Fullname'] ?? '';
+              telno.text = userData['Telno'] ?? '';
+              password.text = userData['Bisease'] ?? '';
 
               return SingleChildScrollView(
                 child: SafeArea(
@@ -151,9 +151,6 @@ class _editscreenState extends State<editscreen> {
                                   await userCollection
                                       .doc(currrenUser.uid)
                                       .update(updatedData);
-
-                                  // อัพเดท Password ใน Firebase Authentication
-                                  await currrenUser.updatePassword(passwords);
 
                                   // อัพเดทข้อมูลสำเร็จ
                                   ScaffoldMessenger.of(context).showSnackBar(

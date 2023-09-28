@@ -119,6 +119,96 @@ class _EditNutritionState extends State<EditNutrition> {
         });
   }
 
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Title'];
+    final String initialid = documentSnapshot['ID'];
+    final String initialtitle = documentSnapshot['Content'];
+
+    title.text = initialLabel;
+    id.text = initialid;
+    texts.text = initialtitle;
+
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 20,
+                  right: 20,
+                  left: 20,
+                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      "แก้ไข",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: id,
+                    decoration: const InputDecoration(
+                        labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: title,
+                    decoration: const InputDecoration(
+                      labelText: 'หัวข้อ',
+                      hintText: 'กรุณาเพิ่มหัวข้อ',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    maxLines: 10,
+                    controller: texts,
+                    decoration: const InputDecoration(
+                        labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final String number = id.text;
+                      final String name = title.text;
+                      final String text = texts.text;
+                      {
+                        // ตรวจสอบว่าชื่อไม่ว่างเปล่า
+                        await documentSnapshot.reference.update({
+                          "ID": number,
+                          "Title": name,
+                          "Content": text,
+                        });
+                        id.text = '';
+                        title.text = '';
+                        texts.text = '';
+                        Navigator.of(context)
+                            .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
+                      }
+                    },
+                    child: const Text("ยืนยัน"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,7 +361,7 @@ class _EditNutritionState extends State<EditNutrition> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

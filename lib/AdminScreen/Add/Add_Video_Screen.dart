@@ -89,6 +89,79 @@ class _AddvideoState extends State<Addvideo> {
         });
   }
 
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Lablevideo'];
+    final String initialUrl = documentSnapshot['URLYoutrue'];
+
+    labal.text = initialLabel;
+    urlvideo.text = initialUrl;
+
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            right: 20,
+            left: 20,
+            bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(
+                child: Text(
+                  "แก้ไข",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextField(
+                controller: labal,
+                decoration: const InputDecoration(
+                  labelText: 'หัวข้อ',
+                  hintText: 'กรุณาหัวข้อ',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: urlvideo,
+                decoration: const InputDecoration(
+                  labelText: 'URL วิดีโอ YouTrue',
+                  hintText: 'กรุณา URL วิดีโอ YouTrue',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final String name = labal.text;
+                  final String urlvideos = urlvideo.text;
+
+                  await documentSnapshot.reference.update({
+                    "Lablevideo": name,
+                    'URLYoutrue': urlvideos,
+                  });
+
+                  labal.text = '';
+                  urlvideo.text = '';
+
+                  Navigator.of(context).pop();
+                },
+                child: const Text("ยืนยัน"),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +169,7 @@ class _AddvideoState extends State<Addvideo> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูล',
+          'วิดิโอเพื่อสุภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -227,7 +300,7 @@ class _AddvideoState extends State<Addvideo> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

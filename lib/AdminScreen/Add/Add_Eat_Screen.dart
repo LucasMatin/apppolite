@@ -111,6 +111,93 @@ class _SaveeatState extends State<Saveeat> {
         });
   }
 
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialID = documentSnapshot['ID'];
+    final String initialTitle1 = documentSnapshot['Title1'];
+    final String initialTitle2 = documentSnapshot['Title2'];
+
+    id.text = initialID;
+    title1.text = initialTitle1;
+    title2.text = initialTitle2;
+
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: Text(
+                        "แก้ไข",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextField(
+                      controller: id,
+                      decoration: const InputDecoration(
+                          labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextField(
+                      maxLines: 1,
+                      controller: title1,
+                      decoration: const InputDecoration(
+                          labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextField(
+                      maxLines: 10,
+                      controller: title2,
+                      decoration: const InputDecoration(
+                          labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                        onPressed: () async {
+                          final String name = title1.text;
+                          final String nname = title2.text;
+                          final String num = id.text;
+                          await documentSnapshot.reference.update({
+                            "Title1": name,
+                            "Title2": nname,
+                            "ID": num,
+                          });
+                          title1.text = '';
+                          title2.text = '';
+                          id.text = '';
+
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("ยืนยัน"))
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +205,7 @@ class _SaveeatState extends State<Saveeat> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูล',
+          'กินอย่างไรให้สุขภาพดี',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -233,7 +320,7 @@ class _SaveeatState extends State<Saveeat> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

@@ -89,10 +89,11 @@ class _AddarticaleState extends State<Addarticale> {
   }
 
   // for Update operation
-  Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
-    if (documentSnapshot != null) {
-      labal.text = documentSnapshot['Lable'];
-    }
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Lable'];
+
+    labal.text = initialLabel;
+
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -125,12 +126,12 @@ class _AddarticaleState extends State<Addarticale> {
                     onPressed: () async {
                       final String name = labal.text;
 
-                      await _items.doc(name).update({"Lable": name});
+                      await documentSnapshot.reference.update({"Lable": name});
                       labal.text = '';
 
                       Navigator.of(context).pop();
                     },
-                    child: const Text("Update"))
+                    child: const Text("ยืนยัน"))
               ],
             ),
           );
@@ -144,7 +145,7 @@ class _AddarticaleState extends State<Addarticale> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูล',
+          'บทความเพื่อสุขภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -250,7 +251,7 @@ class _AddarticaleState extends State<Addarticale> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

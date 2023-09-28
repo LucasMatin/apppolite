@@ -76,6 +76,57 @@ class _AddnutritionState extends State<Addnutrition> {
         });
   }
 
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Lable'];
+
+    labal.text = initialLabel;
+
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Center(
+                  child: Text(
+                    "แก้ไข",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                TextField(
+                  controller: labal,
+                  decoration: const InputDecoration(
+                      labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final String name = labal.text;
+                      await documentSnapshot.reference.update({
+                        "Lable": name,
+                      });
+                      labal.text = '';
+
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("ยืนยัน"))
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +134,7 @@ class _AddnutritionState extends State<Addnutrition> {
         backgroundColor: Colors.brown[300],
         elevation: 0,
         title: Text(
-          'เพิ่มข้อมูล',
+          'แนะนำเกี่ยวกับโภชนาการ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -189,7 +240,7 @@ class _AddnutritionState extends State<Addnutrition> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

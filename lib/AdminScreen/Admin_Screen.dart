@@ -13,6 +13,7 @@ class Adminuser extends StatefulWidget {
 class _AdminuserState extends State<Adminuser> {
   // text field controller
   TextEditingController labal = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   CollectionReference _items = FirebaseFirestore.instance.collection('AdminID');
   @override
@@ -24,6 +25,79 @@ class _AdminuserState extends State<Adminuser> {
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
     _items = FirebaseFirestore.instance.collection("AdminID");
+  }
+
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Fullname'];
+    final String initialUrl = documentSnapshot['Email'];
+
+    labal.text = initialLabel;
+    email.text = initialUrl;
+
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            right: 20,
+            left: 20,
+            bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(
+                child: Text(
+                  "แก้ไข",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextField(
+                controller: labal,
+                decoration: const InputDecoration(
+                  labelText: 'ชื่อแอดมิน',
+                  hintText: 'กรุณาชื่อแอดมิน',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: email,
+                decoration: const InputDecoration(
+                  labelText: 'อีเมลล์',
+                  hintText: 'กรุณาอีเมลล์',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final String name = labal.text;
+                  final String urlvideos = email.text;
+
+                  await documentSnapshot.reference.update({
+                    "Email": name,
+                    'Fullname': urlvideos,
+                  });
+
+                  labal.text = '';
+                  email.text = '';
+
+                  Navigator.of(context).pop();
+                },
+                child: const Text("ยืนยัน"),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -142,7 +216,7 @@ class _AdminuserState extends State<Adminuser> {
                                                 InkWell(
                                                     //TO DO DELETE
                                                     onTap: () async {
-                                                      // await _update();
+                                                      await _update(document);
                                                     },
                                                     child:
                                                         const Icon(Icons.edit)),

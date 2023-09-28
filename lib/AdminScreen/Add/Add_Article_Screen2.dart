@@ -207,6 +207,195 @@ class _EditarticleState extends State<Editarticle> {
         });
   }
 
+  // for _update operation
+  Future<void> _update(DocumentSnapshot documentSnapshot) async {
+    final String initialLabel = documentSnapshot['Title'];
+    final String initialUrl = documentSnapshot['ID'];
+    final String initialContent = documentSnapshot['Content'];
+    final String initialImage = documentSnapshot['Image'];
+
+    title.text = initialLabel;
+    id.text = initialUrl;
+    texts.text = initialContent;
+    imageUrl = initialImage;
+
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 20,
+                  right: 20,
+                  left: 20,
+                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      "แก้ไข",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: id,
+                    decoration: const InputDecoration(
+                        labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: title,
+                    decoration: const InputDecoration(
+                      labelText: 'หัวข้อ',
+                      hintText: 'กรุณาเพิ่มหัวข้อ',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    maxLines: 8,
+                    controller: texts,
+                    decoration: const InputDecoration(
+                        labelText: 'เนื้อหา', hintText: 'กรุณาเนื้อหา'),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  // Display the image if available
+                  imageUrl.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Container(
+                              width: 200, // Set the desired width
+                              height: 150, // Set the desired height
+
+                              child: Image.network(imageUrl),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  ListTile(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+
+                      print('${file?.path}');
+
+                      if (file == null) return;
+
+                      String uniqueFileName =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference referenceRoot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                          referenceRoot.child('images');
+
+                      Reference referenceImageToUpload =
+                          referenceDirImages.child(uniqueFileName);
+
+                      try {
+                        await referenceImageToUpload.putFile(File(file.path));
+
+                        imageUrl =
+                            await referenceImageToUpload.getDownloadURL();
+                        // แสดงข้อมูลหลังจากอัปโหลดรูปภาพสำเร็จ
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('อัปโหลดรูปภาพสำเร็จ'),
+                              content: Column(
+                                children: [
+                                  Image.network(
+                                      imageUrl), // แสดงรูปภาพที่อัปโหลด
+                                  Text('URL ของรูปภาพ: $imageUrl'),
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ปิด'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        setState(() {});
+                      } catch (error) {
+                        // แสดงข้อความหรือผลลัพธ์อื่น ๆ หากมีข้อผิดพลาด
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: $error'),
+                          ),
+                        );
+                      }
+                    },
+                    leading: Icon(Icons.add_a_photo_rounded),
+                    title: const Text('เลือกรูปภาพ'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      // if (imageUrl == null ||
+                      //     imageUrl.isEmpty ||
+                      //     imageUrl.trim() == "") {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     const SnackBar(
+                      //       content: Text('กรุณาอัปโหลดรูปภาพ'),
+                      //     ),
+                      //   );
+                      //   return;
+                      // }
+
+                      final String number = id.text;
+                      final String name = title.text;
+                      final String text = texts.text;
+                      {
+                        // ตรวจสอบว่าชื่อไม่ว่างเปล่า
+                        await documentSnapshot.reference.update({
+                          "ID": number,
+                          "Title": name,
+                          "Content": text,
+                          'Image': imageUrl,
+                        });
+                        id.text = '';
+                        title.text = '';
+                        texts.text = '';
+                        imageUrl = "";
+                        Navigator.of(context)
+                            .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
+                      }
+                    },
+                    child: const Text("ยืนยัน"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -395,7 +584,7 @@ class _EditarticleState extends State<Editarticle> {
                                               InkWell(
                                                   //TO DO DELETE
                                                   onTap: () async {
-                                                    // await _update();
+                                                    await _update(document);
                                                   },
                                                   child:
                                                       const Icon(Icons.edit)),

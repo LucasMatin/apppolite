@@ -228,12 +228,12 @@ class _AddadminscreenState extends State<Addadminscreen> {
           ),
         ),
       ),
-      // Create new project button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _check(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
-        child: const Icon(Icons.assignment_turned_in),
-      ),
+      // // Create new project button
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => _check(),
+      //   backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+      //   child: const Icon(Icons.assignment_turned_in),
+      // ),
     );
   }
 }
