@@ -1,8 +1,13 @@
+// ignore_for_file: file_names
+
+// ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Sos extends StatefulWidget {
+  const Sos({super.key});
+
   @override
   State<Sos> createState() => _SosState();
 }
@@ -15,6 +20,7 @@ class _SosState extends State<Sos> {
     final String url = 'tel:$emergencyPhoneNumber';
 
     try {
+      // ignore: deprecated_member_use
       await launch(url);
     } catch (e) {
       // Handle errors here if needed
@@ -22,11 +28,11 @@ class _SosState extends State<Sos> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Unable to make a call.'),
+            title: const Text('Error'),
+            content: const Text('Unable to make a call.'),
             actions: <Widget>[
               FlatButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -42,11 +48,12 @@ class _SosState extends State<Sos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'เหตุฉุกเฉิน',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -64,7 +71,8 @@ class _SosState extends State<Sos> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          title: Center(child: Text('แจ้งเหตุฉุกเฉินหรือไม่')),
+                          title: const Center(
+                              child: Text('แจ้งเหตุฉุกเฉินหรือไม่')),
                           actions: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment
@@ -73,9 +81,9 @@ class _SosState extends State<Sos> {
                                 ElevatedButton(
                                   style: ButtonStyle(
                                     minimumSize: MaterialStateProperty.all(
-                                        Size(120, 40)),
+                                        const Size(120, 40)),
                                   ),
-                                  child: Text('ใช่'),
+                                  child: const Text('ใช่'),
                                   onPressed: () {
                                     callEmergency();
                                   },
@@ -83,9 +91,9 @@ class _SosState extends State<Sos> {
                                 ElevatedButton(
                                   style: ButtonStyle(
                                     minimumSize: MaterialStateProperty.all(
-                                        Size(120, 40)),
+                                        const Size(120, 40)),
                                   ),
-                                  child: Text('ไม่ใช่'),
+                                  child: const Text('ไม่ใช่'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -108,4 +116,5 @@ class _SosState extends State<Sos> {
   }
 }
 
+// ignore: non_constant_identifier_names
 FlatButton({required Text child, required Null Function() onPressed}) {}

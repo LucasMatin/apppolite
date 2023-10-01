@@ -1,13 +1,12 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/Add_Article_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Eat_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Video_Screen.dart';
-import 'package:polite/Test/Add_FoodToday_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Food_Screen.dart';
-
-import 'package:polite/Screens/Bottom_Screen.dart';
 
 class HomeadminScreen extends StatefulWidget {
   const HomeadminScreen({super.key});
@@ -17,14 +16,16 @@ class HomeadminScreen extends StatefulWidget {
 }
 
 class _HomeadminScreenState extends State<HomeadminScreen> {
-  CollectionReference _items = FirebaseFirestore.instance.collection('UserID');
+  // ignore: unused_field
+  final CollectionReference _items =
+      FirebaseFirestore.instance.collection('UserID');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'จัดการแอดมิน',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -35,19 +36,21 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
           child: Center(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Addfood()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Addfood()));
                   },
                   child: SizedBox(
                     width: 400.0,
                     height: 140.0,
                     child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
+                      color: const Color.fromARGB(255, 143, 113, 102),
                       elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -61,8 +64,8 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                 "images/food.png",
                                 width: 65.0,
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
+                              const SizedBox(height: 10.0),
+                              const Text(
                                 "อาหาร",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -82,13 +85,13 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Addnutrition()));
+                            builder: (context) => const Addnutrition()));
                   },
                   child: SizedBox(
                     width: 400.0,
                     height: 140.0,
                     child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
+                      color: const Color.fromARGB(255, 143, 113, 102),
                       elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -102,8 +105,8 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                 "images/nutrition.png",
                                 width: 65.0,
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
+                              const SizedBox(height: 10.0),
+                              const Text(
                                 "แนะนำเกี่ยวกับโภชนาการ",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -120,14 +123,16 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Saveeat()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Saveeat()));
                   },
                   child: SizedBox(
                     width: 400.0,
                     height: 140.0,
                     child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
+                      color: const Color.fromARGB(255, 143, 113, 102),
                       elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -141,8 +146,8 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                 "images/eat.png",
                                 width: 65.0,
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
+                              const SizedBox(height: 10.0),
+                              const Text(
                                 "กินอย่างไรให้สุภาพดี",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -159,14 +164,16 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Addarticale()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Addarticale()));
                   },
                   child: SizedBox(
                     width: 400.0,
                     height: 140.0,
                     child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
+                      color: const Color.fromARGB(255, 143, 113, 102),
                       elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -180,8 +187,8 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                 "images/article.png",
                                 width: 98.0,
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
+                              const SizedBox(height: 10.0),
+                              const Text(
                                 "บทความเพื่อสุขภาพ",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -198,14 +205,16 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Addvideo()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Addvideo()));
                   },
                   child: SizedBox(
                     width: 400.0,
                     height: 140.0,
                     child: Card(
-                      color: Color.fromARGB(255, 143, 113, 102),
+                      color: const Color.fromARGB(255, 143, 113, 102),
                       elevation: 2.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -219,8 +228,8 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                                 "images/exercise.png",
                                 width: 67.0,
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
+                              const SizedBox(height: 10.0),
+                              const Text(
                                 "วิดิโอเพื่อสุภาพ",
                                 style: TextStyle(
                                   color: Colors.white,

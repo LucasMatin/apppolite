@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +108,7 @@ class _AdminuserState extends State<Adminuser> {
         appBar: AppBar(
           backgroundColor: Colors.brown[300],
           elevation: 0,
-          title: Text(
+          title: const Text(
             'เช็คแอดมิน',
             style: TextStyle(color: Colors.white, fontSize: 23),
           ),
@@ -170,7 +172,7 @@ class _AdminuserState extends State<Adminuser> {
                                               children: [
                                                 Text(
                                                   "แอดมิน : $name",
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 15,
                                                   ),
                                                 )
@@ -196,7 +198,7 @@ class _AdminuserState extends State<Adminuser> {
                                                                       0, 20) +
                                                               '...'
                                                           : email,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 15,
                                                       ),
                                                     ))
@@ -269,7 +271,7 @@ class _AdminuserState extends State<Adminuser> {
                   },
                 );
               }
-              return Text("ไม่มีข้อมูล");
+              return const Text("ไม่มีข้อมูล");
             }));
   }
 }

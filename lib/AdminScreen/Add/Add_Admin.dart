@@ -1,8 +1,10 @@
+// ignore_for_file: file_names, use_build_context_synchronously, duplicate_ignore, avoid_print, unused_element
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Admin_Screen.dart';
-import 'package:polite/AdminScreen/Login_Admin_Screen.dart';
+
 import 'package:polite/Screens/wiget.dart';
 
 class Addadminscreen extends StatefulWidget {
@@ -44,13 +46,19 @@ class _AddadminscreenState extends State<Addadminscreen> {
             'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
           });
 
+          // ignore: avoid_print
           print("บันทึกสำเร็จ");
         } catch (e) {
+          // ignore: avoid_print
           print("Error creating user: $e");
           // แจ้งเตือนว่ามีข้อผิดพลาดในการสร้างบัญชีผู้ใช้
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
+            // ignore: prefer_const_constructors
             SnackBar(
+              // ignore: prefer_const_constructors
               content: Text('มีข้อผิดพลาดในการสร้างบัญชีผู้ใช้'),
+              // ignore: prefer_const_constructors
               duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
             ),
           );
@@ -58,7 +66,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
       } else {
         // แจ้งเตือนว่ามีบัญชีนี้อยู่แล้ว
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('มีบัญชีนี้อยู่แล้ว'),
             duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
           ),
@@ -67,7 +75,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
     } else {
       // แจ้งเตือนว่าข้อมูลไม่ครบ
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('กรุณากรอกข้อมูลให้ครบ'),
           duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
         ),
@@ -158,7 +166,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ADMIN',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -176,8 +184,8 @@ class _AddadminscreenState extends State<Addadminscreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(2),
+                      const Padding(
+                        padding: EdgeInsets.all(2),
                         child: Center(
                           child: Text(
                             "เพิ่มผู้พัฒนา",

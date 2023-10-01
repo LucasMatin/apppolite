@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last, avoid_unnecessary_containers, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:polite/Screens/Login_Screen.dart';
@@ -18,7 +20,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ข้อมูลผู้ดูแล',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -65,7 +67,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(documents['Fullname'],
-                              style: TextStyle(fontSize: 21)),
+                              style: const TextStyle(fontSize: 21)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -73,11 +75,11 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(documents['Email'],
-                              style: TextStyle(fontSize: 18)),
+                              style: const TextStyle(fontSize: 18)),
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("ผู้ดูแล", style: TextStyle(fontSize: 18)),
@@ -107,7 +109,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                 ),
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,7 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: StreamBuilder<DocumentSnapshot>(
           stream: widget.documentReference.snapshots(),
@@ -37,17 +39,17 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
               final documents = snapshot.data;
               final title = documents?['Lable'] ?? '';
               return Text(
                 title,
-                style: TextStyle(color: Colors.white, fontSize: 23),
+                style: const TextStyle(color: Colors.white, fontSize: 23),
               );
             }
-            return Text('ไม่มีข้อมูล');
+            return const Text('ไม่มีข้อมูล');
           },
         ),
         centerTitle: true,
@@ -66,7 +68,7 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
               );
             }
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('ไม่มีข้อมูล'),
               );
             }
@@ -86,7 +88,7 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                         padding: const EdgeInsets.only(),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             if (t3.isNotEmpty)
@@ -94,7 +96,8 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                                 width: 350.0,
                                 height: 180.0,
                                 child: Card(
-                                  color: Color.fromARGB(255, 143, 113, 102),
+                                  color:
+                                      const Color.fromARGB(255, 143, 113, 102),
                                   elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
@@ -105,7 +108,7 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                                   ),
                                 ),
                               ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             if (t1.isNotEmpty)
@@ -115,14 +118,14 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                                 child: Center(
                                   child: Text(
                                     t1,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             if (t2.isNotEmpty)
@@ -131,7 +134,7 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                                     const EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
                                   t2,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 19,
                                   ),
                                 ),

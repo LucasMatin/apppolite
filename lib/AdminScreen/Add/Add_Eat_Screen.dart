@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, unused_element, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +59,7 @@ class _SaveeatState extends State<Saveeat> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -65,7 +67,7 @@ class _SaveeatState extends State<Saveeat> {
                       decoration: const InputDecoration(
                           labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -74,7 +76,7 @@ class _SaveeatState extends State<Saveeat> {
                       decoration: const InputDecoration(
                           labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -144,7 +146,7 @@ class _SaveeatState extends State<Saveeat> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -152,7 +154,7 @@ class _SaveeatState extends State<Saveeat> {
                       decoration: const InputDecoration(
                           labelText: 'ลำดับ', hintText: 'กรุณาลำดับ'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -161,7 +163,7 @@ class _SaveeatState extends State<Saveeat> {
                       decoration: const InputDecoration(
                           labelText: 'หัวข้อ', hintText: 'กรุณาเพิ่มหัวข้อ'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextField(
@@ -204,7 +206,7 @@ class _SaveeatState extends State<Saveeat> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'กินอย่างไรให้สุขภาพดี',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -283,7 +285,7 @@ class _SaveeatState extends State<Saveeat> {
                                           children: [
                                             Text(
                                               title1,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -373,7 +375,7 @@ class _SaveeatState extends State<Saveeat> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

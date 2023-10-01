@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unnecessary_string_interpolations, avoid_print, avoid_function_literals_in_foreach_calls, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +8,8 @@ import 'package:polite/FoodSceen/Open_FoodDaytime_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodMorning_Screen.dart';
 import 'package:polite/FoodSceen/Open_Foodevening_Screen.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:polite/Screens/Bottom_Screen.dart';
-import 'package:polite/Screens/Home_Screen.dart';
 
 class Foodscreen extends StatefulWidget {
   const Foodscreen({super.key});
@@ -18,6 +19,12 @@ class Foodscreen extends StatefulWidget {
 }
 
 class _FoodscreenState extends State<Foodscreen> {
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    getTotalCallory();
+  }
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   String formattedDate = "";
 
@@ -111,9 +118,9 @@ class _FoodscreenState extends State<Foodscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'บันทึกรายการอาหาร',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -125,11 +132,12 @@ class _FoodscreenState extends State<Foodscreen> {
             children: [
               Container(
                 height: 75,
-                color: Color.fromARGB(255, 228, 203, 184),
+                color: const Color.fromARGB(255, 228, 203, 184),
                 child: Center(
                   child: Text(
                     '${getCurrentDateTime()}',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -139,22 +147,22 @@ class _FoodscreenState extends State<Foodscreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Addfoodmorning(),
+                      builder: (context) => const Addfoodmorning(),
                     ),
                   );
                 },
                 child: SizedBox(
-                  width: 400.0,
+                  width: 370.0,
                   height: 100.0,
                   child: Card(
-                    color: Color.fromARGB(255, 143, 113, 102),
+                    color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Column(
                           children: [
                             SizedBox(height: 5.0),
@@ -163,7 +171,7 @@ class _FoodscreenState extends State<Foodscreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 23,
+                                fontSize: 30,
                               ),
                             ),
                           ],
@@ -179,22 +187,22 @@ class _FoodscreenState extends State<Foodscreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Addfooddaytime(),
+                      builder: (context) => const Addfooddaytime(),
                     ),
                   );
                 },
                 child: SizedBox(
-                  width: 400.0,
+                  width: 370.0,
                   height: 100.0,
                   child: Card(
-                    color: Color.fromARGB(255, 143, 113, 102),
+                    color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Column(
                           children: [
                             SizedBox(height: 5.0),
@@ -203,7 +211,7 @@ class _FoodscreenState extends State<Foodscreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 23,
+                                fontSize: 30,
                               ),
                             ),
                           ],
@@ -224,17 +232,17 @@ class _FoodscreenState extends State<Foodscreen> {
                   );
                 },
                 child: SizedBox(
-                  width: 400.0,
+                  width: 370.0,
                   height: 100.0,
                   child: Card(
-                    color: Color.fromARGB(255, 143, 113, 102),
+                    color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Column(
                           children: [
                             SizedBox(height: 5.0),
@@ -243,7 +251,7 @@ class _FoodscreenState extends State<Foodscreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 23,
+                                fontSize: 30,
                               ),
                             ),
                           ],
@@ -253,12 +261,12 @@ class _FoodscreenState extends State<Foodscreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               FutureBuilder<int>(
                 future: getTotalCallory(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -274,13 +282,13 @@ class _FoodscreenState extends State<Foodscreen> {
                   return Center(
                     child: Text(
                       "รวมค่าแคลอรี่: $totalCallory แคลลอรี่",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.only(),
                 child: Center(
@@ -289,23 +297,21 @@ class _FoodscreenState extends State<Foodscreen> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const Openview(),
-                        //   ),
-                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FoodListPage(),
+                            builder: (context) => const FoodListPage(),
                           ),
                         );
                       },
-                      child: Text(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color.fromARGB(255, 112, 86,
+                              77) // Set your desired background color here
+                          ),
+                      child: const Text(
                         'รายการอาหารทั้งหมด',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -328,7 +334,11 @@ class _FoodscreenState extends State<Foodscreen> {
                               builder: (_) => const bottomsceen()),
                         );
                       },
-                      child: Text(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color.fromARGB(255, 112, 86,
+                              77) // Set your desired background color here
+                          ),
+                      child: const Text(
                         'บันทึก',
                         style: TextStyle(
                           fontSize: 25,

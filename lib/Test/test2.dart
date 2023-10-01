@@ -3,11 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoListScreen extends StatelessWidget {
+  const VideoListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายการวิดีโอ YouTrue'),
+        title: const Text('รายการวิดีโอ YouTrue'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         // รับข้อมูล URL วิดีโอจาก Firebase Firestore
@@ -15,7 +17,7 @@ class VideoListScreen extends StatelessWidget {
             FirebaseFirestore.instance.collection('VideoScreen').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

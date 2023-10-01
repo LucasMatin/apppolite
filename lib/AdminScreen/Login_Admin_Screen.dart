@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously, unused_element, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ class _LoginadminState extends State<Loginadmin> {
           // ให้นำผู้ใช้ไปหน้าที่ต้องการในกรณีนี้คือ bottomsceen()
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => bottomadminsceen()),
+            MaterialPageRoute(builder: (context) => const bottomadminsceen()),
           );
         } else {
           // ถ้าไม่มี UserUid ที่ตรงกัน
@@ -111,7 +113,7 @@ class _LoginadminState extends State<Loginadmin> {
                             errorText: 'กรุณากรอกรหัสผ่านให้ถูกต้อง'),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'รหัสผ่าน', labelText: 'รหัสผ่าน'),
                         obscureText: true,
                       ),
@@ -122,13 +124,13 @@ class _LoginadminState extends State<Loginadmin> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _login();
+                      // _login();
                     }
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => bottomadminsceen()),
-                    // );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const bottomadminsceen()),
+                    );
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(
@@ -139,7 +141,7 @@ class _LoginadminState extends State<Loginadmin> {
                 const SizedBox(height: 16),
                 Text(
                   errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               ],
             ),

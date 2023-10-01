@@ -1,7 +1,8 @@
+// ignore_for_file: file_names, prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, duplicate_ignore
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:polite/Test/Add_Video_Screen2.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addvideo extends StatefulWidget {
@@ -31,6 +32,7 @@ class _AddvideoState extends State<Addvideo> {
 
   String searchText = '';
   // for create operation
+  // ignore: unused_element
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -80,6 +82,7 @@ class _AddvideoState extends State<Addvideo> {
                       labal.text = '';
                       urlvideo.text = '';
 
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pop();
                     },
                     child: const Text("ยืนยัน"))
@@ -168,7 +171,7 @@ class _AddvideoState extends State<Addvideo> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'วิดิโอเพื่อสุภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -252,7 +255,7 @@ class _AddvideoState extends State<Addvideo> {
                                                                     0, 20) +
                                                             '...'
                                                         : lable1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -280,7 +283,7 @@ class _AddvideoState extends State<Addvideo> {
                                                                     0, 20) +
                                                             '...'
                                                         : urlvideos,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 15,
                                                     ),
                                                   ))
@@ -353,7 +356,7 @@ class _AddvideoState extends State<Addvideo> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

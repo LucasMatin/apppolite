@@ -301,3 +301,43 @@ class _TableEatScreenState extends State<TableEatScreen> {
     );
   }
 }
+
+
+ // @override
+  // void initState() {
+  //   super.initState();
+  //   final parts = widget.textedit.split(' $lable1 ');
+  //   final partss = widget.callory.split('$callory ');
+  //   if (parts.length == 2) {
+  //     lable1 = parts[0];
+  //     callory = partss[1].replaceAll(' แคลลอรี่', '');
+  //     print(callory);
+  //   }
+  // }
+
+  // void increment() {
+  //   setState(() {
+  //     number++;
+  //     if (number >= 2) {
+  //       // เพิ่มค่า callory เมื่อ number เป็น 2 ขึ้นไป
+  //       print("$callory");
+  //       // callory = (int.parse(callory!) +
+  //       //         int.parse(widget.textedit
+  //       //             .split(' : ')[1]
+  //       //             .replaceAll(' แคลลอรี่', '')))
+  //       //     .toString();
+  //     }
+  //   });
+  // }
+
+  // void decrement() {
+  //   setState(() {
+  //     if (number > 1) {
+  //       number--;
+  //       if (number == 1) {
+  //         // ให้ค่า callory เป็นค่าปกติของแคลอรี่ เมื่อ number เป็น 1
+  //         callory = widget.textedit.split(' : ')[1].replaceAll(' แคลลอรี่', '');
+  //       }
+  //     }
+  //   });
+  // }

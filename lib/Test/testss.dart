@@ -4,7 +4,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class YouTubePlayerScreen extends StatelessWidget {
   final String videoUrl; // URL ของวิดีโอ YouTube
 
-  YouTubePlayerScreen({required this.videoUrl});
+  const YouTubePlayerScreen({super.key, required this.videoUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +12,17 @@ class YouTubePlayerScreen extends StatelessWidget {
     String videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
 
     // สร้าง YoutubePlayerController ด้วย videoId
+    // ignore: no_leading_underscores_for_local_identifiers
     final YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: videoId,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: true, // เล่นอัตโนมัติเมื่อแสดง
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('แสดงวิดีโอ YouTube'),
+        title: const Text('แสดงวิดีโอ YouTube'),
       ),
       body: Center(
         child: YoutubePlayer(

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, sized_box_for_whitespace, non_constant_identifier_names, use_build_context_synchronously, await_only_futures, unused_element, file_names
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,7 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
-import 'package:polite/AdminScreen/test.dart';
+// ignore: unused_import
+import 'package:polite/Test/testasd.dart';
 
 class Editarticle extends StatefulWidget {
   final DocumentReference documentReference;
@@ -37,7 +40,7 @@ class _EditarticleState extends State<Editarticle> {
   TextEditingController id = TextEditingController();
   TextEditingController texts = TextEditingController();
 
-  CollectionReference _items =
+  final CollectionReference _items =
       FirebaseFirestore.instance.collection('ArticleScreen');
 
   String searchText = '';
@@ -126,7 +129,7 @@ class _EditarticleState extends State<Editarticle> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('อัปโหลดรูปภาพสำเร็จ'),
+                              title: const Text('อัปโหลดรูปภาพสำเร็จ'),
                               content: Column(
                                 children: [
                                   Image.network(
@@ -139,7 +142,7 @@ class _EditarticleState extends State<Editarticle> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('ปิด'),
+                                  child: const Text('ปิด'),
                                 ),
                               ],
                             );
@@ -156,7 +159,7 @@ class _EditarticleState extends State<Editarticle> {
                         );
                       }
                     },
-                    leading: Icon(Icons.add_a_photo_rounded),
+                    leading: const Icon(Icons.add_a_photo_rounded),
                     title: const Text('เลือกรูปภาพ'),
                   ),
                   const SizedBox(
@@ -319,7 +322,7 @@ class _EditarticleState extends State<Editarticle> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('อัปโหลดรูปภาพสำเร็จ'),
+                              title: const Text('อัปโหลดรูปภาพสำเร็จ'),
                               content: Column(
                                 children: [
                                   Image.network(
@@ -332,7 +335,7 @@ class _EditarticleState extends State<Editarticle> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('ปิด'),
+                                  child: const Text('ปิด'),
                                 ),
                               ],
                             );
@@ -349,7 +352,7 @@ class _EditarticleState extends State<Editarticle> {
                         );
                       }
                     },
-                    leading: Icon(Icons.add_a_photo_rounded),
+                    leading: const Icon(Icons.add_a_photo_rounded),
                     title: const Text('เลือกรูปภาพ'),
                   ),
                   const SizedBox(
@@ -410,17 +413,17 @@ class _EditarticleState extends State<Editarticle> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
               final documents = snapshot.data;
               final title = documents?['Lable'] ?? '';
               return Text(
                 title,
-                style: TextStyle(color: Colors.white, fontSize: 23),
+                style: const TextStyle(color: Colors.white, fontSize: 23),
               );
             }
-            return Text('ไม่มีข้อมูล');
+            return const Text('ไม่มีข้อมูล');
           },
         ),
         centerTitle: true,
@@ -515,7 +518,7 @@ class _EditarticleState extends State<Editarticle> {
                                                                     0, 20) +
                                                             '...'
                                                         : lable1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -541,7 +544,7 @@ class _EditarticleState extends State<Editarticle> {
                                                                     0, 20) +
                                                             '...'
                                                         : content,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 15,
                                                     ),
                                                   ))
@@ -564,7 +567,7 @@ class _EditarticleState extends State<Editarticle> {
                                                                     0, 20) +
                                                             '...'
                                                         : Image,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 15,
                                                     ),
                                                   ))
@@ -642,7 +645,7 @@ class _EditarticleState extends State<Editarticle> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

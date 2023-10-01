@@ -1,6 +1,12 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, avoid_print, unused_element, file_names
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addfood extends StatefulWidget {
@@ -11,6 +17,9 @@ class Addfood extends StatefulWidget {
 }
 
 class _AddfoodState extends State<Addfood> {
+  String imageUrl = '';
+  List<File> image = [];
+  ImagePicker picker = ImagePicker();
   // text field controller
   TextEditingController labal = TextEditingController();
   TextEditingController callory = TextEditingController();
@@ -93,7 +102,7 @@ class _AddfoodState extends State<Addfood> {
                         }).toList(),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "/",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -128,6 +137,70 @@ class _AddfoodState extends State<Addfood> {
                 const SizedBox(
                   height: 20,
                 ),
+                ListTile(
+                  onTap: () async {
+                    ImagePicker imagePicker = ImagePicker();
+                    XFile? file = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+
+                    print('${file?.path}');
+
+                    if (file == null) return;
+
+                    String uniqueFileName =
+                        DateTime.now().millisecondsSinceEpoch.toString();
+
+                    Reference referenceRoot = FirebaseStorage.instance.ref();
+                    Reference referenceDirImages = referenceRoot.child('Food');
+
+                    Reference referenceImageToUpload =
+                        referenceDirImages.child(uniqueFileName);
+
+                    try {
+                      await referenceImageToUpload.putFile(File(file.path));
+
+                      imageUrl = await referenceImageToUpload.getDownloadURL();
+                      // แสดงข้อมูลหลังจากอัปโหลดรูปภาพสำเร็จ
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('อัปโหลดรูปภาพสำเร็จ'),
+                            content: Column(
+                              children: [
+                                Image.network(imageUrl), // แสดงรูปภาพที่อัปโหลด
+                                Text('URL ของรูปภาพ: $imageUrl'),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('ปิด'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      setState(() {});
+                    } catch (error) {
+                      // แสดงข้อความหรือผลลัพธ์อื่น ๆ หากมีข้อผิดพลาด
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: $error'),
+                        ),
+                      );
+                    }
+                  },
+                  leading: const Icon(Icons.add_a_photo_rounded),
+                  title: const Text('เลือกรูปภาพ'),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     final String name = labal.text;
@@ -140,15 +213,18 @@ class _AddfoodState extends State<Addfood> {
                         "Foodtype": selectedFood,
                         "Category":
                             selectedCategory, // เพิ่มค่าประเภทที่ผู้ใช้เลือก
+                        'Image': imageUrl,
                       });
                       labal.text = '';
+                      callory.text = '';
+                      imageUrl = "";
                       Navigator.of(context)
                           .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                     } else {
                       // ในกรณีที่ชื่อว่างเปล่า คุณสามารถแจ้งเตือนผู้ใช้หรือดำเนินการเพิ่มเติมตามที่คุณต้องการ
                       // ยกตัวอย่างเช่นแสดง SnackBar หรือ AlertDialog
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('กรุณากรอกชื่อ'),
                         ),
                       );
@@ -168,11 +244,13 @@ class _AddfoodState extends State<Addfood> {
     final String initialCallory = documentSnapshot['Callory'];
     final String initialCategory = documentSnapshot['Category'];
     final String initialFoodtype = documentSnapshot['Foodtype'];
+    final String initialImage = documentSnapshot['Image'];
 
     labal.text = initialLabel;
     callory.text = initialCallory;
     selectedCategory = initialCategory;
     selectedFood = initialFoodtype;
+    imageUrl = initialImage;
 
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -235,7 +313,7 @@ class _AddfoodState extends State<Addfood> {
                         }).toList(),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "/",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -268,7 +346,85 @@ class _AddfoodState extends State<Addfood> {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 5,
+                ),
+                // Display the image if available
+                imageUrl.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Container(
+                            width: 200, // Set the desired width
+                            height: 150, // Set the desired height
+
+                            child: Image.network(imageUrl),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                const SizedBox(
+                  height: 5,
+                ),
+                ListTile(
+                  onTap: () async {
+                    ImagePicker imagePicker = ImagePicker();
+                    XFile? file = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+
+                    print('${file?.path}');
+
+                    if (file == null) return;
+
+                    String uniqueFileName =
+                        DateTime.now().millisecondsSinceEpoch.toString();
+
+                    Reference referenceRoot = FirebaseStorage.instance.ref();
+                    Reference referenceDirImages = referenceRoot.child('Food');
+
+                    Reference referenceImageToUpload =
+                        referenceDirImages.child(uniqueFileName);
+
+                    try {
+                      await referenceImageToUpload.putFile(File(file.path));
+
+                      imageUrl = await referenceImageToUpload.getDownloadURL();
+                      // แสดงข้อมูลหลังจากอัปโหลดรูปภาพสำเร็จ
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('อัปโหลดรูปภาพสำเร็จ'),
+                            content: Column(
+                              children: [
+                                Image.network(imageUrl), // แสดงรูปภาพที่อัปโหลด
+                                Text('URL ของรูปภาพ: $imageUrl'),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('ปิด'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      setState(() {});
+                    } catch (error) {
+                      // แสดงข้อความหรือผลลัพธ์อื่น ๆ หากมีข้อผิดพลาด
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: $error'),
+                        ),
+                      );
+                    }
+                  },
+                  leading: const Icon(Icons.add_a_photo_rounded),
+                  title: const Text('เลือกรูปภาพ'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -282,15 +438,18 @@ class _AddfoodState extends State<Addfood> {
                         "Foodtype": selectedFood,
                         "Category":
                             selectedCategory, // เพิ่มค่าประเภทที่ผู้ใช้เลือก
+                        'Image': imageUrl,
                       });
                       labal.text = '';
+                      callory.text = '';
+                      imageUrl = "";
                       Navigator.of(context)
                           .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                     } else {
                       // ในกรณีที่ชื่อว่างเปล่า คุณสามารถแจ้งเตือนผู้ใช้หรือดำเนินการเพิ่มเติมตามที่คุณต้องการ
                       // ยกตัวอย่างเช่นแสดง SnackBar หรือ AlertDialog
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('กรุณากรอกชื่อ'),
                         ),
                       );
@@ -310,7 +469,7 @@ class _AddfoodState extends State<Addfood> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'เพิ่มหัวอาหาร',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -347,6 +506,7 @@ class _AddfoodState extends State<Addfood> {
                   final callory = document['Callory'] ?? '';
                   final id = document['Category'] ?? '';
                   final key = document['Foodtype'] ?? '';
+                  final image = document['Image'] ?? '';
 
                   return Padding(
                     padding: const EdgeInsets.only(
@@ -357,7 +517,7 @@ class _AddfoodState extends State<Addfood> {
                     child: Card(
                       elevation: 1,
                       child: SizedBox(
-                        height: 100,
+                        height: 110,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -379,55 +539,98 @@ class _AddfoodState extends State<Addfood> {
                                       //   ),
                                       // );
                                     },
-                                    subtitle: Column(
+                                    subtitle: Stack(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.6,
-                                                  child: Text(
-                                                    lable1.toString().length >
-                                                            20
-                                                        ? lable1
-                                                                .toString()
-                                                                .substring(
-                                                                    0, 20) +
-                                                            '...'
-                                                        : lable1,
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ))
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                " $callory แคลลอรี่   หมวด : $id ",
-                                                style: TextStyle(fontSize: 16),
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.6,
+                                                      child: Text(
+                                                        lable1
+                                                                    .toString()
+                                                                    .length >
+                                                                20
+                                                            ? lable1
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 20) +
+                                                                '...'
+                                                            : lable1,
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ))
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "ประเภท : $key",
-                                                style: TextStyle(fontSize: 16),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "$callory แคลลอรี่",
+                                                    style: const TextStyle(
+                                                        fontSize: 16),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "$id : $key",
+                                                    style: const TextStyle(
+                                                        fontSize: 16),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            SizedBox(
+                                              width: 95.0,
+                                              height: 75.0,
+                                              child: Card(
+                                                color: const Color.fromARGB(
+                                                    255, 237, 230, 224),
+                                                elevation: 2.0,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  child: Image.network(
+                                                    image,
+                                                    width:
+                                                        70, // กำหนดความกว้างของรูป
+                                                    height:
+                                                        50, // กำหนดความสูงของรูป
+                                                    fit: BoxFit
+                                                        .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -494,7 +697,7 @@ class _AddfoodState extends State<Addfood> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

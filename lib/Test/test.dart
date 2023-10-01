@@ -1,18 +1,22 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Gender Dropdown'),
+          title: const Text('Gender Dropdown'),
         ),
-        body: Center(
+        body: const Center(
           child: MyGenderDropdown(),
         ),
       ),
@@ -21,6 +25,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyGenderDropdown extends StatefulWidget {
+  const MyGenderDropdown({super.key});
+
   @override
   _MyGenderDropdownState createState() => _MyGenderDropdownState();
 }

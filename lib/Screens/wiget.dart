@@ -20,6 +20,7 @@ Widget textbox(
 
 Widget boxadmin(controller, String text, String labal, String hint) {
   return Center(
+    // ignore: sized_box_for_whitespace
     child: Container(
       width: 300,
       child: TextFormField(

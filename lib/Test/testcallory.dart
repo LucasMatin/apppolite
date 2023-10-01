@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls, duplicate_ignore
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TotalCalloryPage extends StatelessWidget {
+  const TotalCalloryPage({super.key});
+
   // TotalCalloryPage({required this.useruid, required this.lable});
   Future<int> getTotalCallory() async {
     try {
@@ -56,6 +60,7 @@ class TotalCalloryPage extends StatelessWidget {
         }
       });
 
+      // ignore: avoid_function_literals_in_foreach_calls
       foodDayTimeSnapshot.docs.forEach((doc) {
         final callory = doc['Callory'];
         if (callory is int) {
@@ -65,6 +70,7 @@ class TotalCalloryPage extends StatelessWidget {
         }
       });
 
+      // ignore: avoid_function_literals_in_foreach_calls
       foodEveningSnapshot.docs.forEach((doc) {
         final callory = doc['Callory'];
         if (callory is int) {
@@ -74,9 +80,11 @@ class TotalCalloryPage extends StatelessWidget {
         }
       });
 
+      // ignore: avoid_print
       print("Total Callory: $totalCallory");
       return totalCallory;
     } catch (e) {
+      // ignore: avoid_print
       print("เกิดข้อผิดพลาดในการดึงข้อมูล: $e");
       return 0;
     }
@@ -86,13 +94,13 @@ class TotalCalloryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("รวมค่าแคลอรี่ของ "),
+        title: const Text("รวมค่าแคลอรี่ของ "),
       ),
       body: FutureBuilder<int>(
         future: getTotalCallory(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -108,6 +116,7 @@ class TotalCalloryPage extends StatelessWidget {
           return Center(
             child: Text(
               "รวมค่าแคลอรี่: $totalCallory แคลลอรี่",
+              // ignore: prefer_const_constructors
               style: TextStyle(fontSize: 20),
             ),
           );

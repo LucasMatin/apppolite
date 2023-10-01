@@ -1,9 +1,10 @@
+// ignore_for_file: file_names, sized_box_for_whitespace
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/FoodSceen/Foodscreen.dart';
 import 'package:polite/FoodSceen/Open_CheckFood_Screen.dart';
-import 'package:polite/Screens/Bottom_Screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
@@ -90,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // _calculateTotalCalories();
 
     // เมื่อข้อมูลถูกเพิ่มเรียบร้อย ให้เปิดหน้า Foodscreen
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const Foodscreen()),
@@ -125,11 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
-          'รายการการบริโภค',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+        title: const Text(
+          'โภชนาการของผู้สูงวัย',
+          style: TextStyle(
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -138,21 +141,23 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(children: [
             Container(
               height: 75,
-              color: Color.fromARGB(255, 228, 203, 184),
+              color: const Color.fromARGB(255, 228, 203, 184),
               child: Center(
                 child: Text(
                   getCurrentDateTime(),
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
                 padding: const EdgeInsets.only(),
                 child: Column(
                   children: <Widget>[
+                    // ignore: avoid_unnecessary_containers
                     Container(
                       child: SfCircularChart(
                         series: <CircularSeries>[
@@ -191,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(8),
                       child: Text(
                         "$totalCalories แคลลอรี่",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -201,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         _getStatusText(
                             totalCalories), // ตรวจสอบสถานะและสร้างข้อความ
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.green, // สีข้อความสีเขียว
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -214,6 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(20),
               child: Container(
                 width: 260,
+                height: 60,
                 child: ElevatedButton(
                   onPressed: () {
                     sendUserDataToDB();
@@ -226,35 +232,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: const Text(
                     'บันทึกเมนูอาหาร',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
+                    ),
                   ),
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(1),
-            //   child: Container(
-            //     width: 260,
-            //     child: ElevatedButton(
-            //       onPressed: () {
-            //         // เรียกฟังก์ชันคำนวณค่าแคลอรี่ทั้งหมด
-            //         _calculateTotalCalories();
-            //       },
-            //       style: ButtonStyle(
-            //         minimumSize: MaterialStateProperty.all(const Size(
-            //           double.infinity,
-            //           48,
-            //         )),
-            //       ),
-            //       child: const Text(
-            //         'ตรวจสอบแคลอรี่',
-            //         style:
-            //             TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ]),
         ),
       ),

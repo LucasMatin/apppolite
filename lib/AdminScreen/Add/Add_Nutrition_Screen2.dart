@@ -1,7 +1,8 @@
+// ignore_for_file: file_names, await_only_futures
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/alert_delete.dart';
-import 'package:polite/AdminScreen/test.dart';
 
 class EditNutrition extends StatefulWidget {
   final DocumentReference documentReference;
@@ -29,11 +30,12 @@ class _EditNutritionState extends State<EditNutrition> {
   TextEditingController id = TextEditingController();
   TextEditingController texts = TextEditingController();
 
-  CollectionReference _items =
+  final CollectionReference _items =
       FirebaseFirestore.instance.collection('NutritionScreen');
 
   String searchText = '';
   // for create operation
+  // ignore: unused_element
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -106,6 +108,7 @@ class _EditNutritionState extends State<EditNutrition> {
                         id.text = '';
                         title.text = '';
                         texts.text = '';
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context)
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
@@ -196,6 +199,7 @@ class _EditNutritionState extends State<EditNutrition> {
                         id.text = '';
                         title.text = '';
                         texts.text = '';
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context)
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
@@ -223,17 +227,17 @@ class _EditNutritionState extends State<EditNutrition> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
               final documents = snapshot.data;
               final title = documents?['Lable'] ?? '';
               return Text(
                 title,
-                style: TextStyle(color: Colors.white, fontSize: 23),
+                style: const TextStyle(color: Colors.white, fontSize: 23),
               );
             }
-            return Text('ไม่มีข้อมูล');
+            return const Text('ไม่มีข้อมูล');
           },
         ),
         centerTitle: true,
@@ -315,7 +319,7 @@ class _EditNutritionState extends State<EditNutrition> {
                                             children: [
                                               Text(
                                                 lable1,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -327,6 +331,7 @@ class _EditNutritionState extends State<EditNutrition> {
                                           padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
+                                              // ignore: sized_box_for_whitespace
                                               Container(
                                                   width: MediaQuery.of(context)
                                                           .size
@@ -335,13 +340,14 @@ class _EditNutritionState extends State<EditNutrition> {
                                                   child: Text(
                                                     content.toString().length >
                                                             20
+                                                        // ignore: prefer_interpolation_to_compose_strings
                                                         ? content
                                                                 .toString()
                                                                 .substring(
                                                                     0, 10) +
                                                             '...'
                                                         : content,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 15,
                                                     ),
                                                   ))
@@ -395,6 +401,7 @@ class _EditNutritionState extends State<EditNutrition> {
                                                             .then((value) {})
                                                             .catchError(
                                                                 (error) {
+                                                          // ignore: avoid_print
                                                           print(error);
                                                         });
                                                       });
@@ -419,7 +426,7 @@ class _EditNutritionState extends State<EditNutrition> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

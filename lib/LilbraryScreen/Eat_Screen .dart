@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +28,9 @@ class _EatScreenState extends State<EatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'กินอย่างไรให้สุขภาพดี',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -67,7 +69,7 @@ class _EatScreenState extends State<EatScreen> {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Padding(
@@ -81,7 +83,7 @@ class _EatScreenState extends State<EatScreen> {
                                         left: 10, right: 10),
                                     child: Text(
                                       t1,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -93,7 +95,7 @@ class _EatScreenState extends State<EatScreen> {
                                     const EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
                                   t2,
-                                  style: TextStyle(fontSize: 19),
+                                  style: const TextStyle(fontSize: 19),
                                 ),
                               ),
                             ],
@@ -105,7 +107,7 @@ class _EatScreenState extends State<EatScreen> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

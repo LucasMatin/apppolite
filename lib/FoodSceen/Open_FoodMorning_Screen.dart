@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, camel_case_types, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +33,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
   TextEditingController searchtext = TextEditingController();
   CollectionReference _items = FirebaseFirestore.instance.collection('Food');
   bool isSearching = false; // เพิ่มตัวแปร isSearching เพื่อตรวจสอบสถานะการค้นหา
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +59,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
           backgroundColor: color),
       child: Text(
         '  $label  ',
-        style: const TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black, fontSize: 18),
       ),
     );
   }
@@ -75,9 +78,9 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'อาหารเช้า',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -143,7 +146,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           SizedBox(
@@ -175,16 +178,10 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                                     ),
                                     child: const Text(
                                       '  ทั้งหมด ',
-                                      style: TextStyle(color: Colors.black),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  buildStatusButton(
-                                      foodstatus.drink,
-                                      'เครื่องดื่ม',
-                                      const Color.fromRGBO(255, 228, 193, 1)),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -197,6 +194,13 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                                       foodstatus.dessert,
                                       'ขนมของหวาน',
                                       const Color.fromRGBO(207, 255, 203, 1)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  buildStatusButton(
+                                      foodstatus.drink,
+                                      'เครื่องดื่ม',
+                                      const Color.fromRGBO(255, 228, 193, 1)),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -249,7 +253,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                             ),
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                         ],
@@ -265,6 +269,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                         final callory = document['Callory'] ?? '';
                         final id = document['Category'] ?? '';
                         final key = document['Foodtype'] ?? '';
+                        final image = document['Image'] ?? '';
                         // แปลง search เป็นตัวพิมพ์เล็กทั้งหมด
                         final lowercaseSearch = search.toLowerCase();
 
@@ -328,7 +333,10 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
 
                         return Column(
                           children: [
-                            MyWidget(textedit: "$lable1 : $callory แคลลอรี่")
+                            MyWidget(
+                                textedit: lable1,
+                                image: image,
+                                callory: callory),
                           ],
                         );
                       },
@@ -337,7 +345,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                 ],
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -346,7 +354,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
             MaterialPageRoute(builder: (_) => const Foodscreen()),
           );
         },
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         child: const Icon(Icons.save_as),
       ),
     );
@@ -354,15 +362,25 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
 }
 
 class MyWidget extends StatefulWidget {
-  final String textedit;
+  final String textedit, image, callory;
 
-  MyWidget({required this.textedit});
-
+  const MyWidget(
+      {super.key,
+      required this.textedit,
+      required this.image,
+      required this.callory});
   @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<MyWidget> {
+  late String colory;
+  @override
+  void initState() {
+    super.initState();
+    colory = widget.callory;
+  }
+
   CollectionReference usersCollection =
       FirebaseFirestore.instance.collection("UserID");
 
@@ -372,48 +390,39 @@ class _MyWidgetState extends State<MyWidget> {
     return formatter.format(now);
   }
 
-  int number = 1; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
-  String? lable;
-  String? callory;
-
-  @override
-  void initState() {
-    super.initState();
-    final parts = widget.textedit.split(' : ');
-    if (parts.length == 2) {
-      lable = parts[0];
-      callory = parts[1].replaceAll(' แคลลอรี่', '');
-    }
-  }
-
-  void increment() {
-    setState(() {
-      number++;
-      if (number >= 2) {
-        // เพิ่มค่า callory เมื่อ number เป็น 2 ขึ้นไป
-        callory = (int.parse(callory!) +
-                int.parse(widget.textedit
-                    .split(' : ')[1]
-                    .replaceAll(' แคลลอรี่', '')))
-            .toString();
-      }
-    });
-  }
-
-  void decrement() {
-    setState(() {
-      if (number > 1) {
-        number--;
-        if (number == 1) {
-          // ให้ค่า callory เป็นค่าปกติของแคลอรี่ เมื่อ number เป็น 1
-          callory = widget.textedit.split(' : ')[1].replaceAll(' แคลลอรี่', '');
-        }
-      }
-    });
-  }
-
   // for create operation
-  Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
+  Future<void> _create(
+      {required String lable, required String callorys}) async {
+    int number = 1; // สามารถเปลี่ยนค่าตัวเลขตามต้องการ
+
+    print(callorys);
+    void increment() {
+      setState(() {
+        number++;
+
+        if (number >= 2) {
+          // เพิ่มค่า callory เมื่อ number เป็น 2 ขึ้นไป
+
+          callorys =
+              (int.parse(callorys) + int.parse(widget.callory)).toString();
+        }
+      });
+    }
+
+    void decrement() {
+      setState(() {
+        if (number > 1) {
+          print(number);
+          number--;
+          // ปรับค่า callorys เมื่อ number เป็น 1 ขึ้นไป
+          callorys =
+              (int.parse(callorys) - int.parse(widget.callory)).toString();
+        } else {
+          // ไม่ทำอะไรเมื่อ number เป็น 1 หรือน้อยกว่า
+        }
+      });
+    }
+
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -443,8 +452,8 @@ class _MyWidgetState extends State<MyWidget> {
                     padding: const EdgeInsets.all(2),
                     child: Center(
                       child: Text(
-                        "$lable  $callory แคลลอรี่",
-                        style: TextStyle(fontSize: 25),
+                        "$lable : $callorys แคลอรี่",
+                        style: const TextStyle(fontSize: 25),
                       ),
                     ),
                   ),
@@ -470,7 +479,7 @@ class _MyWidgetState extends State<MyWidget> {
                             onTap: () {
                               decrement();
                             },
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.all(1),
                               child: Icon(
                                 Icons.remove,
@@ -479,14 +488,14 @@ class _MyWidgetState extends State<MyWidget> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Text(
                           '$number',
-                          style: TextStyle(fontSize: 24.0),
+                          style: const TextStyle(fontSize: 24.0),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Ink(
@@ -503,7 +512,7 @@ class _MyWidgetState extends State<MyWidget> {
                             onTap: () {
                               increment();
                             },
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.all(1),
                               child: Icon(
                                 Icons.add,
@@ -534,7 +543,7 @@ class _MyWidgetState extends State<MyWidget> {
                       // เพิ่มข้อมูลลงในเอกสารย่อย
                       await foodTodayDoc.set({
                         'Foodname': lable,
-                        'Callory': callory,
+                        'Callory': callorys,
                         'Number': number,
                       });
 
@@ -559,60 +568,121 @@ class _MyWidgetState extends State<MyWidget> {
             padding: const EdgeInsets.only(),
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 25, top: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.textedit,
-                        style: TextStyle(
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 400.0,
+                  height: 100.0,
+                  child: Card(
+                    color: const Color.fromARGB(255, 112, 80, 68),
+                    elevation: 2.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Stack(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 140.0,
+                              height: 100.0,
+                              child: Card(
+                                color: const Color.fromARGB(255, 237, 230, 224),
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Image.network(
+                                    widget.image,
+                                    width: 100, // กำหนดความกว้างของรูป
+                                    height: 100, // กำหนดความสูงของรูป
+                                    fit: BoxFit
+                                        .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 25, left: 320),
-                  child: Row(
-                    children: <Widget>[
-                      Ink(
-                        width: 32,
-                        height: 32,
-                        decoration: ShapeDecoration(
-                          color: const Color.fromARGB(255, 138, 102, 87),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                8.0), // ปรับขนาดตามที่คุณต้องการ
-                          ),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            // increment();
-                            _create();
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(1),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 150, right: 15, top: 15),
+                          child: SafeArea(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        widget.textedit,
+                                        style: const TextStyle(
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        "$colory แคลอรี่",
+                                        style: const TextStyle(
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 25, left: 170, top: 16),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Ink(
+                                        width: 32,
+                                        height: 32,
+                                        decoration: ShapeDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 138, 102, 87),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8.0), // ปรับขนาดตามที่คุณต้องการ
+                                          ),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            // increment();
+                                            _create(
+                                                callorys: colory,
+                                                lable: widget.textedit);
+                                          },
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(1),
+                                            child: Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-          const Divider(
-            thickness: 2,
-            color: Colors.grey,
-            indent: 25,
-            endIndent: 25,
           ),
         ],
       ),

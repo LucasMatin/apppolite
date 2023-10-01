@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, camel_case_types, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -76,9 +78,9 @@ class _videoscreenState extends State<videoscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'วิดีโอเพื่อสุขภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -153,7 +155,7 @@ class _videoscreenState extends State<videoscreen> {
                             padding: const EdgeInsets.only(left: 25.0),
                             child: Container(
                               alignment: FractionalOffset.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'วิดีโอเพื่อสุขภาพ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -199,7 +201,8 @@ class _videoscreenState extends State<videoscreen> {
                                 width: 400.0,
                                 height: 100.0,
                                 child: Card(
-                                  color: Color.fromARGB(255, 143, 113, 102),
+                                  color:
+                                      const Color.fromARGB(255, 143, 113, 102),
                                   elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
@@ -212,7 +215,7 @@ class _videoscreenState extends State<videoscreen> {
                                             width: 140.0,
                                             height: 100.0,
                                             child: Card(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 237, 230, 224),
                                               elevation: 2.0,
                                               shape: RoundedRectangleBorder(
@@ -255,7 +258,7 @@ class _videoscreenState extends State<videoscreen> {
                                                             .substring(0, 29) +
                                                         '...'
                                                     : lable1,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 21,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
@@ -277,7 +280,7 @@ class _videoscreenState extends State<videoscreen> {
                 ],
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

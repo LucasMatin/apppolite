@@ -1,3 +1,7 @@
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: unnecessary_string_interpolations, file_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:polite/Screens/Home_Screen.dart';
 import 'package:polite/Screens/Lilbrary_Screen.dart';
@@ -7,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:polite/Screens/profile_kub.dart';
 
+// ignore: camel_case_types
 class bottomsceen extends StatefulWidget {
   const bottomsceen({super.key});
 
@@ -14,10 +19,12 @@ class bottomsceen extends StatefulWidget {
   State<bottomsceen> createState() => _bottomsceenState();
 }
 
+// ignore: camel_case_types
 class _bottomsceenState extends State<bottomsceen> {
   final currrenUser = FirebaseAuth.instance.currentUser!;
   int currentIndex = 0;
 
+  // ignore: unused_element
   void _navigateBottomBar(int index) {
     setState(() {
       currentIndex = index;
@@ -27,9 +34,9 @@ class _bottomsceenState extends State<bottomsceen> {
   final List<Widget> _pages = [
     // ignore: prefer_const_constructors
     HomeScreen(),
-    Lilbraryscreen(),
-    Sos(),
-    Profilescreen()
+    const Lilbraryscreen(),
+    const Sos(),
+    const Profilescreen(),
   ];
 
   @override
@@ -47,7 +54,7 @@ class _bottomsceenState extends State<bottomsceen> {
                 BoxShadow(
                   color: Colors.black.withOpacity(.1),
                   blurRadius: 30,
-                  offset: Offset(0, 10),
+                  offset: const Offset(0, 10),
                 ),
               ],
               borderRadius: BorderRadius.circular(50)),
@@ -67,14 +74,14 @@ class _bottomsceenState extends State<bottomsceen> {
               child: Stack(
                 children: [
                   AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     width: index == currentIndex
                         ? displayWidth * .32
                         : displayWidth * .18,
                     alignment: Alignment.center,
                     child: AnimatedContainer(
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       curve: Curves.fastLinearToSlowEaseIn,
                       height: index == currentIndex ? displayWidth * .12 : 0,
                       width: index == currentIndex ? displayWidth * .32 : 0,
@@ -87,7 +94,7 @@ class _bottomsceenState extends State<bottomsceen> {
                     ),
                   ),
                   AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     width: index == currentIndex
                         ? displayWidth * .31
@@ -98,7 +105,7 @@ class _bottomsceenState extends State<bottomsceen> {
                         Row(
                           children: [
                             AnimatedContainer(
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               curve: Curves.fastLinearToSlowEaseIn,
                               width: index == currentIndex
                                   ? displayWidth * .13
@@ -106,7 +113,7 @@ class _bottomsceenState extends State<bottomsceen> {
                             ),
                             AnimatedOpacity(
                               opacity: index == currentIndex ? 1 : 0,
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               curve: Curves.fastLinearToSlowEaseIn,
                               child: Text(
                                 index == currentIndex
@@ -124,7 +131,7 @@ class _bottomsceenState extends State<bottomsceen> {
                         Row(
                           children: [
                             AnimatedContainer(
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               curve: Curves.fastLinearToSlowEaseIn,
                               width: index == currentIndex
                                   ? displayWidth * .03

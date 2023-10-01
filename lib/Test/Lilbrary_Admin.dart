@@ -1,3 +1,6 @@
+// ignore_for_file: file_names, duplicate_ignore
+// ignore: file_names
+// ignore: file_names
 // import 'package:polite/AdminScreen/Add/Add_Article_Screen.dart';
 // import 'package:polite/AdminScreen/Add/Add_Eat_Screen.dart';
 // import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen.dart';

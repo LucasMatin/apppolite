@@ -1,13 +1,21 @@
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class editscreen extends StatefulWidget {
+  const editscreen({super.key});
+
   @override
   State<editscreen> createState() => _editscreenState();
 }
 
+// ignore: camel_case_types
 class _editscreenState extends State<editscreen> {
   final formKey = GlobalKey<FormState>();
 
@@ -27,14 +35,9 @@ class _editscreenState extends State<editscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //     icon: Icon(Icons.arrow_back_ios_new_sharp)),
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'แก้ไขข้อมูลส่วนตัว',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -153,11 +156,13 @@ class _editscreenState extends State<editscreen> {
                                       .update(updatedData);
 
                                   // อัพเดทข้อมูลสำเร็จ
+                                  // ignore: use_build_context_synchronously
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       content: Text('อัพเดทข้อมูลสำเร็จ'),
                                     ),
                                   );
+                                  // ignore: use_build_context_synchronously
                                   Navigator.of(context).pop();
                                 } catch (e) {
                                   // การอัพเดทข้อมูลผิดพลาด
@@ -185,7 +190,7 @@ class _editscreenState extends State<editscreen> {
                 ),
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

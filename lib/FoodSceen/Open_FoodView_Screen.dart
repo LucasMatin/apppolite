@@ -1,9 +1,16 @@
+// ignore_for_file: unnecessary_string_interpolations, avoid_print, avoid_function_literals_in_foreach_calls, library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:polite/FoodSceen/Foodscreen.dart';
+
+import '../AdminScreen/Add/alert_delete.dart';
 
 class FoodListPage extends StatefulWidget {
+  const FoodListPage({super.key});
+
   @override
   _FoodListPageState createState() => _FoodListPageState();
 }
@@ -56,13 +63,67 @@ class _FoodListPageState extends State<FoodListPage> {
     return snapshot;
   }
 
+  void _deleteFoodItem(String foodName) {
+    FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodMorning")
+        .where('Foodname', isEqualTo: foodName)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        doc.reference.delete();
+      });
+    }).catchError((error) {
+      print("Error deleting food: $error");
+    });
+  }
+
+  void _deleteFoodItema(String foodName) {
+    FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodDayTime")
+        .where('Foodname', isEqualTo: foodName)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        doc.reference.delete();
+      });
+    }).catchError((error) {
+      print("Error deleting food: $error");
+    });
+  }
+
+  void _deleteFoodItemb(String foodName) {
+    FirebaseFirestore.instance
+        .collection("UserID")
+        .doc(_userUid)
+        .collection("Foodtoday")
+        .doc(_currentDate)
+        .collection("FoodEvening")
+        .where('Foodname', isEqualTo: foodName)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        doc.reference.delete();
+      });
+    }).catchError((error) {
+      print("Error deleting food: $error");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'รายการอาหารวันนี้',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -74,22 +135,22 @@ class _FoodListPageState extends State<FoodListPage> {
           children: [
             Container(
               height: 75,
-              color: Color.fromARGB(255, 228, 203, 184),
+              color: const Color.fromARGB(255, 228, 203, 184),
               child: Center(
                 child: Text(
                   '${getCurrentDateTime()}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
-                'ตอนเช้า',
+                '  ตอนเช้า',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -97,11 +158,11 @@ class _FoodListPageState extends State<FoodListPage> {
               future: _getFoodCollectionSnapshot(_foodMorningCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -113,13 +174,43 @@ class _FoodListPageState extends State<FoodListPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        trailing: SizedBox(
+                          width: 40,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                      //TO DO DELETE
+                                      onTap: () async {
+                                        final action =
+                                            await AlertDialogs.yesorCancel(
+                                                context,
+                                                'ลบ',
+                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                        if (action == DialogsAction.yes) {
+                                          setState(() {
+                                            _deleteFoodItem(foodname);
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(Icons.delete)),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }).toList(),
@@ -133,11 +224,11 @@ class _FoodListPageState extends State<FoodListPage> {
               indent: 25,
               endIndent: 25,
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
-                'กลางวัน',
+                '  กลางวัน',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -145,11 +236,11 @@ class _FoodListPageState extends State<FoodListPage> {
               future: _getFoodCollectionSnapshot(_foodDayTimeCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนกลางวัน');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -161,13 +252,43 @@ class _FoodListPageState extends State<FoodListPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        trailing: SizedBox(
+                          width: 40,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                      //TO DO DELETE
+                                      onTap: () async {
+                                        final action =
+                                            await AlertDialogs.yesorCancel(
+                                                context,
+                                                'ลบ',
+                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                        if (action == DialogsAction.yes) {
+                                          setState(() {
+                                            _deleteFoodItema(foodname);
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(Icons.delete)),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }).toList(),
@@ -181,11 +302,11 @@ class _FoodListPageState extends State<FoodListPage> {
               indent: 25,
               endIndent: 25,
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
-                'ตอนเย็น',
+                '  ตอนเย็น',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -193,11 +314,11 @@ class _FoodListPageState extends State<FoodListPage> {
               future: _getFoodCollectionSnapshot(_foodEveningCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเย็น');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -209,13 +330,43 @@ class _FoodListPageState extends State<FoodListPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        trailing: SizedBox(
+                          width: 40,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                      //TO DO DELETE
+                                      onTap: () async {
+                                        final action =
+                                            await AlertDialogs.yesorCancel(
+                                                context,
+                                                'ลบ',
+                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                        if (action == DialogsAction.yes) {
+                                          setState(() {
+                                            _deleteFoodItemb(foodname);
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(Icons.delete)),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }).toList(),
@@ -231,6 +382,16 @@ class _FoodListPageState extends State<FoodListPage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const Foodscreen()),
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        child: const Icon(Icons.save_as),
       ),
     );
   }

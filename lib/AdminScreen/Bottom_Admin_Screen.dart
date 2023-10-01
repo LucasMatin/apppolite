@@ -1,7 +1,8 @@
+// ignore_for_file: file_names, camel_case_types, unnecessary_string_interpolations
+
 import 'package:polite/AdminScreen/Add/Add_Admin.dart';
 import 'package:polite/AdminScreen/Admin_Screen.dart';
 import 'package:polite/AdminScreen/Home_Admin.dart';
-import 'package:polite/Test/Lilbrary_Admin.dart';
 import 'package:polite/AdminScreen/Profile_Admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,7 @@ class bottomadminsceen extends StatefulWidget {
 class _bottomadminsceenState extends State<bottomadminsceen> {
   int currentIndex = 0;
 
+  // ignore: unused_element
   void _navigateBottomBar(int index) {
     setState(() {
       currentIndex = index;
@@ -23,10 +25,10 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
   }
 
   final List<Widget> _pages = [
-    HomeadminScreen(),
-    Adminuser(),
-    Addadminscreen(),
-    Profiladminescreen(),
+    const HomeadminScreen(),
+    const Adminuser(),
+    const Addadminscreen(),
+    const Profiladminescreen(),
   ];
 
   @override
@@ -43,7 +45,7 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
               BoxShadow(
                 color: Colors.black.withOpacity(.1),
                 blurRadius: 30,
-                offset: Offset(0, 10),
+                offset: const Offset(0, 10),
               ),
             ],
             borderRadius: BorderRadius.circular(50)),
@@ -63,14 +65,14 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
             child: Stack(
               children: [
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == currentIndex
                       ? displayWidth * .32
                       : displayWidth * .18,
                   alignment: Alignment.center,
                   child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     height: index == currentIndex ? displayWidth * .12 : 0,
                     width: index == currentIndex ? displayWidth * .32 : 0,
@@ -83,7 +85,7 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
                   ),
                 ),
                 AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   width: index == currentIndex
                       ? displayWidth * .31
@@ -94,14 +96,14 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
                       Row(
                         children: [
                           AnimatedContainer(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             width:
                                 index == currentIndex ? displayWidth * .13 : 0,
                           ),
                           AnimatedOpacity(
                             opacity: index == currentIndex ? 1 : 0,
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             child: Text(
                               index == currentIndex
@@ -119,7 +121,7 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
                       Row(
                         children: [
                           AnimatedContainer(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             width:
                                 index == currentIndex ? displayWidth * .03 : 20,

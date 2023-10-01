@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +27,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: StreamBuilder<DocumentSnapshot>(
           stream: widget.documentReference.snapshots(),
@@ -34,17 +36,17 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
               return Text('Error: ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
               final documents = snapshot.data;
               final title = documents?['Lable'] ?? '';
               return Text(
                 title,
-                style: TextStyle(color: Colors.white, fontSize: 23),
+                style: const TextStyle(color: Colors.white, fontSize: 23),
               );
             }
-            return Text('ไม่มีข้อมูล');
+            return const Text('ไม่มีข้อมูล');
           },
         ),
         centerTitle: true,
@@ -83,7 +85,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Padding(
@@ -97,7 +99,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
                                         left: 10, right: 10),
                                     child: Text(
                                       t1,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -109,7 +111,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
                                     const EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
                                   t2,
-                                  style: TextStyle(fontSize: 19),
+                                  style: const TextStyle(fontSize: 19),
                                 ),
                               ),
                             ],
@@ -121,7 +123,7 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

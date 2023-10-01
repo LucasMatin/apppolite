@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_element, use_build_context_synchronously, sized_box_for_whitespace, prefer_interpolation_to_compose_strings
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +76,7 @@ class _AddarticaleState extends State<Addarticale> {
                       // ในกรณีที่ชื่อว่างเปล่า คุณสามารถแจ้งเตือนผู้ใช้หรือดำเนินการเพิ่มเติมตามที่คุณต้องการ
                       // ยกตัวอย่างเช่นแสดง SnackBar หรือ AlertDialog
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('กรุณากรอกชื่อ'),
                         ),
                       );
@@ -144,7 +146,7 @@ class _AddarticaleState extends State<Addarticale> {
       appBar: AppBar(
         backgroundColor: Colors.brown[300],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'บทความเพื่อสุขภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -230,7 +232,7 @@ class _AddarticaleState extends State<Addarticale> {
                                                                     0, 20) +
                                                             '...'
                                                         : lable1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -304,7 +306,7 @@ class _AddarticaleState extends State<Addarticale> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
       floatingActionButton: FloatingActionButton(

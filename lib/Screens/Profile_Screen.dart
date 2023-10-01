@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, empty_catches, use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +12,8 @@ import 'package:polite/Screens/Login_Screen.dart';
 import 'package:flutter/material.dart';
 
 class Profilescreen extends StatefulWidget {
+  const Profilescreen({super.key});
+
   @override
   State<Profilescreen> createState() => _ProfilescreenState();
 }
@@ -31,11 +35,12 @@ class _ProfilescreenState extends State<Profilescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ข้อมูลส่วนตัว',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -84,7 +89,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                               height: 35,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
-                                  color: Color.fromARGB(255, 196, 164, 153)),
+                                  color:
+                                      const Color.fromARGB(255, 196, 164, 153)),
                               child: InkWell(
                                 onTap: () {
                                   dialogBuilder(context);
@@ -104,7 +110,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(userData['Fullname'],
-                              style: TextStyle(fontSize: 21)),
+                              style: const TextStyle(fontSize: 25)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -112,7 +118,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(userData['Email'],
-                              style: TextStyle(fontSize: 18)),
+                              style: const TextStyle(fontSize: 20)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -120,7 +126,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(userData['Bisease'],
-                              style: TextStyle(fontSize: 18)),
+                              style: const TextStyle(fontSize: 20)),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -131,11 +137,15 @@ class _ProfilescreenState extends State<Profilescreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => editscreen(),
+                                  builder: (context) => const editscreen(),
                                 ),
                               );
                             },
-                            child: const Text("แก้ไขโปรไฟล์"),
+                            child: const Text(
+                              "แก้ไขโปรไฟล์",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                             style: ElevatedButton.styleFrom(
                                 // backgroundColor:
                                 ),
@@ -152,7 +162,11 @@ class _ProfilescreenState extends State<Profilescreen> {
                                 ),
                               );
                             },
-                            child: const Text("ออกจากระบบ"),
+                            child: const Text(
+                              "ออกจากระบบ",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                             style: ElevatedButton.styleFrom(
                                 // backgroundColor:
                                 ),
@@ -168,7 +182,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                 ),
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }
@@ -230,7 +244,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                         setState(() {});
                       } catch (error) {}
                     },
-                    leading: Icon(Icons.add_a_photo_rounded),
+                    leading: const Icon(Icons.add_a_photo_rounded),
                     title: const Text('เลือกรูปภาพ'),
                   ),
                   Row(
@@ -251,6 +265,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                         ),
                         child: const Text('เสร็จ'),
                         onPressed: () async {
+                          // ignore: unnecessary_null_comparison
                           if (imageUrl == null ||
                               imageUrl.isEmpty ||
                               imageUrl.trim() == "") {

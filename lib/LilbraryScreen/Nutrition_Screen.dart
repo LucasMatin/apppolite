@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +30,9 @@ class _NutritionSreenState extends State<NutritionSreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'แนะนำเกี่ยวกับโภชนาการ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -95,7 +97,8 @@ class _NutritionSreenState extends State<NutritionSreen> {
                                     width: 380.0,
                                     height: 70.0,
                                     child: Card(
-                                      color: Color.fromARGB(255, 143, 113, 102),
+                                      color: const Color.fromARGB(
+                                          255, 143, 113, 102),
                                       elevation: 2.0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -106,10 +109,10 @@ class _NutritionSreenState extends State<NutritionSreen> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Column(
                                             children: [
-                                              SizedBox(height: 5.0),
+                                              const SizedBox(height: 5.0),
                                               Text(
                                                 lablenutrition,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 24.0,
@@ -132,7 +135,7 @@ class _NutritionSreenState extends State<NutritionSreen> {
                 },
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

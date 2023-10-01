@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -74,9 +76,9 @@ class _ArticlescreenState extends State<Articlescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'บทความเพื่อสุขภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -151,7 +153,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                             padding: const EdgeInsets.only(left: 25.0),
                             child: Container(
                               alignment: FractionalOffset.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'บทความยอดนิยม',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -220,7 +222,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                                                             .substring(0, 29) +
                                                         '...'
                                                     : lable1,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
@@ -242,7 +244,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                 ],
               );
             }
-            return Text("ไม่มีข้อมูล");
+            return const Text("ไม่มีข้อมูล");
           }),
     );
   }

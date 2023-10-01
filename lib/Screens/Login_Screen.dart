@@ -1,4 +1,6 @@
 //import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: unused_import, file_names, sized_box_for_whitespace
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -49,9 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
         if (querySnapshot.docs.isNotEmpty) {
           // ถ้ามีผู้ใช้ใน Collection "UserID" ที่ UserUid ตรงกัน
           // ให้นำผู้ใช้ไปหน้าที่ต้องการในกรณีนี้คือ bottomsceen()
+          // ignore: use_build_context_synchronously
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => bottomsceen()),
+            MaterialPageRoute(builder: (context) => const bottomsceen()),
           );
         } else {
           // ถ้าไม่มี UserUid ที่ตรงกัน
@@ -124,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'รหัสผ่าน',
                           labelText: 'รหัสผ่าน',
                         ),
@@ -190,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               ],
             ),

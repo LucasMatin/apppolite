@@ -1,3 +1,7 @@
+// ignore: file_names
+// ignore: file_names
+// ignore_for_file: file_names, duplicate_ignore, avoid_print, use_build_context_synchronously, unused_element, library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,16 +60,17 @@ class _Sigup extends State<Sigup> {
           });
 
           print("บันทึกสำเร็จ");
+          // ignore: use_build_context_synchronously
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
             (route) => false,
           );
         } catch (e) {
           print("Error creating user: $e");
           // แจ้งเตือนว่ามีข้อผิดพลาดในการสร้างบัญชีผู้ใช้
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('มีข้อผิดพลาดในการสร้างบัญชีผู้ใช้'),
               duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
             ),
@@ -74,7 +79,7 @@ class _Sigup extends State<Sigup> {
       } else {
         // แจ้งเตือนว่ามีบัญชีนี้อยู่แล้ว
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('มีบัญชีนี้อยู่แล้ว'),
             duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
           ),
@@ -83,7 +88,7 @@ class _Sigup extends State<Sigup> {
     } else {
       // แจ้งเตือนว่าข้อมูลไม่ครบ
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('กรุณากรอกข้อมูลให้ครบ'),
           duration: Duration(seconds: 2), // แสดงเป็นเวลา 2 วินาที
         ),
@@ -158,9 +163,9 @@ class _Sigup extends State<Sigup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ลงทะเบียน',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -256,7 +261,7 @@ class _Sigup extends State<Sigup> {
 class SexDropdownFormField extends StatefulWidget {
   final TextEditingController controller;
 
-  SexDropdownFormField({required this.controller});
+  const SexDropdownFormField({super.key, required this.controller});
 
   @override
   _SexDropdownFormFieldState createState() => _SexDropdownFormFieldState();
@@ -282,7 +287,7 @@ class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
           onChanged: (newValue) {
             setState(() {
               selectedGender = newValue!;
-              widget.controller.text = newValue!;
+              widget.controller.text = newValue;
             });
           },
           items: <String>['ชาย', 'หญิง'].map((String gender) {

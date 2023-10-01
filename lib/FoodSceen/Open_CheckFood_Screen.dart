@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +39,9 @@ class _CheckfoodState extends State<Checkfood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'รายการอาหารย้อนหลัง',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -49,23 +51,23 @@ class _CheckfoodState extends State<Checkfood> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             FutureBuilder<QuerySnapshot>(
               future: _getFoodCollectionSnapshot(_foodtodayCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
+                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: docs.map((doc) {
                       final data = doc['date'];
-                      print("$data");
+                      // print("$data");
 
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -100,7 +102,7 @@ class _CheckfoodState extends State<Checkfood> {
                                   subtitle: Center(
                                     child: Text(
                                       data,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
                                       ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class textapp extends StatefulWidget {
+  const textapp({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _textappState createState() => _textappState();
 }
 
+// ignore: camel_case_types
 class _textappState extends State<textapp> {
   int number = 0;
 
@@ -13,7 +18,7 @@ class _textappState extends State<textapp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('เพิ่ม/ลดตัวเลข'),
+          title: const Text('เพิ่ม/ลดตัวเลข'),
         ),
         body: Center(
           child: Column(
@@ -24,22 +29,22 @@ class _textappState extends State<textapp> {
                 children: <Widget>[
                   Text(
                     'ตัวเลขปัจจุบัน: $number',
-                    style: TextStyle(fontSize: 24.0),
+                    style: const TextStyle(fontSize: 24.0),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       IconButton(
-                        icon: Icon(Icons.remove),
+                        icon: const Icon(Icons.remove),
                         onPressed: () {
                           setState(() {
                             number--;
                           });
                         },
                       ),
-                      SizedBox(width: 20.0),
+                      const SizedBox(width: 20.0),
                       IconButton(
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         onPressed: () {
                           setState(() {
                             number++;
@@ -50,7 +55,7 @@ class _textappState extends State<textapp> {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
             ],
           ),
         ),

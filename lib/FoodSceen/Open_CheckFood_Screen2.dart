@@ -1,13 +1,15 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 
 class FoodHistoryPage extends StatefulWidget {
   final String selectedDate;
   const FoodHistoryPage({required this.selectedDate, Key? key})
       : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _FoodHistoryPageState createState() => _FoodHistoryPageState();
 }
 
@@ -57,9 +59,9 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'รายการอาหารย้อนหลัง',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -71,20 +73,20 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
           children: [
             Container(
               height: 75,
-              color: Color.fromARGB(255, 228, 203, 184),
+              color: const Color.fromARGB(255, 228, 203, 184),
               child: Center(
                 child: Text(
                   widget.selectedDate,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'ตอนเช้า',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -94,11 +96,11 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
               future: _getFoodCollectionSnapshot(_foodMorningCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
+                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -110,12 +112,12 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       );
@@ -130,9 +132,9 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
               indent: 25,
               endIndent: 25,
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'กลางวัน',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -142,11 +144,11 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
               future: _getFoodCollectionSnapshot(_foodDayTimeCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนกลางวัน');
+                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนกลางวัน');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -158,12 +160,12 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       );
@@ -178,9 +180,9 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
               indent: 25,
               endIndent: 25,
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'ตอนเย็น',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -190,11 +192,11 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
               future: _getFoodCollectionSnapshot(_foodEveningCollection),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเย็น');
+                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเย็น');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -206,12 +208,12 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                       return ListTile(
                         title: Text(
                           '$foodname',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '$callory แคลลอรี่ x $number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       );

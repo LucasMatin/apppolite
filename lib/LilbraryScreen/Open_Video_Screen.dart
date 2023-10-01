@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -20,9 +22,9 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
     final url = document['URLYoutrue'] ?? '';
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'วิดีโอเพื่อสุขภาพ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
@@ -38,7 +40,7 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(
@@ -46,15 +48,16 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
             child: Center(
               child: Text(
                 lable,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
+          const Padding(
+            padding: EdgeInsets.all(8),
             child: Center(
               child: Text(
                 "แหล่งข้อมูล",
@@ -67,7 +70,8 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
             child: Center(
               child: Text(
                 url,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           )
