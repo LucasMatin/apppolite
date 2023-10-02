@@ -225,6 +225,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     sendUserDataToDB();
                   },
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 160, 126,
+                            115)), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,

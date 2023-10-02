@@ -147,7 +147,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                // backgroundColor:
+                                primary: Color.fromARGB(255, 160, 126,
+                                    115) // Set your desired background color here
                                 ),
                           )),
                       const SizedBox(height: 10),
@@ -168,7 +169,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                // backgroundColor:
+                                primary: Color.fromARGB(255, 160, 126,
+                                    115) // Set your desired background color here
                                 ),
                           )),
                       const SizedBox(height: 10),
