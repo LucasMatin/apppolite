@@ -86,15 +86,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Loginadmin(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.admin_panel_settings))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Loginadmin(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.admin_panel_settings),
+                      iconSize: 36.0, // ปรับขนาดไอคอนตามต้องการ
+                    )),
                 Container(
                   width: 200,
                   height: 200,

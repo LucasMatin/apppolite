@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Open_CheckFood_Screen2.dart';
 // import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 
@@ -17,7 +18,10 @@ class _CheckfoodState extends State<Checkfood> {
   late final User _currentUser;
   late final String _userUid;
   late final CollectionReference _foodtodayCollection;
-
+  DateTime? _startDate;
+  DateTime? _endDate;
+  late TextEditingController _startDateController;
+  late TextEditingController _endDateController;
   @override
   void initState() {
     super.initState();
@@ -27,12 +31,77 @@ class _CheckfoodState extends State<Checkfood> {
         .collection("UserID")
         .doc(_userUid)
         .collection("Foodtoday");
+    _startDateController = TextEditingController(
+      text: _startDate != null
+          ? DateFormat('dd-MM-yyyy').format(_startDate!)
+          : '',
+    );
+    _endDateController = TextEditingController(
+      text: _endDate != null ? DateFormat('dd-MM-yyyy').format(_endDate!) : '',
+    );
   }
 
   Future<QuerySnapshot> _getFoodCollectionSnapshot(
       CollectionReference collection) async {
     final snapshot = await collection.where('date').get();
     return snapshot;
+  }
+
+  Future<void> _selectDate(BuildContext context, bool isStartDate) async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (selectedDate != null) {
+      setState(() {
+        if (isStartDate) {
+          _startDate = selectedDate;
+          _startDateController.text =
+              DateFormat('dd-MM-yyyy').format(selectedDate);
+          print(_startDateController);
+        } else {
+          _endDate = selectedDate;
+          _endDateController.text =
+              DateFormat('dd-MM-yyyy').format(selectedDate);
+          print(_endDateController);
+        }
+
+        // เรียกใช้งานฟังก์ชัน _fetchData เพื่อดึงข้อมูลใหม่
+        _fetchData();
+      });
+    }
+  }
+
+  Future<void> _fetchData() async {
+    if (_startDate != null && _endDate != null) {
+      try {
+        // Fetch data based on the selected date range
+        final snapshot = await _foodtodayCollection
+            .where('date', isGreaterThanOrEqualTo: _startDate)
+            .where('date', isLessThanOrEqualTo: _endDate)
+            .get();
+
+        // Check if there is data in the snapshot
+        if (snapshot.size == 0) {
+          // Handle the case where there is no data
+          setState(() {
+            var _snapshotData =
+                null; // Set _snapshotData to null or handle it as needed
+          });
+        } else {
+          // Update the UI with the new data
+          setState(() {
+            var _snapshotData = snapshot;
+          });
+        }
+      } catch (e) {
+        // Handle errors here
+        print("Error fetching data: $e");
+      }
+    }
   }
 
   @override
@@ -51,6 +120,37 @@ class _CheckfoodState extends State<Checkfood> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      readOnly: true,
+                      controller: _startDateController,
+                      onTap: () => _selectDate(context, true),
+                      decoration: InputDecoration(
+                        labelText: 'วันที่เริ่มต้น',
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      readOnly: true,
+                      controller: _endDateController,
+                      onTap: () => _selectDate(context, false),
+                      decoration: InputDecoration(
+                        labelText: 'วันที่สิ้นสุด',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 20),
             FutureBuilder<QuerySnapshot>(
               future: _getFoodCollectionSnapshot(_foodtodayCollection),

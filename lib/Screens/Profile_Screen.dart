@@ -77,8 +77,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color:
-                                      Color.fromARGB(255, 77, 74, 74), // สีขอบ
+                                  color: const Color.fromARGB(
+                                      255, 77, 74, 74), // สีขอบ
                                   width: 3.0, // ความหนาขอบ
                                 ),
                               ),
