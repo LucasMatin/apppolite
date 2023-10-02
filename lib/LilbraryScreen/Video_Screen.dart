@@ -179,7 +179,7 @@ class _videoscreenState extends State<videoscreen> {
                     child: ListView.builder(
                       itemCount: itemsToDisplay.length,
                       itemBuilder: (context, index) {
-                        final document = documents[index];
+                        final document = itemsToDisplay[index];
                         final lable1 = document['Lablevideo'] ?? '';
                         final url = document['URLYoutrue'] ?? '';
 

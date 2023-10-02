@@ -80,7 +80,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                   style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
             ),
@@ -88,7 +88,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'ตอนเช้า',
+                ' ตอนเช้า',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -100,7 +100,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเช้า');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -136,7 +136,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'กลางวัน',
+                ' ตอนกลางวัน',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -148,7 +148,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนกลางวัน');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(
@@ -184,7 +184,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'ตอนเย็น',
+                ' ตอนเย็น',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -196,7 +196,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
                 } else if (snapshot.hasError) {
                   return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Text('ไม่มีข้อมูลในรายการอาหารเมื่อตอนเย็น');
+                  return const Text('');
                 } else {
                   final docs = snapshot.data!.docs;
                   return Column(

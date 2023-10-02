@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, empty_catches, use_build_context_synchronously
+// ignore_for_file: file_names, avoid_unnecessary_containers, sort_child_properties_last, avoid_print, empty_catches, use_build_context_synchronously, deprecated_member_use
 
 import 'dart:io';
 
@@ -73,13 +73,22 @@ class _ProfilescreenState extends State<Profilescreen> {
                           SizedBox(
                             width: 130,
                             height: 130,
-                            child: ClipRRect(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color:
+                                      Color.fromARGB(255, 77, 74, 74), // สีขอบ
+                                  width: 3.0, // ความหนาขอบ
+                                ),
+                              ),
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: userData["Image"] != null
                                     ? Image.network(userData["Image"])
-                                    : Image.asset(
-                                        "images/Proflie.png") // ถ้าไม่มีรูปให้แสดงไอคอน
-                                ),
+                                    : Image.asset("images/Proflie.png"),
+                              ),
+                            ),
                           ),
                           Positioned(
                             bottom: 0,
@@ -147,7 +156,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 160, 126,
+                                primary: const Color.fromARGB(255, 160, 126,
                                     115) // Set your desired background color here
                                 ),
                           )),
@@ -169,7 +178,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 160, 126,
+                                primary: const Color.fromARGB(255, 160, 126,
                                     115) // Set your desired background color here
                                 ),
                           )),

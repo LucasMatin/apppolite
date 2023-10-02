@@ -154,6 +154,37 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 20,
             ),
             Padding(
+              padding: const EdgeInsets.only(),
+              child: Center(
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("UserID")
+                      .doc(_userUid)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (snapshot.hasData) {
+                      final documents = snapshot.data;
+                      final title = documents?['Fullname'] ?? '';
+                      return Text(
+                        title,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      );
+                    }
+                    return const Text('ไม่มีข้อมูล');
+                  },
+                ),
+              ),
+            ),
+            Padding(
                 padding: const EdgeInsets.only(),
                 child: Column(
                   children: <Widget>[
@@ -195,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text(
-                        "$totalCalories แคลลอรี่",
+                        "$totalCalories แคลอรี่ ",
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -216,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 )),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(30),
               child: Container(
                 width: 260,
                 height: 60,
@@ -226,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 160, 126,
+                        const Color.fromARGB(255, 160, 126,
                             115)), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
@@ -266,7 +297,7 @@ String _getStatusText(double value) {
   } else if (value > 2000) {
     return 'อยู่ในเกณฑ์เสี่ยง';
   } else {
-    return 'อยู่ในเกณฑ์ปกติ';
+    return '';
   }
 }
 

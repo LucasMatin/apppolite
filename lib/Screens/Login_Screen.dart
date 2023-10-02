@@ -1,9 +1,8 @@
 //import 'package:firebase_auth/firebase_auth.dart';
-// ignore_for_file: unused_import, file_names, sized_box_for_whitespace
+// ignore_for_file: unused_import, file_names, sized_box_for_whitespace, unused_element
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:polite/AdminScreen/Login_Admin_Screen.dart';
@@ -12,6 +11,7 @@ import 'package:polite/Screens/Bottom_Screen.dart';
 import 'package:polite/Screens/Register_Screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:polite/Screens/Reset_Password_Screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
-
   Future<void> _login() async {
     final String email = emailController.text.trim();
     final String password = passwordController.text.trim();
@@ -37,7 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
         email: email,
         password: password,
       );
-
       if (userCredential.user != null) {
         // เข้าสู่ระบบสำเร็จ
         String userUid = userCredential.user!.uid;
@@ -85,6 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Loginadmin(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.admin_panel_settings))),
                 Container(
                   width: 200,
                   height: 200,
@@ -119,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const SizedBox(height: 12),
                       TextFormField(
                         controller: passwordController, // เพิ่ม controller
                         validator: RequiredValidator(
@@ -140,12 +149,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Loginadmin(),
+                                builder: (context) => const resetpass(),
                               ),
                             );
                           },
                           child: const Text(
-                            'แอดมิน',
+                            'ลืมรหัสผ่าน ?',
                             style: TextStyle(color: Color(0xFF3D80DE)),
                           ),
                         ),
@@ -156,11 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _login(); // เรียกใช้งาน _login()
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => bottomsceen()),
-                      // );
+                      _login();
                     }
                   },
                   style: ButtonStyle(

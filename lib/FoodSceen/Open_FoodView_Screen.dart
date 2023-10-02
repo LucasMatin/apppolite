@@ -228,7 +228,7 @@ class _FoodListPageState extends State<FoodListPage> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                '  กลางวัน',
+                '  ตอนกลางวัน',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),

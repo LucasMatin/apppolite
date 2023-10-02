@@ -73,24 +73,17 @@ class _CheckfoodState extends State<Checkfood> {
                         padding: const EdgeInsets.only(
                           left: 15,
                           right: 12,
-                          top: 10,
                         ),
                         child: Card(
                           elevation: 1,
                           child: SizedBox(
-                            height: 90,
+                            height: 80,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 ListTile(
                                   isThreeLine: false,
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => FoodHistoryPage(),
-                                    //   ),
-                                    // );
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
