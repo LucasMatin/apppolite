@@ -617,7 +617,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       Text(
                                         widget.textedit,
                                         style: const TextStyle(
-                                            fontSize: 21,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
@@ -631,7 +631,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       Text(
                                         "$colory แคลอรี่",
                                         style: const TextStyle(
-                                            fontSize: 21,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),

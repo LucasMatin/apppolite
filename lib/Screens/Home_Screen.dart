@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/FoodSceen/Foodscreen.dart';
+
 import 'package:polite/FoodSceen/Open_CheckFood_Screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -238,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         _getStatusText(
                             totalCalories), // ตรวจสอบสถานะและสร้างข้อความ
                         style: const TextStyle(
-                          color: Colors.green, // สีข้อความสีเขียว
+                          color: Colors.black, // สีข้อความสีเขียว
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -257,8 +258,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 160, 126,
-                            115)), // Set your desired background color here
+                        const Color.fromARGB(255, 228, 203,
+                            184)), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,
@@ -293,9 +294,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
 String _getStatusText(double value) {
   if (value > 2500) {
-    return 'อยู่ในเกณฑ์อันตราย';
+    return 'เกณฑ์อันตราย';
   } else if (value > 2000) {
-    return 'อยู่ในเกณฑ์เสี่ยง';
+    return 'เกณฑ์เสี่ยง';
+  } else if (value > 1000) {
+    return 'เกณฑ์ปกติ';
   } else {
     return '';
   }

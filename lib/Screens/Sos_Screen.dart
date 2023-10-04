@@ -83,7 +83,10 @@ class _SosState extends State<Sos> {
                                     minimumSize: MaterialStateProperty.all(
                                         const Size(120, 40)),
                                   ),
-                                  child: const Text('ใช่'),
+                                  child: const Text(
+                                    'ใช่',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     callEmergency();
                                   },
@@ -93,7 +96,10 @@ class _SosState extends State<Sos> {
                                     minimumSize: MaterialStateProperty.all(
                                         const Size(120, 40)),
                                   ),
-                                  child: const Text('ไม่ใช่'),
+                                  child: const Text(
+                                    'ไม่ใช่',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

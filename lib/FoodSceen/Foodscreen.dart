@@ -305,8 +305,8 @@ class _FoodscreenState extends State<Foodscreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: const Color.fromARGB(255, 112, 86,
-                              77) // Set your desired background color here
+                          primary: const Color.fromARGB(255, 228, 203,
+                              184) // Set your desired background color here
                           ),
                       child: const Text(
                         'รายการอาหารทั้งหมด',
@@ -335,8 +335,8 @@ class _FoodscreenState extends State<Foodscreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: const Color.fromARGB(255, 112, 86,
-                              77) // Set your desired background color here
+                          primary: const Color.fromARGB(255, 228, 203,
+                              184) // Set your desired background color here
                           ),
                       child: const Text(
                         'บันทึก',

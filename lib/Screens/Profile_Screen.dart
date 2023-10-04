@@ -114,7 +114,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                           )
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -122,7 +122,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                               style: const TextStyle(fontSize: 25)),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -138,7 +138,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                               style: const TextStyle(fontSize: 20)),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       SizedBox(
                           width: 200,
                           child: ElevatedButton(
@@ -156,8 +156,8 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: const Color.fromARGB(255, 160, 126,
-                                    115) // Set your desired background color here
+                                primary: const Color.fromARGB(255, 228, 203,
+                                    184) // Set your desired background color here
                                 ),
                           )),
                       const SizedBox(height: 10),
@@ -178,11 +178,11 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: const Color.fromARGB(255, 160, 126,
-                                    115) // Set your desired background color here
+                                primary: const Color.fromARGB(255, 228, 203,
+                                    184) // Set your desired background color here
                                 ),
                           )),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       const Divider(
                         thickness: 2,
                         indent: 25,
