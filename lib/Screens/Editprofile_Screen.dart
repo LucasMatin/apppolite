@@ -112,20 +112,26 @@ class _editscreenState extends State<editscreen> {
                               const SizedBox(height: 20),
                               SizedBox(
                                 width: 300,
-                                child: TextFormField(
+                                child: DiseaseDropdownFormField(
                                   controller: password,
-                                  decoration: const InputDecoration(
-                                      label: Text('โรคประจำตัว'),
-                                      prefixIcon: Icon(
-                                          Icons.accessibility_new_rounded)),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'กรุณาโรคประจำตัว';
-                                    }
-                                    return null; // ไม่มีข้อผิดพลาด
-                                  },
                                 ),
                               ),
+                              // SizedBox(
+                              //   width: 300,
+                              //   child: TextFormField(
+                              //     controller: password,
+                              //     decoration: const InputDecoration(
+                              //         label: Text('โรคประจำตัว'),
+                              //         prefixIcon: Icon(
+                              //             Icons.accessibility_new_rounded)),
+                              //     validator: (value) {
+                              //       if (value == null || value.isEmpty) {
+                              //         return 'กรุณาโรคประจำตัว';
+                              //       }
+                              //       return null; // ไม่มีข้อผิดพลาด
+                              //     },
+                              //   ),
+                              // ),
                             ],
                           )),
                       const SizedBox(height: 20),
@@ -192,6 +198,100 @@ class _editscreenState extends State<editscreen> {
             }
             return const Text("ไม่มีข้อมูล");
           }),
+    );
+  }
+}
+
+class DiseaseDropdownFormField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const DiseaseDropdownFormField({Key? key, required this.controller})
+      : super(key: key);
+
+  @override
+  _DiseaseDropdownFormFieldState createState() =>
+      _DiseaseDropdownFormFieldState();
+}
+
+class _DiseaseDropdownFormFieldState extends State<DiseaseDropdownFormField> {
+  String selectedDisease = 'ไม่มีโรคประจำตัว'; // Default value
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = selectedDisease;
+
+    // Set selectedDisease to the first item in the list (if available)
+    getDiseases().then((diseases) {
+      if (diseases.isNotEmpty) {
+        setState(() {
+          selectedDisease = diseases[0];
+          widget.controller.text = selectedDisease;
+        });
+      }
+    });
+  }
+
+  Future<List<String>> getDiseases() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('NutritionScreen').get();
+
+      List<String> diseases = querySnapshot.docs
+          .map((document) => document['Lable'].toString())
+          .toList();
+
+      print(
+          'Diseases from Firestore: $diseases'); // Add this line for debugging
+
+      // Add "ไม่มีโรคประจำตัว" to the list
+      diseases.insert(0, 'ไม่มีโรคประจำตัว');
+
+      return diseases;
+    } catch (error) {
+      // Handle errors as needed
+      print('Error fetching diseases: $error');
+      return [];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<String>>(
+      future: getDiseases(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text('No data available');
+        } else {
+          List<String> diseases = snapshot.data!;
+
+          print(
+              'Selected Disease: $selectedDisease'); // Add this line for debugging
+
+          return DropdownButtonFormField<String>(
+            value: selectedDisease,
+            onChanged: (newValue) {
+              setState(() {
+                selectedDisease = newValue!;
+                widget.controller.text = newValue;
+              });
+            },
+            items: diseases
+                .map((String disease) => DropdownMenuItem<String>(
+                      value: disease,
+                      child: Text(disease),
+                    ))
+                .toList(),
+            decoration: const InputDecoration(
+              labelText: 'โรคประจำตัว',
+            ),
+          );
+        }
+      },
     );
   }
 }
