@@ -270,6 +270,9 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                         final id = document['Category'] ?? '';
                         final key = document['Foodtype'] ?? '';
                         final image = document['Image'] ?? '';
+                        final units = document['Unit'] ?? '';
+                        final diseases = document['Diseases'] ?? [];
+                        final diseasess = document['NoDiseases'] ?? [];
                         // แปลง search เป็นตัวพิมพ์เล็กทั้งหมด
                         final lowercaseSearch = search.toLowerCase();
 
@@ -334,9 +337,13 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                         return Column(
                           children: [
                             MyWidget(
-                                textedit: lable1,
-                                image: image,
-                                callory: callory),
+                              textedit: lable1,
+                              image: image,
+                              callory: callory,
+                              diseases: diseases,
+                              diseasess: diseasess,
+                              unitss: units,
+                            ),
                           ],
                         );
                       },
@@ -362,13 +369,18 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
 }
 
 class MyWidget extends StatefulWidget {
-  final String textedit, image, callory;
-
-  const MyWidget(
-      {super.key,
-      required this.textedit,
-      required this.image,
-      required this.callory});
+  final String textedit, image, callory, unitss;
+  final List<dynamic> diseases,
+      diseasess; // เพิ่ม properties สำหรับรับข้อมูล Diseases และ NoDiseases
+  const MyWidget({
+    super.key,
+    required this.textedit,
+    required this.image,
+    required this.callory,
+    required this.unitss,
+    required this.diseases,
+    required this.diseasess,
+  });
   @override
   _MyWidgetState createState() => _MyWidgetState();
 }
@@ -458,6 +470,60 @@ class _MyWidgetState extends State<MyWidget> {
                     ),
                   ),
                   const SizedBox(
+                    height: 15,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(2),
+                    child: Center(
+                      child: Text(
+                        // ignore: unnecessary_type_check
+                        "แนะนำสำหรับโรค",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: Center(
+                      child: Text(
+                        // ignore: unnecessary_type_check
+                        "${widget.diseases is List ? widget.diseases.join(', ') : widget.diseases}",
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(2),
+                    child: Center(
+                      child: Text(
+                        // ignore: unnecessary_type_check
+                        "ไม่แนะนำสำหรับโรค",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: Center(
+                      child: Text(
+                        // ignore: unnecessary_type_check
+                        "${widget.diseasess is List ? widget.diseasess.join(', ') : widget.diseasess}",
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -492,7 +558,7 @@ class _MyWidgetState extends State<MyWidget> {
                           width: 20,
                         ),
                         Text(
-                          '$number',
+                          '$number ${widget.unitss}',
                           style: const TextStyle(fontSize: 24.0),
                         ),
                         const SizedBox(

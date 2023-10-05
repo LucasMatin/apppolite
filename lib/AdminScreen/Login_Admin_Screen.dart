@@ -125,11 +125,6 @@ class _LoginadminState extends State<Loginadmin> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _login();
-                      //  Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const bottomadminsceen()),
-                      // );
                     }
                   },
                   style: ButtonStyle(

@@ -114,7 +114,7 @@ class _EditarticleState extends State<Editarticle> {
 
                       Reference referenceRoot = FirebaseStorage.instance.ref();
                       Reference referenceDirImages =
-                          referenceRoot.child('images');
+                          referenceRoot.child('Article');
 
                       Reference referenceImageToUpload =
                           referenceDirImages.child(uniqueFileName);

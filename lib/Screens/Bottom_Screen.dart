@@ -33,7 +33,7 @@ class _bottomsceenState extends State<bottomsceen> {
 
   final List<Widget> _pages = [
     // ignore: prefer_const_constructors
-    HomeScreen(),
+    const HomeScreen(),
     const Lilbraryscreen(),
     const Sos(),
     const Profilescreen(),

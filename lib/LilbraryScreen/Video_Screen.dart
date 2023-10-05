@@ -255,7 +255,7 @@ class _videoscreenState extends State<videoscreen> {
                                                 lable1.toString().length > 20
                                                     ? lable1
                                                             .toString()
-                                                            .substring(0, 29) +
+                                                            .substring(0, 20) +
                                                         '...'
                                                     : lable1,
                                                 style: const TextStyle(

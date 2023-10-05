@@ -8,7 +8,6 @@ import 'package:polite/FoodSceen/Open_FoodDaytime_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodMorning_Screen.dart';
 import 'package:polite/FoodSceen/Open_Foodevening_Screen.dart';
-
 import 'package:polite/Screens/Bottom_Screen.dart';
 
 class Foodscreen extends StatefulWidget {

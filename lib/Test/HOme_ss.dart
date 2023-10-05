@@ -1,7 +1,12 @@
-// ignore_for_file: file_names, sized_box_for_whitespace
+// ignore_for_file: file_names, sized_box_for_whitespace, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:polite/FoodSceen/Foodscreen.dart';
 import 'package:polite/Screens/Home_Screen.dart';
+import 'package:polite/Screens/Lilbrary_Screen.dart';
+import 'package:polite/Screens/Sos_Screen.dart';
+
+import '../FoodSceen/Open_FoodMorning_Screen.dart';
 
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
@@ -35,6 +40,7 @@ class _MyWidgetState extends State<MyWidget> {
                 padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   width: 260,
+                  height: 70,
                   child: ElevatedButton(
                     onPressed: () {
                       // sendUserDataToDB();
@@ -52,7 +58,7 @@ class _MyWidgetState extends State<MyWidget> {
                       )),
                     ),
                     child: const Text(
-                      'บันทึกเมนูอาหาร',
+                      'บันทึกรายการอาหาร',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                     ),
@@ -63,9 +69,15 @@ class _MyWidgetState extends State<MyWidget> {
                 padding: const EdgeInsets.all(20),
                 child: Container(
                   width: 260,
+                  height: 70,
                   child: ElevatedButton(
                     onPressed: () {
-                      // sendUserDataToDB();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(const Size(
@@ -85,9 +97,16 @@ class _MyWidgetState extends State<MyWidget> {
                 padding: const EdgeInsets.all(20),
                 child: Container(
                   width: 260,
+                  height: 70,
                   child: ElevatedButton(
                     onPressed: () {
                       // sendUserDataToDB();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Lilbraryscreen(),
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(const Size(
@@ -97,6 +116,64 @@ class _MyWidgetState extends State<MyWidget> {
                     ),
                     child: const Text(
                       'ห้องสมุดโภชนาการ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  width: 260,
+                  height: 70,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // sendUserDataToDB();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Sos(),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size(
+                        double.infinity,
+                        48,
+                      )),
+                    ),
+                    child: const Text(
+                      'เหตุฉุกเฉิน',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  width: 260,
+                  height: 70,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // sendUserDataToDB();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => (),
+                      //   ),
+                      // );
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size(
+                        double.infinity,
+                        48,
+                      )),
+                    ),
+                    child: const Text(
+                      'อาหารแนะนำสำหรับโรค',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20.0),
                     ),

@@ -220,8 +220,11 @@ class _Sigup extends State<Sigup> {
                       textbox(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมลล์',
                           'กรุณากรอกอีเมลล์'),
                       const SizedBox(height: 24),
-                      textbox(bisease, 'กรุณาป้อนโรคประจำตัวด้วย',
-                          'โรคประจำตัว', 'กรุณากรอกโรคประจำตัว'),
+                      DiseaseDropdownFormField(
+                        controller: bisease,
+                      ),
+                      // textbox(bisease, 'กรุณาป้อนโรคประจำตัวด้วย',
+                      //     'โรคประจำตัว', 'กรุณากรอกโรคประจำตัว'),
                       const SizedBox(height: 24),
                       textbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
                           'เบอร์โทรศัพท์', 'กรุณากรอกเบอร์โทรศัพท์'),
@@ -298,6 +301,100 @@ class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
           }).toList(),
         ),
       ),
+    );
+  }
+}
+
+class DiseaseDropdownFormField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const DiseaseDropdownFormField({Key? key, required this.controller})
+      : super(key: key);
+
+  @override
+  _DiseaseDropdownFormFieldState createState() =>
+      _DiseaseDropdownFormFieldState();
+}
+
+class _DiseaseDropdownFormFieldState extends State<DiseaseDropdownFormField> {
+  String selectedDisease = 'ไม่มีโรคประจำตัว'; // Default value
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = selectedDisease;
+
+    // Set selectedDisease to the first item in the list (if available)
+    getDiseases().then((diseases) {
+      if (diseases.isNotEmpty) {
+        setState(() {
+          selectedDisease = diseases[0];
+          widget.controller.text = selectedDisease;
+        });
+      }
+    });
+  }
+
+  Future<List<String>> getDiseases() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('NutritionScreen').get();
+
+      List<String> diseases = querySnapshot.docs
+          .map((document) => document['Lable'].toString())
+          .toList();
+
+      print(
+          'Diseases from Firestore: $diseases'); // Add this line for debugging
+
+      // Add "ไม่มีโรคประจำตัว" to the list
+      diseases.insert(0, 'ไม่มีโรคประจำตัว');
+
+      return diseases;
+    } catch (error) {
+      // Handle errors as needed
+      print('Error fetching diseases: $error');
+      return [];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<String>>(
+      future: getDiseases(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Text('No data available');
+        } else {
+          List<String> diseases = snapshot.data!;
+
+          print(
+              'Selected Disease: $selectedDisease'); // Add this line for debugging
+
+          return DropdownButtonFormField<String>(
+            value: selectedDisease,
+            onChanged: (newValue) {
+              setState(() {
+                selectedDisease = newValue!;
+                widget.controller.text = newValue;
+              });
+            },
+            items: diseases
+                .map((String disease) => DropdownMenuItem<String>(
+                      value: disease,
+                      child: Text(disease),
+                    ))
+                .toList(),
+            decoration: const InputDecoration(
+              labelText: 'โรคประจำตัว',
+            ),
+          );
+        }
+      },
     );
   }
 }

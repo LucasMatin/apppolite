@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/Add_Nutrition_Screen2.dart';
-import 'package:polite/AdminScreen/Add/alert_delete.dart';
 
 class Addnutrition extends StatefulWidget {
   const Addnutrition({super.key});
@@ -231,58 +230,58 @@ class _AddnutritionState extends State<Addnutrition> {
                                         ),
                                       ],
                                     ),
-                                    trailing: SizedBox(
-                                      width: 40,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  //TO DO DELETE
-                                                  onTap: () async {
-                                                    await _update(document);
-                                                  },
-                                                  child:
-                                                      const Icon(Icons.edit)),
-                                            ],
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  //TO DO DELETE
-                                                  onTap: () async {
-                                                    final action =
-                                                        await AlertDialogs
-                                                            .yesorCancel(
-                                                                context,
-                                                                'ลบ',
-                                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
-                                                    if (action ==
-                                                        DialogsAction.yes) {
-                                                      setState(() {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'NutritionScreen')
-                                                            .doc(document.id)
-                                                            .delete()
-                                                            .then((_) {})
-                                                            .catchError(
-                                                                (error) {});
-                                                      });
-                                                    }
-                                                  },
-                                                  child:
-                                                      const Icon(Icons.delete)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    // trailing: SizedBox(
+                                    //   width: 40,
+                                    //   child: Column(
+                                    //     children: [
+                                    //       Row(
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           InkWell(
+                                    //               //TO DO DELETE
+                                    //               onTap: () async {
+                                    //                 await _update(document);
+                                    //               },
+                                    //               child:
+                                    //                   const Icon(Icons.edit)),
+                                    //         ],
+                                    //       ),
+                                    //       Row(
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           InkWell(
+                                    //               //TO DO DELETE
+                                    //               onTap: () async {
+                                    //                 final action =
+                                    //                     await AlertDialogs
+                                    //                         .yesorCancel(
+                                    //                             context,
+                                    //                             'ลบ',
+                                    //                             'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                    //                 if (action ==
+                                    //                     DialogsAction.yes) {
+                                    //                   setState(() {
+                                    //                     FirebaseFirestore
+                                    //                         .instance
+                                    //                         .collection(
+                                    //                             'NutritionScreen')
+                                    //                         .doc(document.id)
+                                    //                         .delete()
+                                    //                         .then((_) {})
+                                    //                         .catchError(
+                                    //                             (error) {});
+                                    //                   });
+                                    //                 }
+                                    //               },
+                                    //               child:
+                                    //                   const Icon(Icons.delete)),
+                                    //         ],
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                   ),
                                 ],
                               ),
@@ -298,11 +297,11 @@ class _AddnutritionState extends State<Addnutrition> {
             return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _create(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => _create(),
+      //   backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

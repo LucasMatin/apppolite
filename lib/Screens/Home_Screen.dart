@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:polite/FoodSceen/Foodscreen.dart';
 
 import 'package:polite/FoodSceen/Open_CheckFood_Screen.dart';
+import 'package:polite/Screens/Callory_Screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
@@ -152,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
             Padding(
               padding: const EdgeInsets.only(),
@@ -225,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(4),
                       child: Text(
                         "$totalCalories แคลอรี่ ",
                         style: const TextStyle(
@@ -248,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 )),
             Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.all(15),
               child: Container(
                 width: 260,
                 height: 60,
@@ -266,10 +267,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
                   ),
                   child: const Text(
-                    'บันทึกเมนูอาหาร',
+                    'บันทึกรายการอาหาร',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(1),
+              child: Container(
+                width: 260,
+                height: 60,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CalloryweekScreen()));
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 228, 203,
+                            184)), // Set your desired background color here
+                    minimumSize: MaterialStateProperty.all(const Size(
+                      double.infinity,
+                      48,
+                    )),
+                  ),
+                  child: const Text(
+                    'แคลลอรี่สัปดาห์ที่แล้ว',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
