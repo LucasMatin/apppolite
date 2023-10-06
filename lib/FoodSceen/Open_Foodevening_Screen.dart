@@ -459,6 +459,35 @@ class _MyWidgetState extends State<MyWidget> {
                     height: 20,
                   ),
                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: SizedBox(
+                        width: 300.0,
+                        height: 200.0,
+                        child: Card(
+                          color: const Color.fromARGB(255, 237, 230, 224),
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: Image.network(
+                              widget.image,
+                              width: 100, // กำหนดความกว้างของรูป
+                              height: 100, // กำหนดความสูงของรูป
+                              fit: BoxFit
+                                  .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(2),
                     child: Center(
                       child: Text(

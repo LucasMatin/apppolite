@@ -731,7 +731,7 @@ class _AddfoodState extends State<Addfood> {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    "$id : $key",
+                                                    "$id:$key",
                                                     style: const TextStyle(
                                                         fontSize: 16),
                                                   ),
@@ -771,14 +771,15 @@ class _AddfoodState extends State<Addfood> {
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(3),
-                                                  child: Image.network(
-                                                    image,
-                                                    width:
-                                                        70, // กำหนดความกว้างของรูป
-                                                    height:
-                                                        50, // กำหนดความสูงของรูป
-                                                    fit: BoxFit
-                                                        .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
+                                                  child: Visibility(
+                                                    visible: image !=
+                                                        null, // กำหนดให้แสดงเมื่อ image ไม่เท่ากับ null
+                                                    child: Image.network(
+                                                      image!,
+                                                      width: 70,
+                                                      height: 50,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -788,7 +789,7 @@ class _AddfoodState extends State<Addfood> {
                                       ],
                                     ),
                                     trailing: SizedBox(
-                                      width: 40,
+                                      width: 30,
                                       child: Column(
                                         children: [
                                           Row(
