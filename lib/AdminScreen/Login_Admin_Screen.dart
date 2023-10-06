@@ -131,7 +131,10 @@ class _LoginadminState extends State<Loginadmin> {
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 48)),
                   ),
-                  child: const Text('เข้าสู่ระบบ'),
+                  child: const Text(
+                    'เข้าสู่ระบบ',
+                    style: TextStyle(fontSize: 23),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
