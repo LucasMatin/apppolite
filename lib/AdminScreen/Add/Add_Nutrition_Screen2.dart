@@ -317,13 +317,27 @@ class _EditNutritionState extends State<EditNutrition> {
                                           padding: const EdgeInsets.only(),
                                           child: Row(
                                             children: [
-                                              Text(
-                                                lable1,
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )
+                                              // ignore: sized_box_for_whitespace
+                                              Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(
+                                                    lable1.toString().length >
+                                                            20
+                                                        // ignore: prefer_interpolation_to_compose_strings
+                                                        ? lable1
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 16) +
+                                                            '...'
+                                                        : lable1,
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ))
                                             ],
                                           ),
                                         ),

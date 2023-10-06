@@ -32,7 +32,7 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser!;
     _userUid = _currentUser.uid;
-    _currentDate = getCurrentDateTime(); // Initialize _currentDate here
+    _currentDate = getCurrentDateTime();
     _foodTodayCollection = FirebaseFirestore.instance
         .collection("UserID")
         .doc(_userUid)
@@ -48,6 +48,12 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
     _fetchDataForWeek();
   }
 
+  @override
+  void dispose() {
+    // Cancel asynchronous operations, stream subscriptions, etc.
+    super.dispose();
+  }
+
   String getCurrentDateTime() {
     var now = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
@@ -60,19 +66,23 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
     startDate = endDate.subtract(const Duration(days: 6));
 
     for (int i = 0; i < 7; i++) {
-      DateTime currentDate = startDate.add(Duration(days: i));
-      String dateKey = DateFormat('dd-MM-yyyy').format(currentDate);
-      print("Fetching data for date: $dateKey");
+      if (mounted) {
+        DateTime currentDate = startDate.add(Duration(days: i));
+        String dateKey = DateFormat('dd-MM-yyyy').format(currentDate);
+        print("Fetching data for date: $dateKey");
 
-      await _calculateTotalCaloriesForDay(dateKey);
+        await _calculateTotalCaloriesForDay(dateKey);
+      }
     }
 
-    double totalCaloriesForWeek =
-        chartData.fold(0, (sum, data) => sum + data.value);
+    if (mounted) {
+      double totalCaloriesForWeek =
+          chartData.fold(0, (sum, data) => sum + data.value);
 
-    setState(() {
-      totalCalories = totalCaloriesForWeek;
-    });
+      setState(() {
+        totalCalories = totalCaloriesForWeek;
+      });
+    }
   }
 
   Future<void> _calculateTotalCaloriesForDay(String dateKey) async {

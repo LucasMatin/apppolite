@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Open_Article_Screen.dart';
@@ -28,48 +29,56 @@ class _ArticlescreenState extends State<Articlescreen> {
     article = FirebaseFirestore.instance.collection("ArticleScreen");
   }
 
-  List<DocumentSnapshot> searchResults = []; // เพิ่มตัวแปร searchResults นี้
+  // List<DocumentSnapshot> searchResults = []; // เพิ่มตัวแปร searchResults นี้
 
-  void searchInFirebase(String searchtext) {
-    // แปลง searchText เป็นตัวพิมพ์เล็กทั้งหมด
-    searchtext = searchtext.toLowerCase();
-    if (searchtext.isEmpty) {
-      setState(() {
-        searchResults.clear();
-        isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีการค้นหา
-      });
-    } else {
-      // ใช้คำสั่งค้นหาข้อมูลใน Firestore
-      FirebaseFirestore.instance
-          .collection("ArticleScreen")
-          .where("Lable", isGreaterThanOrEqualTo: searchtext)
-          .where("Lable",
-              isLessThan:
-                  searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
-          .get()
-          .then((QuerySnapshot querySnapshot) {
-        // ตรวจสอบว่ามีข้อมูลหรือไม่
-        if (querySnapshot.docs.isNotEmpty) {
-          // มีข้อมูล
-          final documents = querySnapshot.docs;
+  // void searchInFirebase(String searchtext) {
+  //   // แปลง searchText เป็นตัวพิมพ์เล็กทั้งหมด
+  //   searchtext = searchtext.toLowerCase();
+  //   if (searchtext.isEmpty) {
+  //     setState(() {
+  //       searchResults.clear();
+  //       isSearching = false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีการค้นหา
+  //     });
+  //   } else {
+  //     // ใช้คำสั่งค้นหาข้อมูลใน Firestore
+  //     FirebaseFirestore.instance
+  //         .collection("ArticleScreen")
+  //         .where("Lable", isGreaterThanOrEqualTo: searchtext)
+  //         .where("Lable",
+  //             isLessThan:
+  //                 searchtext + 'z') // เพิ่ม 'z' เพื่อให้เป็นการค้นหาแบบ prefix
+  //         .get()
+  //         .then((QuerySnapshot querySnapshot) {
+  //       // ตรวจสอบว่ามีข้อมูลหรือไม่
+  //       if (querySnapshot.docs.isNotEmpty) {
+  //         // มีข้อมูล
+  //         final documents = querySnapshot.docs;
 
-          // อัปเดต UI โดยการเรียก setState
-          setState(() {
-            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
-            searchResults = documents;
-            isSearching = true; // ปรับสถานะการค้นหาเป็น true เมื่อมีการค้นหา
-          });
-        } else {
-          // ไม่มีข้อมูลที่ค้นหา
-          setState(() {
-            // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
-            searchResults.clear();
-            isSearching =
-                false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีผลลัพธ์การค้นหา
-          });
-        }
-      });
-    }
+  //         // อัปเดต UI โดยการเรียก setState
+  //         setState(() {
+  //           // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการที่ค้นพบ
+  //           searchResults = documents;
+  //           isSearching = true; // ปรับสถานะการค้นหาเป็น true เมื่อมีการค้นหา
+  //         });
+  //       } else {
+  //         // ไม่มีข้อมูลที่ค้นหา
+  //         setState(() {
+  //           // รีเซ็ตรายการที่แสดงใน ListView.builder เป็นรายการว่าง
+  //           searchResults.clear();
+  //           isSearching =
+  //               false; // ปรับสถานะการค้นหาเป็น false เมื่อไม่มีผลลัพธ์การค้นหา
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  String search = "";
+
+  void searchtest(value) {
+    setState(() {
+      search = value.toLowerCase();
+    });
   }
 
   @override
@@ -107,10 +116,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                   ),
                 );
               }
-              // สร้างรายการที่จะแสดง
-              final itemsToDisplay = isSearching && searchtext.text.isNotEmpty
-                  ? searchResults
-                  : documents;
+
               return Column(
                 children: [
                   Stack(
@@ -123,6 +129,12 @@ class _ArticlescreenState extends State<Articlescreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               controller: searchtext,
+                              onChanged: (value) {
+                                EasyDebounce.debounce(
+                                    "searchDebounce",
+                                    const Duration(milliseconds: 1000),
+                                    () => searchtest(value));
+                              },
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 10),
@@ -130,14 +142,8 @@ class _ArticlescreenState extends State<Articlescreen> {
                                 suffixIcon: IconButton(
                                   icon: const Icon(Icons.search),
                                   onPressed: () {
-                                    // เรียกใช้งานฟังก์ชันค้นหาเมื่อกดปุ่มค้นหา
-                                    if (searchtext.text.isEmpty) {
-                                      searchInFirebase(
-                                          ""); // เรียกด้วยค่าว่างเพื่อให้แสดงทั้งหมด
-                                    } else {
-                                      searchInFirebase(searchtext
-                                          .text); // เรียกด้วยข้อความค้นหา
-                                    }
+                                    searchtext.clear();
+                                    searchtest("");
                                   },
                                 ),
                                 border: OutlineInputBorder(
@@ -175,10 +181,14 @@ class _ArticlescreenState extends State<Articlescreen> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: itemsToDisplay.length,
+                      itemCount: documents.length,
                       itemBuilder: (context, index) {
-                        final document = itemsToDisplay[index];
+                        final document = documents[index];
                         final lable1 = document['Lable'] ?? '';
+                        final lowercaseSearch = search.toLowerCase();
+                        if (!lable1.toLowerCase().contains(lowercaseSearch)) {
+                          return const SizedBox.shrink();
+                        }
 
                         return Padding(
                           padding: const EdgeInsets.all(8.0),

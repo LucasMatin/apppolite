@@ -157,7 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Text(
                             'ลืมรหัสผ่าน ?',
-                            style: TextStyle(color: Color(0xFF3D80DE)),
+                            style: TextStyle(
+                                color: Color(0xFF3D80DE), fontSize: 16),
                           ),
                         ),
                       ),
@@ -174,17 +175,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 48)),
                   ),
-                  child: const Text('เข้าสู่ระบบ'),
+                  child: const Text(
+                    'เข้าสู่ระบบ',
+                    style: TextStyle(fontSize: 23),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 RichText(
                   text: TextSpan(
                     text: "คุณยังไม่ได้ลงทะเบียนใช่หรือไม่? ",
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                     children: <TextSpan>[
                       TextSpan(
                         text: 'ลงทะเบียน',
-                        style: const TextStyle(color: Color(0xFF3D80DE)),
+                        style: const TextStyle(
+                            color: Color(0xFF3D80DE), fontSize: 16),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.push(

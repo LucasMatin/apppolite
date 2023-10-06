@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:polite/FoodSceen/Open_CheckFood_Screen2.dart';
+import 'package:polite/Screens/Open_CheckFood_Screen2.dart';
 // import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
 
 class Checkfood extends StatefulWidget {
@@ -186,7 +186,7 @@ class _CheckfoodState extends State<Checkfood> {
                           final DateTime? dateTime = DateTime.parse(
                               "${dates[2]}-${dates[1]}-${dates[0]}");
 
-                          // Check if the date is within the selected range
+                          // เช็คกำหนดการแสดงของข้อมูล
                           if ((_startDate == null ||
                                   dateTime!.isAfter(_startDate!)) &&
                               (_endDate == null ||
@@ -226,8 +226,6 @@ class _CheckfoodState extends State<Checkfood> {
                                                 ),
                                               ),
                                             ),
-                                            // เพิ่ม Widget ที่ต้องการแสดง (เช่น นาฬิกา) ตรงนี้
-                                            // เช่น Text(DateTime.now().toString()),
                                           ],
                                         ),
                                       ),

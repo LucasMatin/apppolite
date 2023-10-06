@@ -92,19 +92,17 @@ class _OpennutritionscreenState extends State<Opennutritionscreen> {
                           padding: const EdgeInsets.only(),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Text(
-                                      t1,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Center(
+                                  child: Text(
+                                    t1,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ],
+                                ),
                               ),
                               Padding(
                                 padding:

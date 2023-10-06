@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/FoodSceen/Foodscreen.dart';
 
-import 'package:polite/FoodSceen/Open_CheckFood_Screen.dart';
+import 'package:polite/Screens/Open_CheckFood_Screen.dart';
 import 'package:polite/Screens/Callory_Screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -134,7 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           'โภชนาการของผู้สูงวัย',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
       ),
@@ -259,8 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 228, 203,
-                            184)), // Set your desired background color here
+                        const Color.fromARGB(255, 161, 136,
+                            127)), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,
@@ -290,18 +292,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 228, 203,
-                            184)), // Set your desired background color here
+                        const Color.fromARGB(255, 161, 136,
+                            127)), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,
                     )),
                   ),
                   child: const Text(
-                    'แคลลอรี่สัปดาห์ที่แล้ว',
+                    'แคลอรี่สัปดาห์ที่แล้ว',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      fontSize: 23.0,
                     ),
                   ),
                 ),
@@ -318,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         backgroundColor: const Color.fromARGB(255, 161, 136, 127),
-        child: const Icon(Icons.check_box_rounded),
+        child: const Icon(Icons.list),
       ),
     );
   }

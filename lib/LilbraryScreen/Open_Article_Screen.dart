@@ -81,75 +81,80 @@ class _OpenArticlescreenState extends State<OpenArticlescreen> {
                 final t2 = document["Content"] ?? '';
                 final t3 = document["Image"] ?? '';
 
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            if (t3.isNotEmpty)
-                              SizedBox(
-                                width: 350.0,
-                                height: 180.0,
-                                child: Card(
-                                  color:
-                                      const Color.fromARGB(255, 143, 113, 102),
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.network(t3),
-                                  ),
-                                ),
+                return SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
                               ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            if (t1.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: Center(
-                                  child: Text(
-                                    t1,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                              if (t3.isNotEmpty)
+                                SizedBox(
+                                  width: 350.0,
+                                  height: 180.0,
+                                  child: Card(
+                                    color: const Color.fromARGB(
+                                        255, 143, 113, 102),
+                                    elevation: 2.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.network(t3),
                                     ),
                                   ),
                                 ),
+                              const SizedBox(
+                                height: 20,
                               ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            if (t2.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: Text(
-                                  t2,
-                                  style: const TextStyle(
-                                    fontSize: 19,
+                              if (t1.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Center(
+                                    child: Text(
+                                      t1,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
+                              const SizedBox(
+                                height: 10,
                               ),
-                          ],
+                              if (t2.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Text(
+                                    t2,
+                                    style: const TextStyle(
+                                      fontSize: 19,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
             ).toList(); // เพิ่ม .toList() เพื่อแปลงเป็นรายการวิดเจ็ต
-
-            return Column(
-              children: widgets,
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: widgets,
+                ),
+              ),
             );
           }),
     );

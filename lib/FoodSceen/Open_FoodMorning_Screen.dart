@@ -479,7 +479,9 @@ class _MyWidgetState extends State<MyWidget> {
                         // ignore: unnecessary_type_check
                         "แนะนำสำหรับโรค",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
                       ),
                     ),
                   ),
@@ -506,7 +508,9 @@ class _MyWidgetState extends State<MyWidget> {
                         // ignore: unnecessary_type_check
                         "ไม่แนะนำสำหรับโรค",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
                       ),
                     ),
                   ),

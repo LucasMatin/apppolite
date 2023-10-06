@@ -181,7 +181,9 @@ class _AddfoodState extends State<Addfood> {
                       },
                       title: const Text('แนะนำสำหรับโรค'),
                       buttonText: const Text(
-                          'แนะนำสำหรับโรค'), // เปลี่ยนชื่อ buttonText ที่นี่
+                        'แนะนำสำหรับโรค',
+                        style: TextStyle(color: Colors.green, fontSize: 18),
+                      ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),
                   ),
                   Padding(
@@ -196,7 +198,9 @@ class _AddfoodState extends State<Addfood> {
                       },
                       title: const Text('ไม่แนะนำสำหรับโรค'),
                       buttonText: const Text(
-                          'ไม่แนะนำสำหรับโรค'), // เปลี่ยนชื่อ buttonText ที่นี่
+                        'ไม่แนะนำสำหรับโรค',
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),
                   ),
                   const SizedBox(
