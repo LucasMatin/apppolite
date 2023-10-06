@@ -19,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _mounted = false;
+  String gender = ''; // ค่าเริ่มต้นที่เหมาะสม
+
   // เพิ่มตัวแปรเก็บค่าแคลอรี่ทั้งหมด
   double totalCalories = 0.0;
   late final User _currentUser;
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _mounted = true;
+
     _currentUser = FirebaseAuth.instance.currentUser!;
     _userUid = _currentUser.uid;
     _currentDate = getCurrentDateTime();
@@ -57,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection("FoodEvening");
     // เรียก _calculateTotalCalories() เมื่อหน้า HomeScreen ถูกโหลด
     _calculateTotalCalories();
+    _loadUserData();
   }
 
   @override
@@ -65,6 +69,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  _loadUserData() async {
+    DocumentSnapshot userSnapshot = await usersCollection.doc(_userUid).get();
+
+    if (_mounted && userSnapshot.exists) {
+      setState(() {
+        gender = userSnapshot['Sex'] ?? '';
+        // print(gender);
+      });
+      print(gender);
+    }
+  }
+
+  // ฟังก์ชันอื่น ๆ ที่เรียกใช้ _getStatusText หรืออื่น ๆ
   String getCurrentDateTime() {
     var now = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
@@ -175,12 +192,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasData) {
                       final documents = snapshot.data;
                       final title = documents?['Fullname'] ?? '';
-                      return Text(
-                        title,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
+                      final title1 = documents?['Sex'] ?? '';
+                      return Column(
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          // Text(
+                          //   title1,
+                          //   style: const TextStyle(
+                          //       color: Colors.black,
+                          //       fontSize: 25,
+                          //       fontWeight: FontWeight.bold),
+                          // ),
+                        ],
                       );
                     }
                     return const Text('ไม่มีข้อมูล');
@@ -240,7 +269,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: 16,
                       child: Text(
                         _getStatusText(
-                            totalCalories), // ตรวจสอบสถานะและสร้างข้อความ
+                          totalCalories,
+                          gender, // สมมติว่าคุณมีตัวแปร gender ที่เก็บค่าเพศ
+                        ), // ตรวจสอบสถานะและสร้างข้อความ
                         style: const TextStyle(
                           color: Colors.black, // สีข้อความสีเขียว
                           fontSize: 20,
@@ -326,15 +357,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-String _getStatusText(double value) {
-  if (value > 2500) {
-    return 'เกณฑ์อันตราย';
-  } else if (value > 2000) {
-    return 'เกณฑ์เสี่ยง';
-  } else if (value > 1000) {
-    return 'เกณฑ์ปกติ';
+String _getStatusText(double value, String gender) {
+  if (gender == 'ชาย') {
+    if (value > 2500) {
+      return 'เกณฑ์อันตราย';
+    } else if (value > 2000) {
+      return 'เกณฑ์เสี่ยง';
+    } else if (value > 1800) {
+      return 'เกณฑ์ปกติ';
+    } else {
+      return '';
+    }
+  } else if (gender == 'หญิง') {
+    if (value > 2500) {
+      return 'เกณฑ์อันตราย';
+    } else if (value > 1800) {
+      return 'เกณฑ์เสี่ยง';
+    } else if (value > 1500) {
+      return 'เกณฑ์ปกติ';
+    } else {
+      return '';
+    }
   } else {
-    return '';
+    return ''; // หรือจะระบุเงื่อนไขเพิ่มเติมในกรณีที่เพศไม่ได้ระบุ
   }
 }
 

@@ -461,7 +461,9 @@ class _AddfoodState extends State<Addfood> {
                       },
                       title: const Text('โรคที่เหมาะอาหาร'),
                       buttonText: const Text(
-                          'เลือกโรคที่เหมาะอาหาร'), // เปลี่ยนชื่อ buttonText ที่นี่
+                        'เลือกโรคที่เหมาะอาหาร',
+                        style: TextStyle(color: Colors.green, fontSize: 18),
+                      ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),
                   ),
                   Padding(
@@ -477,7 +479,9 @@ class _AddfoodState extends State<Addfood> {
                       },
                       title: const Text('โรคที่ไม่เหมาะอาหาร'),
                       buttonText: const Text(
-                          'เลือกโรคที่ไม่เหมาะอาหาร'), // เปลี่ยนชื่อ buttonText ที่นี่
+                        'เลือกโรคที่ไม่เหมาะอาหาร',
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),
                   ),
 
