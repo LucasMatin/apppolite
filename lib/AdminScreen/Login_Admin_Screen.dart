@@ -21,41 +21,84 @@ class _LoginadminState extends State<Loginadmin> {
   TextEditingController passwords = TextEditingController();
   String errorMessage = '';
 
+  // Future<void> _login() async {
+  //   final String email = emails.text.trim();
+  //   final String password = passwords.text.trim();
+
+  //   try {
+  //     UserCredential userCredential = await _auths.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+
+  //     if (userCredential.user != null) {
+  //       String userUid = userCredential.user!.uid;
+  //       // เข้าสู่ระบบสำเร็จ
+  //       // ตรวจสอบว่าผู้ใช้อยู่ใน Collection "UserID" โดยเช็ค UserUid
+  //       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //           .collection('AdminID')
+  //           .where('UserUid', isEqualTo: userUid)
+  //           .get();
+
+  //       if (querySnapshot.docs.isNotEmpty) {
+  //         // ถ้ามีผู้ใช้ใน Collection "UserID" ที่ UserUid ตรงกัน
+  //         // ให้นำผู้ใช้ไปหน้าที่ต้องการในกรณีนี้คือ bottomsceen()
+  //         Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => const bottomadminsceen()),
+  //         );
+  //       } else {
+  //         // ถ้าไม่มี UserUid ที่ตรงกัน
+  //         // ให้แสดงข้อความข้อผิดพลาด
+  //         errorMessage = "ไม่สามารถเข้าสู่ระบบได้คุณไม่ใช่แอดมิน";
+  //       }
+  //     }
+  //   } catch (e) {
+  //     // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
+  //     errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
+  //   }
+
+  //   // รีเซ็ตค่าในฟอร์ม
+  //   emails.text = '';
+  //   passwords.text = '';
+
+  //   // อัพเดท UI
+  //   setState(() {});
+  // }
   Future<void> _login() async {
-    final String email = emails.text.trim();
+    final String username = emails.text.trim();
     final String password = passwords.text.trim();
 
     try {
-      UserCredential userCredential = await _auths.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // Query Firestore ด้วย username แทน
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('AdminID')
+          .where('Telno', isEqualTo: username)
+          .get();
 
-      if (userCredential.user != null) {
-        String userUid = userCredential.user!.uid;
-        // เข้าสู่ระบบสำเร็จ
-        // ตรวจสอบว่าผู้ใช้อยู่ใน Collection "UserID" โดยเช็ค UserUid
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('AdminID')
-            .where('UserUid', isEqualTo: userUid)
-            .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        // ถ้ามีผู้ใช้ที่ Username ตรงกัน
+        UserCredential userCredential = await _auths.signInWithEmailAndPassword(
+          email: querySnapshot.docs[0]['Email'], // ใช้ Email จาก Firestore
+          password: password,
+        );
 
-        if (querySnapshot.docs.isNotEmpty) {
-          // ถ้ามีผู้ใช้ใน Collection "UserID" ที่ UserUid ตรงกัน
-          // ให้นำผู้ใช้ไปหน้าที่ต้องการในกรณีนี้คือ bottomsceen()
+        if (userCredential.user != null) {
+          // ถ้าล็อกอินสำเร็จ
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const bottomadminsceen()),
           );
         } else {
-          // ถ้าไม่มี UserUid ที่ตรงกัน
-          // ให้แสดงข้อความข้อผิดพลาด
-          errorMessage = "ไม่สามารถเข้าสู่ระบบได้คุณไม่ใช่แอดมิน";
+          // ถ้าล็อกอินไม่สำเร็จ
+          errorMessage = "ไม่สามารถเข้าสู่ระบบได้";
         }
+      } else {
+        // ถ้าไม่มีผู้ใช้ที่ Username ตรงกัน
+        errorMessage = "ไม่สามารถเข้าสู่ระบบได้";
       }
     } catch (e) {
-      // เกิดข้อผิดพลาดในการเข้าสู่ระบบ
-      errorMessage = "เบอร์โทรศัพท์หรือรหัสผ่านไม่ถูกต้อง";
+      // จัดการข้อผิดพลาด...
     }
 
     // รีเซ็ตค่าในฟอร์ม
