@@ -459,9 +459,9 @@ class _AddfoodState extends State<Addfood> {
                           updatedDiseases = List<String>.from(values);
                         });
                       },
-                      title: const Text('โรคที่เหมาะอาหาร'),
+                      title: const Text('แนะนำสำหรับโรค'),
                       buttonText: const Text(
-                        'เลือกโรคที่เหมาะอาหาร',
+                        'แนะนำสำหรับโรค',
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),
@@ -477,9 +477,9 @@ class _AddfoodState extends State<Addfood> {
                           updatedDiseases2 = List<String>.from(values);
                         });
                       },
-                      title: const Text('โรคที่ไม่เหมาะอาหาร'),
+                      title: const Text('ไม่แนะนำสำหรับโรค'),
                       buttonText: const Text(
-                        'เลือกโรคที่ไม่เหมาะอาหาร',
+                        'ไม่แนะนำสำหรับโรค',
                         style: TextStyle(color: Colors.red, fontSize: 18),
                       ), // เปลี่ยนชื่อ buttonText ที่นี่
                     ),

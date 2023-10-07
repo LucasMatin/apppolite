@@ -98,7 +98,7 @@ class _NutritionSreenState extends State<NutritionSreen> {
                                     height: 70.0,
                                     child: Card(
                                       color: const Color.fromARGB(
-                                          255, 143, 113, 102),
+                                          255, 112, 86, 77),
                                       elevation: 2.0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:

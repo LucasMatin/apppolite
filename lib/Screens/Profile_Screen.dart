@@ -78,7 +78,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: const Color.fromARGB(
-                                      255, 77, 74, 74), // สีขอบ
+                                      255, 112, 86, 77), // สีขอบ
                                   width: 3.0, // ความหนาขอบ
                                 ),
                               ),
@@ -97,16 +97,21 @@ class _ProfilescreenState extends State<Profilescreen> {
                               width: 35,
                               height: 35,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color:
-                                      const Color.fromARGB(255, 196, 164, 153)),
+                                borderRadius: BorderRadius.circular(100),
+                                color: const Color.fromARGB(255, 112, 86, 77),
+                                border: Border.all(
+                                  color: const Color.fromARGB(
+                                      255, 112, 86, 77), // สีขอบ
+                                  width: 3.0, // ความหนาขอบ
+                                ),
+                              ),
                               child: InkWell(
                                 onTap: () {
                                   dialogBuilder(context);
                                 },
                                 child: const Icon(
                                   LineAwesomeIcons.camera,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   size: 20,
                                 ),
                               ),
@@ -156,9 +161,9 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: const Color.fromARGB(255, 228, 203,
-                                    184) // Set your desired background color here
-                                ),
+                              primary: const Color.fromARGB(255, 112, 86,
+                                  77), // Set your desired background color here
+                            ),
                           )),
                       const SizedBox(height: 10),
                       SizedBox(
@@ -178,9 +183,9 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: const Color.fromARGB(255, 228, 203,
-                                    184) // Set your desired background color here
-                                ),
+                              primary: const Color.fromARGB(255, 112, 86,
+                                  77), // Set your desired background color here
+                            ),
                           )),
                       const SizedBox(height: 20),
                       const Divider(

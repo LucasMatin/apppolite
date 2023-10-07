@@ -292,8 +292,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 161, 136,
-                            127)), // Set your desired background color here
+                      const Color.fromARGB(255, 112, 86, 77),
+                    ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,
@@ -323,8 +323,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 161, 136,
-                            127)), // Set your desired background color here
+                      const Color.fromARGB(255, 112, 86, 77),
+                    ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
                       48,

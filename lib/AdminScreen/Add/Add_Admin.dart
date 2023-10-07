@@ -32,6 +32,8 @@ class _AddadminscreenState extends State<Addadminscreen> {
           );
           // รับ User UID จาก Authentication
           String userUid = userCredential.user!.uid;
+          String image =
+              "https://firebasestorage.googleapis.com/v0/b/apppolite.appspot.com/o/images%2Fpeople-icon-vector-person-sing-250nw-707883430.webp?alt=media&token=a042325b-d34d-4e85-a86d-fb82f4e00700";
 
           // บันทึกข้อมูลลงใน Firestore
           await FirebaseFirestore.instance
@@ -44,6 +46,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
             'Telno': telno.text,
             'Sex': sex.text,
             'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
+            'Image': image, // เพิ่ม Image ลงใน Firestore
           });
 
           // ignore: avoid_print
