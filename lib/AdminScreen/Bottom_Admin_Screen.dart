@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, camel_case_types, unnecessary_string_interpolations
+// ignore_for_file: file_names, camel_case_types, unnecessary_string_interpolations, unused_import
 
 import 'package:polite/AdminScreen/Add/Add_Admin.dart';
 import 'package:polite/AdminScreen/Admin_Screen.dart';

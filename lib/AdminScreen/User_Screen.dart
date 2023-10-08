@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, sized_box_for_whitespace, prefer_interpolation_to_compose_strings
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
