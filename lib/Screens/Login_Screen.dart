@@ -1,5 +1,5 @@
 //import 'package:firebase_auth/firebase_auth.dart';
-// ignore_for_file: unused_import, file_names, sized_box_for_whitespace, unused_element
+// ignore_for_file: unused_import, file_names, sized_box_for_whitespace, unused_element, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -63,7 +63,7 @@ class _FoodHistoryPageState extends State<FoodHistoryPage> {
         elevation: 0,
         title: const Text(
           'รายการอาหารย้อนหลัง',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(color: Colors.white, fontSize: 26),
         ),
         centerTitle: true,
       ),

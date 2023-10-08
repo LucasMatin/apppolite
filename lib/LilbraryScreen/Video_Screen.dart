@@ -264,10 +264,10 @@ class _videoscreenState extends State<videoscreen> {
                                           child: Column(
                                             children: [
                                               Text(
-                                                lable1.toString().length > 20
+                                                lable1.toString().length > 23
                                                     ? lable1
                                                             .toString()
-                                                            .substring(0, 20) +
+                                                            .substring(0, 23) +
                                                         '...'
                                                     : lable1,
                                                 style: const TextStyle(

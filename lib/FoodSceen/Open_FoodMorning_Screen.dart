@@ -159,29 +159,29 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        selectedStatus = foodstatus.all;
-                                      });
-                                    },
-                                    style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      backgroundColor:
-                                          selectedStatus == foodstatus.all
-                                              ? const Color.fromRGBO(
-                                                  229, 227, 227, 1)
-                                              : const Color.fromRGBO(
-                                                  229, 227, 227, 1),
-                                    ),
-                                    child: const Text(
-                                      '  ทั้งหมด ',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 18),
-                                    ),
-                                  ),
+                                  // TextButton(
+                                  //   onPressed: () {
+                                  //     setState(() {
+                                  //       selectedStatus = foodstatus.all;
+                                  //     });
+                                  //   },
+                                  //   style: OutlinedButton.styleFrom(
+                                  //     shape: RoundedRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(15),
+                                  //     ),
+                                  //     backgroundColor:
+                                  //         selectedStatus == foodstatus.all
+                                  //             ? const Color.fromRGBO(
+                                  //                 229, 227, 227, 1)
+                                  //             : const Color.fromRGBO(
+                                  //                 229, 227, 227, 1),
+                                  //   ),
+                                  //   child: const Text(
+                                  //     '  ทั้งหมด ',
+                                  //     style: TextStyle(
+                                  //         color: Colors.black, fontSize: 18),
+                                  //   ),
+                                  // ),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -192,7 +192,7 @@ class _AddfoodmorningState extends State<Addfoodmorning> {
                                   ),
                                   buildStatusButton(
                                       foodstatus.dessert,
-                                      'ขนมของหวาน',
+                                      'ขนม/ของหวาน',
                                       const Color.fromRGBO(207, 255, 203, 1)),
                                   const SizedBox(
                                     width: 10,

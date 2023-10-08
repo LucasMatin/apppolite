@@ -169,11 +169,11 @@ class _AddvideoState extends State<Addvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: const Text(
-          'วิดิโอเพื่อสุภาพ',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          'วิดิโอเพื่อสุขภาพ',
+          style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
       ),

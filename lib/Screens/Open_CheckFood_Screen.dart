@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, unused_field, avoid_print, unnecessary_nullable_for_final_variable_declarations
+// ignore_for_file: file_names, unused_field, avoid_print, unnecessary_nullable_for_final_variable_declarations, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,6 +45,7 @@ class _CheckfoodState extends State<Checkfood> {
   Future<QuerySnapshot> _getFoodCollectionSnapshot(
       CollectionReference collection) async {
     final snapshot = await collection.where('date').get();
+    final snapshots = await collection.where('Allcalory').get();
     return snapshot;
   }
 
@@ -124,7 +125,7 @@ class _CheckfoodState extends State<Checkfood> {
         elevation: 0,
         title: const Text(
           'รายการอาหารย้อนหลัง',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(color: Colors.white, fontSize: 26),
         ),
         centerTitle: true,
       ),
@@ -182,6 +183,7 @@ class _CheckfoodState extends State<Checkfood> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: docs.map((doc) {
                           final String data = doc['date'];
+
                           final List dates = data.split("-");
                           final DateTime? dateTime = DateTime.parse(
                               "${dates[2]}-${dates[1]}-${dates[0]}");
@@ -198,39 +200,36 @@ class _CheckfoodState extends State<Checkfood> {
                               ),
                               child: Card(
                                 elevation: 1,
-                                child: SizedBox(
-                                  height: 80,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ListTile(
-                                        isThreeLine: false,
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FoodHistoryPage(
-                                                      selectedDate: data),
-                                            ),
-                                          );
-                                        },
-                                        subtitle: Column(
-                                          children: [
-                                            Center(
-                                              child: Text(
-                                                data,
-                                                style: const TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ListTile(
+                                      isThreeLine: false,
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FoodHistoryPage(
+                                                    selectedDate: data),
+                                          ),
+                                        );
+                                      },
+                                      subtitle: Column(
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              data,
+                                              style: const TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             );

@@ -167,7 +167,7 @@ class _Sigup extends State<Sigup> {
         elevation: 0,
         title: const Text(
           'ลงทะเบียน',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(color: Colors.white, fontSize: 26),
         ),
         centerTitle: true,
         leading: IconButton(

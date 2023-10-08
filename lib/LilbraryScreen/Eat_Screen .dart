@@ -70,7 +70,7 @@ class _EatScreenState extends State<EatScreen> {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(),

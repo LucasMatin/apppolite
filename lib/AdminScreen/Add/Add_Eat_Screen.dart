@@ -204,11 +204,11 @@ class _SaveeatState extends State<Saveeat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: const Text(
           'กินอย่างไรให้สุขภาพดี',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
       ),

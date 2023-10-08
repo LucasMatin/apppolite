@@ -113,6 +113,35 @@ class _FoodscreenState extends State<Foodscreen> {
     }
   }
 
+  CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection("UserID");
+  sendUserDataToDB() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    var currentUser = auth.currentUser;
+    String? useruid = currentUser!.uid;
+
+    // สร้างเอกสารย่อยภายใต้คอลเลกชัน "UserID" โดยใช้วันที่ปัจจุบันเป็นชื่อเอกสาร
+    DocumentReference foodTodayDoc = usersCollection
+        .doc(useruid)
+        .collection("Foodtoday")
+        .doc(getCurrentDateTime());
+
+    // เพิ่มข้อมูลลงในเอกสารย่อย
+    await foodTodayDoc.set({
+      'date': getCurrentDateTime(),
+      'Allcalory': await getTotalCallory(),
+    });
+    // // หลังจากบันทึกข้อมูลแล้ว เรียกฟังก์ชันคำนวณค่าแคลอรี่ทั้งหมด
+    // _calculateTotalCalories();
+
+    // เมื่อข้อมูลถูกเพิ่มเรียบร้อย ให้เปิดหน้า Foodscreen
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const bottomsceen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -280,7 +309,7 @@ class _FoodscreenState extends State<Foodscreen> {
 
                   return Center(
                     child: Text(
-                      "รวมค่าแคลอรี่: $totalCallory แคลลอรี่",
+                      "รวม: $totalCallory แคลอรี่",
                       style: const TextStyle(
                           fontSize: 25, fontWeight: FontWeight.bold),
                     ),
@@ -326,13 +355,7 @@ class _FoodscreenState extends State<Foodscreen> {
                     width: 300,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const bottomsceen()),
-                        );
-                      },
+                      onPressed: sendUserDataToDB,
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 112, 86,
                             77), // Set your desired background color here

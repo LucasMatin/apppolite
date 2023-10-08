@@ -218,7 +218,7 @@ class _EditNutritionState extends State<EditNutrition> {
     return Scaffold(
       // ...
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: StreamBuilder<DocumentSnapshot>(
           stream: widget.documentReference.snapshots(),
@@ -234,7 +234,7 @@ class _EditNutritionState extends State<EditNutrition> {
               final title = documents?['Lable'] ?? '';
               return Text(
                 title,
-                style: const TextStyle(color: Colors.white, fontSize: 23),
+                style: const TextStyle(color: Colors.white, fontSize: 25),
               );
             }
             return const Text('ไม่มีข้อมูล');

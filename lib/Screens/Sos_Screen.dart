@@ -53,7 +53,9 @@ class _SosState extends State<Sos> {
         title: const Text(
           'เหตุฉุกเฉิน',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
       ),

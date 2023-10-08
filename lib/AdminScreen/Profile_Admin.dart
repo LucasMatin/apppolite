@@ -28,11 +28,11 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[300],
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: const Text(
-          'ข้อมูลผู้ดูแล',
-          style: TextStyle(color: Colors.white, fontSize: 23),
+          'ข้อมูลผู้ดูแลระบบ',
+          style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
       ),
@@ -126,7 +126,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("ผู้ดูแล", style: TextStyle(fontSize: 18)),
+                          Text("ผู้ดูแลระบบ", style: TextStyle(fontSize: 18)),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -142,11 +142,9 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(
-                                  255,
-                                  112,
-                                  86,
-                                  77), // Set your desired background color here
+                              // ignore: prefer_const_constructors
+                              backgroundColor: Color.fromARGB(255, 114, 88,
+                                  79), // Set your desired background color here
                             ),
                             child: const Text(
                               "ออกจากระบบ",

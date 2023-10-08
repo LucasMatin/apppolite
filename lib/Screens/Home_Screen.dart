@@ -131,12 +131,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<double> _getTotalCalories(CollectionReference collection) async {
-    double total = 0.0;
+    double total = 0;
     QuerySnapshot snapshot = await collection.get();
     for (QueryDocumentSnapshot doc in snapshot.docs) {
-      double calories = (doc['Callory'] ?? 0.0) is double
+      double calories = (doc['Callory'] ?? 0) is double
           ? doc['Callory']
-          : double.tryParse(doc['Callory'] ?? '0.0') ?? 0.0;
+          : double.tryParse(doc['Callory'] ?? '0') ?? 0;
       total += calories;
     }
     return total;
@@ -259,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        "$totalCalories แคลอรี่ ",
+                        "${totalCalories.toStringAsFixed(totalCalories.truncateToDouble() == totalCalories ? 0 : 2)} / ${gender == 'ชาย' ? '2000' : '1800'} แคลอรี่",
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 112, 86, 77),
+                      const Color.fromARGB(255, 114, 88, 79),
                     ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
@@ -323,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 112, 86, 77),
+                      const Color.fromARGB(255, 114, 88, 79),
                     ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
@@ -358,6 +358,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 String _getStatusText(double value, String gender) {
+  double maleThreshold = 2000;
+  double femaleThreshold = 1800;
   if (gender == 'ชาย') {
     if (value > 2500) {
       return 'เกณฑ์อันตราย';

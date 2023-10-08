@@ -20,7 +20,9 @@ class Lilbraryscreen extends StatelessWidget {
         title: Text(
           'ห้องสมุดเพื่อสุขภาพ',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
       ),
@@ -63,7 +65,7 @@ class Lilbraryscreen extends StatelessWidget {
                                   ),
                                   SizedBox(height: 5.0),
                                   Text(
-                                    "แนะนำเกี่ยวกับโภชนาการ",
+                                    "โรคที่พบในผู้สูงอายุ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -104,7 +106,7 @@ class Lilbraryscreen extends StatelessWidget {
                                   ),
                                   SizedBox(height: 5.0),
                                   Text(
-                                    "กินอย่างไรให้สุภาพดี",
+                                    "กินอย่างไรให้สุขภาพดี",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -186,7 +188,7 @@ class Lilbraryscreen extends StatelessWidget {
                                   ),
                                   SizedBox(height: 5.0),
                                   const Text(
-                                    "วิดิโอเพื่อสุภาพ",
+                                    "วิดิโอเพื่อสุขภาพ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,

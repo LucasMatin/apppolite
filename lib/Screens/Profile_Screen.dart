@@ -40,7 +40,9 @@ class _ProfilescreenState extends State<Profilescreen> {
         title: const Text(
           'ข้อมูลส่วนตัว',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
       ),

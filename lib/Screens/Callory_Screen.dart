@@ -125,7 +125,9 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
         title: const Text(
           'สรุปแคลอรี่สัปดาห์ที่แล้ว',
           style: TextStyle(
-              color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
       ),
@@ -160,6 +162,11 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
                         dataLabelSettings: const DataLabelSettings(
                           isVisible: true,
                           labelAlignment: ChartDataLabelAlignment.top,
+                          labelPosition: ChartDataLabelPosition.outside,
+                          textStyle: TextStyle(
+                            fontSize: 12, // ปรับขนาดตัวอักษรตามต้องการ
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -172,7 +179,7 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  "รวมแคลอรี่: $totalCalories แคลอรี่",
+                  "รวม: ${totalCalories.toStringAsFixed(totalCalories.truncateToDouble() == totalCalories ? 0 : 2)} แคลอรี่",
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.bold),
                 ),

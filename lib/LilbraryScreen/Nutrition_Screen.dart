@@ -33,7 +33,7 @@ class _NutritionSreenState extends State<NutritionSreen> {
         backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         elevation: 0,
         title: const Text(
-          'แนะนำเกี่ยวกับโภชนาการ',
+          'โรคที่พบในผู้สูงอายุ',
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
@@ -61,78 +61,93 @@ class _NutritionSreenState extends State<NutritionSreen> {
                   ),
                 );
               }
-              return ListView.builder(
-                itemCount: documents.length,
-                itemBuilder: (context, index) {
-                  final document = documents[index];
-                  final lablenutrition = document['Lable'] ?? '';
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (context, index) {
+                          final document = documents[index];
+                          final lablenutrition = document['Lable'] ?? '';
 
-                  return SingleChildScrollView(
-                    child: SafeArea(
-                        child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(),
-                          child: Center(
-                            child: Wrap(
-                              spacing: 20.0,
-                              runSpacing: 20.0,
+                          return SingleChildScrollView(
+                            child: SafeArea(
+                                child: Column(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            Opennutritionscreen(
-                                                documentReference:
-                                                    document.reference),
-                                        settings:
-                                            RouteSettings(arguments: document),
-                                      ),
-                                    );
-                                  },
-                                  child: SizedBox(
-                                    width: 380.0,
-                                    height: 70.0,
-                                    child: Card(
-                                      color: const Color.fromARGB(
-                                          255, 112, 86, 77),
-                                      elevation: 2.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              const SizedBox(height: 5.0),
-                                              Text(
-                                                lablenutrition,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24.0,
+                                const SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.only(),
+                                  child: Center(
+                                    child: Wrap(
+                                      spacing: 20.0,
+                                      runSpacing: 20.0,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Opennutritionscreen(
+                                                        documentReference:
+                                                            document.reference),
+                                                settings: RouteSettings(
+                                                    arguments: document),
+                                              ),
+                                            );
+                                          },
+                                          child: SizedBox(
+                                            width: 380.0,
+                                            height: 70.0,
+                                            child: Card(
+                                              color: const Color.fromARGB(
+                                                  255, 114, 88, 79),
+                                              elevation: 2.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 5.0),
+                                                      Text(
+                                                        lablenutrition,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 24.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
-                                ),
+                                )
                               ],
-                            ),
-                          ),
-                        )
-                      ],
-                    )),
-                  );
-                },
+                            )),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
             return const Text("ไม่มีข้อมูล");
