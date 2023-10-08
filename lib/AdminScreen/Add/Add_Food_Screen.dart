@@ -311,7 +311,10 @@ class _AddfoodState extends State<Addfood> {
                         );
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),
@@ -596,7 +599,10 @@ class _AddfoodState extends State<Addfood> {
                         );
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),

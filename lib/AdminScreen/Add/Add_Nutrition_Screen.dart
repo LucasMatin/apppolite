@@ -70,7 +70,10 @@ class _AddnutritionState extends State<Addnutrition> {
 
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"))
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ))
               ],
             ),
           );
@@ -121,7 +124,10 @@ class _AddnutritionState extends State<Addnutrition> {
 
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"))
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ))
               ],
             ),
           );

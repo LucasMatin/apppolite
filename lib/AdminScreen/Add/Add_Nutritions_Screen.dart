@@ -76,7 +76,10 @@ class _NutritionsScreenState extends State<NutritionsScreen> {
 
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"))
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ))
               ],
             ),
           );
@@ -131,7 +134,10 @@ class _NutritionsScreenState extends State<NutritionsScreen> {
 
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"))
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ))
               ],
             ),
           );

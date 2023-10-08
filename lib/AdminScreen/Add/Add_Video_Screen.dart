@@ -85,7 +85,10 @@ class _AddvideoState extends State<Addvideo> {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"))
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ))
               ],
             ),
           );
@@ -156,7 +159,10 @@ class _AddvideoState extends State<Addvideo> {
 
                   Navigator.of(context).pop();
                 },
-                child: const Text("ยืนยัน"),
+                child: const Text(
+                  "ยืนยัน",
+                  style: TextStyle(fontSize: 20),
+                ),
               )
             ],
           ),

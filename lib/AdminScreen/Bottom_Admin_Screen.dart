@@ -6,6 +6,7 @@ import 'package:polite/AdminScreen/Home_Admin.dart';
 import 'package:polite/AdminScreen/Profile_Admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:polite/AdminScreen/User_Screen.dart';
 
 class bottomadminsceen extends StatefulWidget {
   const bottomadminsceen({super.key});
@@ -26,7 +27,7 @@ class _bottomadminsceenState extends State<bottomadminsceen> {
 
   final List<Widget> _pages = [
     const HomeadminScreen(),
-    const Adminuser(),
+    const Userscreen(),
     const Addadminscreen(),
     const Profiladminescreen(),
   ];

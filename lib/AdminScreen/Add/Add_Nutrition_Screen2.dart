@@ -113,7 +113,10 @@ class _EditNutritionState extends State<EditNutrition> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),
@@ -204,7 +207,10 @@ class _EditNutritionState extends State<EditNutrition> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),

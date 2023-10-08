@@ -201,7 +201,10 @@ class _EditarticleState extends State<Editarticle> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),
@@ -390,7 +393,10 @@ class _EditarticleState extends State<Editarticle> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
-                    child: const Text("ยืนยัน"),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 ],
               ),
