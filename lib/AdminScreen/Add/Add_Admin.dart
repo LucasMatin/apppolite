@@ -222,7 +222,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       boxadmin(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมล',
                           'กรุณากรอกอีเมล์'),
                       const SizedBox(height: 24),
-                      boxadmin(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
+                      telnotbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
                           'เบอร์โทรศัพท์', 'กรุณากรอกเบอร์โทรศัพท์'),
                       const SizedBox(height: 24),
                       boxadmin(password, 'กรุณาป้อนรหัสผ่านด้วย', 'รหัสผ่าน',

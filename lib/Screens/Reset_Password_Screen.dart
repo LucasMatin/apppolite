@@ -40,6 +40,15 @@ class _resetpassState extends State<resetpass> {
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                // Padding(
+                //   padding: const EdgeInsets.all(1),
+                //   child: Center(
+                //     child: Text("รบกวนกรอกอีเมลของท่านเพื่อ"),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 25,
+                ),
                 Form(
                   key: formKey,
                   child: Column(
@@ -60,6 +69,9 @@ class _resetpassState extends State<resetpass> {
                     }
                   },
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 86, 167, 89),
+                    ),
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 48)),
                   ),

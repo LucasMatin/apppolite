@@ -153,7 +153,9 @@ class _CalloryweekScreenState extends State<CalloryweekScreen> {
                 padding: const EdgeInsets.only(),
                 child: Center(
                   child: SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
+                    primaryXAxis: CategoryAxis(
+                      labelIntersectAction: AxisLabelIntersectAction.rotate45,
+                    ),
                     series: <ChartSeries>[
                       ColumnSeries<ChartData, String>(
                         dataSource: chartData,

@@ -226,7 +226,7 @@ class _Sigup extends State<Sigup> {
                       // textbox(bisease, 'กรุณาป้อนโรคประจำตัวด้วย',
                       //     'โรคประจำตัว', 'กรุณากรอกโรคประจำตัว'),
                       const SizedBox(height: 24),
-                      textbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
+                      telnotbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
                           'เบอร์โทรศัพท์', 'กรุณากรอกเบอร์โทรศัพท์'),
                       const SizedBox(height: 24),
                       passbox(
@@ -238,6 +238,10 @@ class _Sigup extends State<Sigup> {
                     ],
                   ),
                 ),
+                // Padding(padding: const EdgeInsets.all(1),
+                // child: Center(
+                //   child: Text("หมายเหตุ: ใส่ข้อมูลของท่านให้"),
+                // ),),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ElevatedButton(
                   onPressed: () {
@@ -246,10 +250,18 @@ class _Sigup extends State<Sigup> {
                     }
                   },
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 86, 167, 89),
+                    ),
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 48)),
                   ),
-                  child: const Text('ลงทะเบียนเสร็จสิ้น'),
+                  child: const Text(
+                    'ลงทะเบียน',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
               ],
