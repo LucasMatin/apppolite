@@ -46,7 +46,7 @@ class _resetpassState extends State<resetpass> {
                 //     child: Text("รบกวนกรอกอีเมลของท่านเพื่อ"),
                 //   ),
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Form(
