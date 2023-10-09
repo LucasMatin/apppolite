@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: camel_case_types
 class editscreen extends StatefulWidget {
@@ -98,6 +99,12 @@ class _editscreenState extends State<editscreen> {
                                 width: 300,
                                 child: TextFormField(
                                   controller: telno,
+                                  maxLength: 10,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9]')),
+                                  ],
                                   decoration: const InputDecoration(
                                       label: Text('เบอร์โทรศัพท์'),
                                       prefixIcon: Icon(Icons.call)),
