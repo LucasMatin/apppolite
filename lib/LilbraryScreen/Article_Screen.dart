@@ -209,7 +209,7 @@ class _ArticlescreenState extends State<Articlescreen> {
                                 width: 400.0,
                                 height: 100.0,
                                 child: Card(
-                                  color: const Color.fromARGB(255, 114, 88, 79),
+                                  color: const Color.fromARGB(255, 128, 98, 88),
                                   elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),

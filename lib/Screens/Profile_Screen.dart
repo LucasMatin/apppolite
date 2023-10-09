@@ -101,10 +101,10 @@ class _ProfilescreenState extends State<Profilescreen> {
                               height: 35,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                color: Color.fromARGB(255, 112, 77, 77),
+                                color: const Color.fromARGB(255, 112, 77, 77),
                                 border: Border.all(
-                                  color:
-                                      Color.fromARGB(255, 112, 77, 77), // สีขอบ
+                                  color: const Color.fromARGB(
+                                      255, 112, 77, 77), // สีขอบ
                                   width: 3.0, // ความหนาขอบ
                                 ),
                               ),
@@ -164,7 +164,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 46, 106,
+                              primary: const Color.fromARGB(255, 46, 106,
                                   175), // Set your desired background color here
                             ),
                           )),
@@ -186,7 +186,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                                   fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 238, 77,
+                              primary: const Color.fromARGB(255, 238, 77,
                                   77), // Set your desired background color here
                             ),
                           )),

@@ -22,12 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'APPPOLITE',
         theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 241, 234, 224),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 241, 234, 224),
           primarySwatch: Colors.blue,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 48),
-              backgroundColor: Color.fromARGB(255, 196, 157, 130),
+              backgroundColor: const Color.fromARGB(255, 196, 157, 130),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
                 side: BorderSide.none,

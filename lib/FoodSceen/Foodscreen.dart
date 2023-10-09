@@ -224,7 +224,7 @@ class _FoodscreenState extends State<Foodscreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(),
+                                  padding: EdgeInsets.only(),
                                   child: Text(
                                     "กดเข้าไปเพื่อบันทึกอาหารเช้า",
                                     style: TextStyle(
@@ -284,7 +284,7 @@ class _FoodscreenState extends State<Foodscreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(),
+                                  padding: EdgeInsets.only(),
                                   child: Text(
                                     "กดเข้าไปเพื่อบันทึกอาหารกลางวัน",
                                     style: TextStyle(
@@ -344,7 +344,7 @@ class _FoodscreenState extends State<Foodscreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(),
+                                  padding: EdgeInsets.only(),
                                   child: Text(
                                     "กดเข้าไปเพื่อบันทึกอาหารเช้า",
                                     style: TextStyle(
@@ -407,14 +407,14 @@ class _FoodscreenState extends State<Foodscreen> {
                           primary: const Color.fromARGB(255, 86, 167,
                               89), // Set your desired background color here
                         ),
-                        child: Stack(
+                        child: const Stack(
                           children: [
                             // Padding(
                             //   padding: const EdgeInsets.all(3),
                             //   child: Icon(Icons.remove_red_eye),
                             // ),
-                            const Center(
-                              child: const Text(
+                            Center(
+                              child: Text(
                                 'รายการอาหารทั้งหมด',
                                 style: TextStyle(
                                   fontSize: 25,

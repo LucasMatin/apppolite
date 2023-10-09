@@ -213,8 +213,7 @@ class _videoscreenState extends State<videoscreen> {
                                 width: 400.0,
                                 height: 100.0,
                                 child: Card(
-                                  color:
-                                      const Color.fromARGB(255, 143, 113, 102),
+                                  color: const Color.fromARGB(255, 129, 98, 88),
                                   elevation: 2.0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),

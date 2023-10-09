@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/LilbraryScreen/Open_Nutrition_Screen.dart';
@@ -24,6 +25,15 @@ class _NutritionSreenState extends State<NutritionSreen> {
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
     nutrition = FirebaseFirestore.instance.collection("NutritionScreen");
+  }
+
+  TextEditingController searchtext = TextEditingController();
+  String search = "";
+
+  void searchtest(value) {
+    setState(() {
+      search = value.toLowerCase();
+    });
   }
 
   @override
@@ -65,6 +75,34 @@ class _NutritionSreenState extends State<NutritionSreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: searchtext,
+                        onChanged: (value) {
+                          EasyDebounce.debounce(
+                              "searchDebounce",
+                              const Duration(milliseconds: 1000),
+                              () => searchtest(value));
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10),
+                          hintText: "ค้นหา...",
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {
+                              searchtext.clear();
+                              searchtest("");
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: const BorderSide(),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -74,6 +112,12 @@ class _NutritionSreenState extends State<NutritionSreen> {
                         itemBuilder: (context, index) {
                           final document = documents[index];
                           final lablenutrition = document['Lable'] ?? '';
+                          final lowercaseSearch = search.toLowerCase();
+                          if (!lablenutrition
+                              .toLowerCase()
+                              .contains(lowercaseSearch)) {
+                            return const SizedBox.shrink();
+                          }
 
                           return SingleChildScrollView(
                             child: SafeArea(
@@ -106,7 +150,7 @@ class _NutritionSreenState extends State<NutritionSreen> {
                                             height: 70.0,
                                             child: Card(
                                               color: const Color.fromARGB(
-                                                  255, 114, 88, 79),
+                                                  255, 126, 97, 87),
                                               elevation: 2.0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:

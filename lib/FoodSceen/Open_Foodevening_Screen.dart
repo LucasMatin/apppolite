@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, camel_case_types, file_names, prefer_const_constructors, deprecated_member_use
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, camel_case_types, file_names, prefer_const_constructors, deprecated_member_use, sized_box_for_whitespace, prefer_interpolation_to_compose_strings
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
