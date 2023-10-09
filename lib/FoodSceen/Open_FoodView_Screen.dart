@@ -128,6 +128,16 @@ class _FoodListPageState extends State<FoodListPage> {
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const Foodscreen()),
+            );
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -383,16 +393,16 @@ class _FoodListPageState extends State<FoodListPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const Foodscreen()),
-          );
-        },
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
-        child: const Icon(Icons.save_as),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (_) => const Foodscreen()),
+      //     );
+      //   },
+      //   backgroundColor: const Color.fromARGB(255, 112, 86, 77),
+      //   child: const Icon(Icons.save_as),
+      // ),
     );
   }
 }

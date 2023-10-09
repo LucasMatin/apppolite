@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, unused_element, file_names
+// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, unused_element, file_names, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -89,25 +89,30 @@ class _SaveeatState extends State<Saveeat> {
                       height: 20,
                     ),
                     ElevatedButton(
-                        onPressed: () async {
-                          final String name = title1.text;
-                          final String nname = title2.text;
-                          final String num = id.text;
-                          await _items.doc(num).set({
-                            "Title1": name,
-                            "Title2": nname,
-                            "ID": num,
-                          });
-                          title1.text = '';
-                          title2.text = '';
-                          id.text = '';
+                      onPressed: () async {
+                        final String name = title1.text;
+                        final String nname = title2.text;
+                        final String num = id.text;
+                        await _items.doc(num).set({
+                          "Title1": name,
+                          "Title2": nname,
+                          "ID": num,
+                        });
+                        title1.text = '';
+                        title2.text = '';
+                        id.text = '';
 
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(
-                          "ยืนยัน",
-                          style: TextStyle(fontSize: 20),
-                        ))
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(
+                            255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                      ),
+                      child: const Text(
+                        "ยืนยัน",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -179,25 +184,30 @@ class _SaveeatState extends State<Saveeat> {
                       height: 20,
                     ),
                     ElevatedButton(
-                        onPressed: () async {
-                          final String name = title1.text;
-                          final String nname = title2.text;
-                          final String num = id.text;
-                          await documentSnapshot.reference.update({
-                            "Title1": name,
-                            "Title2": nname,
-                            "ID": num,
-                          });
-                          title1.text = '';
-                          title2.text = '';
-                          id.text = '';
+                      onPressed: () async {
+                        final String name = title1.text;
+                        final String nname = title2.text;
+                        final String num = id.text;
+                        await documentSnapshot.reference.update({
+                          "Title1": name,
+                          "Title2": nname,
+                          "ID": num,
+                        });
+                        title1.text = '';
+                        title2.text = '';
+                        id.text = '';
 
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(
-                          "ยืนยัน",
-                          style: TextStyle(fontSize: 20),
-                        ))
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(
+                            255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                      ),
+                      child: const Text(
+                        "ยืนยัน",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -318,7 +328,7 @@ class _SaveeatState extends State<Saveeat> {
                                       ],
                                     ),
                                     trailing: SizedBox(
-                                      width: 40,
+                                      width: 60,
                                       child: Column(
                                         children: [
                                           Row(
@@ -386,7 +396,7 @@ class _SaveeatState extends State<Saveeat> {
       // Create new project button
       floatingActionButton: FloatingActionButton(
         onPressed: () => _create(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         child: const Icon(Icons.add),
       ),
     );

@@ -156,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -172,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 5,
             ),
             Padding(
               padding: const EdgeInsets.only(),
@@ -193,22 +194,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       final documents = snapshot.data;
                       final title = documents?['Fullname'] ?? '';
                       final title1 = documents?['Sex'] ?? '';
-                      return Column(
+                      return Stack(
                         children: [
-                          Text(
-                            title,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold),
+                          Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    title,
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          // Text(
-                          //   title1,
-                          //   style: const TextStyle(
-                          //       color: Colors.black,
-                          //       fontSize: 25,
-                          //       fontWeight: FontWeight.bold),
-                          // ),
                         ],
                       );
                     }
@@ -257,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(1),
                       child: Text(
                         "${totalCalories.toStringAsFixed(totalCalories.truncateToDouble() == totalCalories ? 0 : 2)} / ${gender == 'ชาย' ? '2000' : '1800'} แคลอรี่",
                         style: const TextStyle(
@@ -282,17 +285,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 )),
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child: Container(
-                width: 260,
-                height: 60,
+                width: 240,
+                height: 55,
                 child: ElevatedButton(
                   onPressed: () {
                     sendUserDataToDB();
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 114, 88, 79),
+                      const Color.fromARGB(255, 86, 167, 89),
                     ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
@@ -303,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'บันทึกรายการอาหาร',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
+                      fontSize: 23.0,
                     ),
                   ),
                 ),
@@ -312,8 +315,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(1),
               child: Container(
-                width: 260,
-                height: 60,
+                width: 240,
+                height: 55,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -323,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 114, 88, 79),
+                      Color.fromARGB(255, 46, 106, 175),
                     ), // Set your desired background color here
                     minimumSize: MaterialStateProperty.all(const Size(
                       double.infinity,
@@ -340,6 +343,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(2),
+            //   child: Center(
+            //     child: Text(
+            //       "ผู้ชาย: พลังงานที่ใช้ต่อวัน = 1,800 - 2,000 แคลอรี่",
+            //       style: TextStyle(fontSize: 17, color: Colors.red),
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(2),
+            //   child: Center(
+            //     child: Text(
+            //       "ผู้หญิง: พลังงานที่ใช้ต่อวัน = 1,500 - 1,800 แคลอรี่",
+            //       style: TextStyle(fontSize: 17, color: Colors.red),
+            //     ),
+            //   ),
+            // )
           ]),
         ),
       ),
@@ -350,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (_) => const Checkfood()),
           );
         },
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 114, 88, 79),
         child: const Icon(Icons.list),
       ),
     );

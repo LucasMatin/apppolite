@@ -35,6 +35,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
@@ -143,8 +144,8 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                             },
                             style: ElevatedButton.styleFrom(
                               // ignore: prefer_const_constructors
-                              backgroundColor: Color.fromARGB(255, 114, 88,
-                                  79), // Set your desired background color here
+                              backgroundColor: Color.fromARGB(255, 187, 53,
+                                  46), // Set your desired background color here
                             ),
                             child: const Text(
                               "ออกจากระบบ",

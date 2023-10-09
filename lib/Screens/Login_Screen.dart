@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Text(
-                  '"โภชนาการของผู้สูงวัย"',
+                  'โภชนาการของผู้สูงวัย',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                          hintText: 'อีเมลล์',
+                          hintText: 'เบอร์โทรศัพท์',
                           labelText: 'บัญชี',
                         ),
                       ),

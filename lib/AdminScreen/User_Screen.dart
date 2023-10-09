@@ -39,6 +39,7 @@ class _UserscreenState extends State<Userscreen> {
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream: _items.snapshots(),

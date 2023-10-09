@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, use_build_context_synchronously, duplicate_ignore, avoid_print, unused_element
+// ignore_for_file: file_names, use_build_context_synchronously, duplicate_ignore, avoid_print, unused_element, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,6 +48,11 @@ class _AddadminscreenState extends State<Addadminscreen> {
             'UserUid': userUid, // เพิ่ม User UID ลงใน Firestore
             'Image': image, // เพิ่ม Image ลงใน Firestore
           });
+          fullname.text = '';
+          password.text = '';
+          email.text = '';
+          telno.text = '';
+          sex.text = '';
 
           // ignore: avoid_print
           print("บันทึกสำเร็จ");
@@ -155,9 +160,13 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       ),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(
+                        255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                  ),
                   child: const Text(
                     "ยืนยัน",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 25),
                   ),
                 )
               ],
@@ -177,6 +186,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -206,7 +216,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       const SizedBox(height: 24),
                       boxadmin(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
                       const SizedBox(height: 24),
-                      boxadmin(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมล์',
+                      boxadmin(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมล',
                           'กรุณากรอกอีเมล์'),
                       const SizedBox(height: 24),
                       boxadmin(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
@@ -227,6 +237,8 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       }
                     },
                     style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 86, 167, 89)),
                       minimumSize: MaterialStateProperty.all(
                           const Size(double.infinity, 48)),
                     ),
@@ -245,7 +257,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
       // // Create new project button
       floatingActionButton: FloatingActionButton(
         onPressed: () => _check(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         child: const Icon(Icons.assignment_turned_in),
       ),
     );

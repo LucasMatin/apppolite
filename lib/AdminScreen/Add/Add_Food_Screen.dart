@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, avoid_print, unused_element, file_names, unused_local_variable
+// ignore_for_file: prefer_interpolation_to_compose_strings, sized_box_for_whitespace, use_build_context_synchronously, avoid_print, unused_element, file_names, unused_local_variable, deprecated_member_use
 
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _AddfoodState extends State<Addfood> {
   TextEditingController unit = TextEditingController();
 
   CollectionReference _items = FirebaseFirestore.instance.collection('Food');
+  TextEditingController searchtext = TextEditingController();
 
   @override
   void initState() {
@@ -311,9 +313,13 @@ class _AddfoodState extends State<Addfood> {
                         );
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(
+                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    ),
                     child: const Text(
                       "ยืนยัน",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25),
                     ),
                   )
                 ],
@@ -599,9 +605,13 @@ class _AddfoodState extends State<Addfood> {
                         );
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(
+                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    ),
                     child: const Text(
                       "ยืนยัน",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25),
                     ),
                   )
                 ],
@@ -609,6 +619,14 @@ class _AddfoodState extends State<Addfood> {
             ),
           );
         });
+  }
+
+  String search = "";
+
+  void searchtest(value) {
+    setState(() {
+      search = value.toLowerCase();
+    });
   }
 
   @override
@@ -646,219 +664,280 @@ class _AddfoodState extends State<Addfood> {
                   ),
                 );
               }
-              return ListView.builder(
-                itemCount: documents.length,
-                itemBuilder: (context, index) {
-                  final document = documents[index];
-                  final lable1 = document['Lable'] ?? '';
-                  final callory = document['Callory'] ?? '';
-                  final id = document['Category'] ?? '';
-                  final key = document['Foodtype'] ?? '';
-                  final image = document['Image'] ?? '';
-                  final units = document['Unit'] ?? '';
-                  final diseases = document['Diseases'] ?? [];
-                  final diseasess = document['NoDiseases'] ?? [];
+              return Column(
+                children: [
+                  Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: searchtext,
+                              onChanged: (value) {
+                                EasyDebounce.debounce(
+                                    "searchDebounce",
+                                    const Duration(milliseconds: 1500),
+                                    () => searchtest(value));
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10),
+                                hintText: "ค้นหา...",
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.search),
+                                  onPressed: () {
+                                    searchtext.clear();
+                                    searchtest("");
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: const BorderSide(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: documents.length,
+                      itemBuilder: (context, index) {
+                        final document = documents[index];
+                        final lable1 = document['Lable'] ?? '';
+                        final callory = document['Callory'] ?? '';
+                        final id = document['Category'] ?? '';
+                        final key = document['Foodtype'] ?? '';
+                        final image = document['Image'] ?? '';
+                        final units = document['Unit'] ?? '';
+                        final diseases = document['Diseases'] ?? [];
+                        final diseasess = document['NoDiseases'] ?? [];
+                        // แปลง search เป็นตัวพิมพ์เล็กทั้งหมด
+                        final lowercaseSearch = search.toLowerCase();
 
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                      right: 12,
-                      top: 10,
-                    ),
-                    child: Card(
-                      elevation: 1,
-                      child: SizedBox(
-                        height: 110,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
+                        if (!lable1.toLowerCase().contains(lowercaseSearch)) {
+                          return const SizedBox.shrink();
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: 15,
+                            right: 12,
+                            top: 10,
+                          ),
+                          child: Card(
+                            elevation: 1,
+                            child: SizedBox(
+                              height: 110,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ListTile(
-                                    isThreeLine: false,
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => AddFood2(
-                                      //         documentReference:
-                                      //             document.reference),
-                                      //     settings: RouteSettings(
-                                      //         arguments: document),
-                                      //   ),
-                                      // );
-                                    },
-                                    subtitle: Stack(
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
                                       children: [
-                                        Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                      child: Text(
-                                                        lable1
-                                                                    .toString()
-                                                                    .length >
-                                                                20
-                                                            ? lable1
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 20) +
-                                                                '...'
-                                                            : lable1,
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ))
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "$callory แคลลอรี่",
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "$id:$key",
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            // Padding(
-                                            //   padding: const EdgeInsets.only(),
-                                            //   child: Row(
-                                            //     children: [
-                                            //       Text(
-                                            //         "Diseases: ${diseases.join(', ')}",
-                                            //         style: const TextStyle(
-                                            //             fontSize: 16),
-                                            //       ),
-                                            //     ],
+                                        ListTile(
+                                          isThreeLine: false,
+                                          onTap: () {
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) => AddFood2(
+                                            //         documentReference:
+                                            //             document.reference),
+                                            //     settings: RouteSettings(
+                                            //         arguments: document),
                                             //   ),
-                                            // ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            SizedBox(
-                                              width: 95.0,
-                                              height: 75.0,
-                                              child: Card(
-                                                color: const Color.fromARGB(
-                                                    255, 237, 230, 224),
-                                                elevation: 2.0,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(3),
-                                                  child: Visibility(
-                                                    visible: image !=
-                                                        null, // กำหนดให้แสดงเมื่อ image ไม่เท่ากับ null
-                                                    child: Image.network(
-                                                      image!,
-                                                      width: 70,
-                                                      height: 50,
-                                                      fit: BoxFit.cover,
+                                            // );
+                                          },
+                                          subtitle: Stack(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(),
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.6,
+                                                            child: Text(
+                                                              lable1.toString().length >
+                                                                      15
+                                                                  ? lable1
+                                                                          .toString()
+                                                                          .substring(
+                                                                              0,
+                                                                              13) +
+                                                                      '...'
+                                                                  : lable1,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ))
+                                                      ],
                                                     ),
                                                   ),
-                                                ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "$callory แคลลอรี่",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "$id",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  // Padding(
+                                                  //   padding: const EdgeInsets.only(),
+                                                  //   child: Row(
+                                                  //     children: [
+                                                  //       Text(
+                                                  //         "Diseases: ${diseases.join(', ')}",
+                                                  //         style: const TextStyle(
+                                                  //             fontSize: 16),
+                                                  //       ),
+                                                  //     ],
+                                                  //   ),
+                                                  // ),
+                                                ],
                                               ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 95.0,
+                                                    height: 75.0,
+                                                    child: Card(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              237,
+                                                              230,
+                                                              224),
+                                                      elevation: 2.0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(3),
+                                                        child: Visibility(
+                                                          visible: image !=
+                                                              null, // กำหนดให้แสดงเมื่อ image ไม่เท่ากับ null
+                                                          child: Image.network(
+                                                            image!,
+                                                            width: 70,
+                                                            height: 50,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: SizedBox(
+                                            width: 55,
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    InkWell(
+                                                        //TO DO DELETE
+                                                        onTap: () async {
+                                                          await _update(
+                                                              document);
+                                                        },
+                                                        child: const Icon(
+                                                            Icons.edit)),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    InkWell(
+                                                        //TO DO DELETE
+                                                        onTap: () async {
+                                                          final action =
+                                                              await AlertDialogs
+                                                                  .yesorCancel(
+                                                                      context,
+                                                                      'ลบ',
+                                                                      'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                                          if (action ==
+                                                              DialogsAction
+                                                                  .yes) {
+                                                            setState(() {
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'Food')
+                                                                  .doc(document
+                                                                      .id)
+                                                                  .delete()
+                                                                  .then((_) {})
+                                                                  .catchError(
+                                                                      (error) {});
+                                                            });
+                                                          }
+                                                        },
+                                                        child: const Icon(
+                                                            Icons.delete)),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ],
-                                    ),
-                                    trailing: SizedBox(
-                                      width: 30,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  //TO DO DELETE
-                                                  onTap: () async {
-                                                    await _update(document);
-                                                  },
-                                                  child:
-                                                      const Icon(Icons.edit)),
-                                            ],
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                  //TO DO DELETE
-                                                  onTap: () async {
-                                                    final action =
-                                                        await AlertDialogs
-                                                            .yesorCancel(
-                                                                context,
-                                                                'ลบ',
-                                                                'คุณต้องการลบข้อมูลนี้หรือไม่');
-                                                    if (action ==
-                                                        DialogsAction.yes) {
-                                                      setState(() {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection('Food')
-                                                            .doc(document.id)
-                                                            .delete()
-                                                            .then((_) {})
-                                                            .catchError(
-                                                                (error) {});
-                                                      });
-                                                    }
-                                                  },
-                                                  child:
-                                                      const Icon(Icons.delete)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ],
               );
             }
             return const Text("ไม่มีข้อมูล");
@@ -866,7 +945,7 @@ class _AddfoodState extends State<Addfood> {
       // Create new project button
       floatingActionButton: FloatingActionButton(
         onPressed: () => _create(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         child: const Icon(Icons.add),
       ),
     );

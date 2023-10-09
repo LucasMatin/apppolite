@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:polite/FoodSceen/Open_FoodDaytime_Screen.dart';
 import 'package:polite/FoodSceen/Open_FoodView_Screen.dart';
@@ -153,6 +154,16 @@ class _FoodscreenState extends State<Foodscreen> {
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const bottomsceen()),
+            );
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -181,30 +192,50 @@ class _FoodscreenState extends State<Foodscreen> {
                 },
                 child: SizedBox(
                   width: 370.0,
-                  height: 100.0,
+                  height: 105.0,
                   child: Card(
                     color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5.0),
-                            Text(
-                              "อาหารเช้า",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                            ),
-                          ],
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Image.asset(
+                            'images/morning.png', // ระบุตำแหน่งรูปภาพของคุณ
+                            width: 60.0,
+                            height: 60.0,
+                          ),
                         ),
-                      ),
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 5.0),
+                                Text(
+                                  "อาหารเช้า",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(),
+                                  child: Text(
+                                    "กดเข้าไปเพื่อบันทึกอาหารเช้า",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -221,30 +252,50 @@ class _FoodscreenState extends State<Foodscreen> {
                 },
                 child: SizedBox(
                   width: 370.0,
-                  height: 100.0,
+                  height: 105.0,
                   child: Card(
                     color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5.0),
-                            Text(
-                              "อาหารกลางวัน",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                            ),
-                          ],
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Image.asset(
+                            'images/eve.png', // ระบุตำแหน่งรูปภาพของคุณ
+                            width: 60.0,
+                            height: 60.0,
+                          ),
                         ),
-                      ),
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 5.0),
+                                Text(
+                                  "อาหารกลางวัน",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(),
+                                  child: Text(
+                                    "กดเข้าไปเพื่อบันทึกอาหารกลางวัน",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -261,30 +312,50 @@ class _FoodscreenState extends State<Foodscreen> {
                 },
                 child: SizedBox(
                   width: 370.0,
-                  height: 100.0,
+                  height: 105.0,
                   child: Card(
                     color: const Color.fromARGB(255, 112, 86, 77),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5.0),
-                            Text(
-                              "อาหารเย็น",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                            ),
-                          ],
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Image.asset(
+                            'images/sometime.png', // ระบุตำแหน่งรูปภาพของคุณ
+                            width: 60.0,
+                            height: 60.0,
+                          ),
                         ),
-                      ),
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 5.0),
+                                Text(
+                                  "อาหารเย็น",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(),
+                                  child: Text(
+                                    "กดเข้าไปเพื่อบันทึกอาหารเช้า",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -311,7 +382,7 @@ class _FoodscreenState extends State<Foodscreen> {
                     child: Text(
                       "รวม: $totalCallory แคลอรี่",
                       style: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                          fontSize: 27, fontWeight: FontWeight.bold),
                     ),
                   );
                 },
@@ -324,53 +395,64 @@ class _FoodscreenState extends State<Foodscreen> {
                     width: 300,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FoodListPage(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 112, 86,
-                            77), // Set your desired background color here
-                      ),
-                      child: const Text(
-                        'รายการอาหารทั้งหมด',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FoodListPage(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color.fromARGB(255, 86, 167,
+                              89), // Set your desired background color here
                         ),
-                      ),
-                    ),
+                        child: Stack(
+                          children: [
+                            // Padding(
+                            //   padding: const EdgeInsets.all(3),
+                            //   child: Icon(Icons.remove_red_eye),
+                            // ),
+                            const Center(
+                              child: const Text(
+                                'รายการอาหารทั้งหมด',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(),
-                child: Center(
-                  child: SizedBox(
-                    width: 300,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: sendUserDataToDB,
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 112, 86,
-                            77), // Set your desired background color here
-                      ),
-                      child: const Text(
-                        'บันทึก',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(),
+              //   child: Center(
+              //     child: SizedBox(
+              //       width: 300,
+              //       height: 60,
+              //       child: ElevatedButton(
+              //         onPressed: sendUserDataToDB,
+              //         style: ElevatedButton.styleFrom(
+              //           primary: Color.fromARGB(255, 46, 106,
+              //               175), // Set your desired background color here
+              //         ),
+              //         child: const Center(
+              //           child: const Text(
+              //             'หน้าหลัก',
+              //             style: TextStyle(
+              //               fontSize: 25,
+              //               fontWeight: FontWeight.bold,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

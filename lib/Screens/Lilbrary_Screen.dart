@@ -25,6 +25,7 @@ class Lilbraryscreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false, //ปิดปุ่ม back
       ),
       body: SingleChildScrollView(
         child: SafeArea(

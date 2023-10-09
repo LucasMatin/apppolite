@@ -187,7 +187,11 @@ class _editscreenState extends State<editscreen> {
                                 48,
                               )),
                             ),
-                            child: const Text('แก้ไขเสร็จสิ้น'),
+                            child: const Text(
+                              'แก้ไขเสร็จสิ้น',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),

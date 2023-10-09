@@ -45,6 +45,7 @@ class _ProfilescreenState extends State<Profilescreen> {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
@@ -100,10 +101,10 @@ class _ProfilescreenState extends State<Profilescreen> {
                               height: 35,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                color: const Color.fromARGB(255, 112, 86, 77),
+                                color: Color.fromARGB(255, 112, 77, 77),
                                 border: Border.all(
-                                  color: const Color.fromARGB(
-                                      255, 112, 86, 77), // สีขอบ
+                                  color:
+                                      Color.fromARGB(255, 112, 77, 77), // สีขอบ
                                   width: 3.0, // ความหนาขอบ
                                 ),
                               ),
@@ -147,7 +148,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                       ),
                       const SizedBox(height: 30),
                       SizedBox(
-                          width: 200,
+                          width: 220,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
@@ -160,16 +161,16 @@ class _ProfilescreenState extends State<Profilescreen> {
                             child: const Text(
                               "แก้ไขโปรไฟล์",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: const Color.fromARGB(255, 112, 86,
-                                  77), // Set your desired background color here
+                              primary: Color.fromARGB(255, 46, 106,
+                                  175), // Set your desired background color here
                             ),
                           )),
                       const SizedBox(height: 10),
                       SizedBox(
-                          width: 200,
+                          width: 220,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
@@ -182,10 +183,10 @@ class _ProfilescreenState extends State<Profilescreen> {
                             child: const Text(
                               "ออกจากระบบ",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 23, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: const Color.fromARGB(255, 112, 86,
+                              primary: Color.fromARGB(255, 238, 77,
                                   77), // Set your desired background color here
                             ),
                           )),

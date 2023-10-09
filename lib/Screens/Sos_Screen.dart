@@ -58,6 +58,7 @@ class _SosState extends State<Sos> {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: SafeArea(

@@ -31,6 +31,7 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
           style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: SafeArea(

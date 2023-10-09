@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, camel_case_types, file_names
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, camel_case_types, file_names, prefer_const_constructors, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -84,6 +84,16 @@ class _AddfoodeveningState extends State<Addfoodevening> {
           style: TextStyle(color: Colors.white, fontSize: 23),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const Foodscreen()),
+            );
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _items.snapshots(),
@@ -566,7 +576,7 @@ class _MyWidgetState extends State<MyWidget> {
                           width: 32,
                           height: 32,
                           decoration: ShapeDecoration(
-                            color: Colors.grey,
+                            color: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                   8.0), // ปรับขนาดตามที่คุณต้องการ
@@ -599,7 +609,7 @@ class _MyWidgetState extends State<MyWidget> {
                           width: 32,
                           height: 32,
                           decoration: ShapeDecoration(
-                            color: Colors.grey,
+                            color: Colors.green,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                   8.0), // ปรับขนาดตามที่คุณต้องการ
@@ -647,7 +657,14 @@ class _MyWidgetState extends State<MyWidget> {
                       // เมื่อข้อมูลถูกเพิ่มเรียบร้อย ให้เปิดหน้า Foodscreen
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ยืนยัน"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    ),
+                    child: const Text(
+                      "ยืนยัน",
+                      style: TextStyle(fontSize: 25),
+                    ),
                   )
                 ],
               ),

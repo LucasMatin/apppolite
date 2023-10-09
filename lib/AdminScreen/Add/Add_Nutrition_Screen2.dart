@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, await_only_futures
+// ignore_for_file: file_names, await_only_futures, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -113,9 +113,13 @@ class _EditNutritionState extends State<EditNutrition> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(
+                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    ),
                     child: const Text(
                       "ยืนยัน",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25),
                     ),
                   )
                 ],
@@ -207,9 +211,13 @@ class _EditNutritionState extends State<EditNutrition> {
                             .pop(); // เมื่อบันทึกสำเร็จให้ปิดหน้าต่างปัจจุบัน
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(
+                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    ),
                     child: const Text(
                       "ยืนยัน",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25),
                     ),
                   )
                 ],
@@ -331,16 +339,16 @@ class _EditNutritionState extends State<EditNutrition> {
                                                       0.6,
                                                   child: Text(
                                                     lable1.toString().length >
-                                                            20
+                                                            23
                                                         // ignore: prefer_interpolation_to_compose_strings
                                                         ? lable1
                                                                 .toString()
                                                                 .substring(
-                                                                    0, 16) +
+                                                                    0, 18) +
                                                             '...'
                                                         : lable1,
                                                     style: const TextStyle(
-                                                        fontSize: 18,
+                                                        fontSize: 19,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ))
@@ -449,11 +457,11 @@ class _EditNutritionState extends State<EditNutrition> {
             return const Text("ไม่มีข้อมูล");
           }),
       // Create new project button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _create(),
-        backgroundColor: const Color.fromARGB(255, 161, 136, 127),
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => _create(),
+      //   backgroundColor: const Color.fromARGB(255, 161, 136, 127),
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

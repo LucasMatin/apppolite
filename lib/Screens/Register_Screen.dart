@@ -217,8 +217,8 @@ class _Sigup extends State<Sigup> {
                             labelText: 'วัน เดือน ปีเกิด'),
                       ),
                       const SizedBox(height: 24),
-                      textbox(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมลล์',
-                          'กรุณากรอกอีเมลล์'),
+                      textbox(email, 'กรุณาป้อนอีเมลด้วย', 'อีเมล',
+                          'กรุณากรอกอีเมล'),
                       const SizedBox(height: 24),
                       DiseaseDropdownFormField(
                         controller: bisease,
