@@ -76,6 +76,7 @@ class _FoodListPageState extends State<FoodListPage> {
       querySnapshot.docs.forEach((doc) {
         doc.reference.delete();
       });
+      setState(() {});
     }).catchError((error) {
       print("Error deleting food: $error");
     });
@@ -94,6 +95,7 @@ class _FoodListPageState extends State<FoodListPage> {
       querySnapshot.docs.forEach((doc) {
         doc.reference.delete();
       });
+      setState(() {});
     }).catchError((error) {
       print("Error deleting food: $error");
     });
@@ -112,6 +114,7 @@ class _FoodListPageState extends State<FoodListPage> {
       querySnapshot.docs.forEach((doc) {
         doc.reference.delete();
       });
+      setState(() {});
     }).catchError((error) {
       print("Error deleting food: $error");
     });

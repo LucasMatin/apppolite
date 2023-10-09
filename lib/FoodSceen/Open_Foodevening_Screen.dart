@@ -362,16 +362,16 @@ class _AddfoodeveningState extends State<Addfoodevening> {
             }
             return const Text("ไม่มีข้อมูล");
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const Foodscreen()),
-          );
-        },
-        backgroundColor: const Color.fromARGB(255, 112, 86, 77),
-        child: const Icon(Icons.save_as),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (_) => const Foodscreen()),
+      //     );
+      //   },
+      //   backgroundColor: const Color.fromARGB(255, 112, 86, 77),
+      //   child: const Icon(Icons.save_as),
+      // ),
     );
   }
 }
@@ -447,229 +447,234 @@ class _MyWidgetState extends State<MyWidget> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: 20,
-                  right: 20,
-                  left: 20,
-                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Center(
-                    child: Text(
-                      "รายการบันทึก",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: SizedBox(
-                        width: 300.0,
-                        height: 200.0,
-                        child: Card(
-                          color: const Color.fromARGB(255, 237, 230, 224),
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Image.network(
-                              widget.image,
-                              width: 100, // กำหนดความกว้างของรูป
-                              height: 100, // กำหนดความสูงของรูป
-                              fit: BoxFit
-                                  .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Center(
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: 20,
+                    right: 20,
+                    left: 20,
+                    bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
                       child: Text(
-                        "$lable : $callorys แคลอรี่",
-                        style: const TextStyle(fontSize: 25),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(2),
-                    child: Center(
-                      child: Text(
-                        // ignore: unnecessary_type_check
-                        "แนะนำสำหรับโรค",
+                        "รายการบันทึก",
                         style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Center(
-                      child: Text(
-                        // ignore: unnecessary_type_check
-                        "${widget.diseases is List ? widget.diseases.join(', ') : widget.diseases}",
-                        style: const TextStyle(fontSize: 18),
-                      ),
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(2),
-                    child: Center(
-                      child: Text(
-                        // ignore: unnecessary_type_check
-                        "ไม่แนะนำสำหรับโรค",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Center(
-                      child: Text(
-                        // ignore: unnecessary_type_check
-                        "${widget.diseasess is List ? widget.diseasess.join(', ') : widget.diseasess}",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Ink(
-                          width: 32,
-                          height: 32,
-                          decoration: ShapeDecoration(
-                            color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: SizedBox(
+                          width: 300.0,
+                          height: 200.0,
+                          child: Card(
+                            color: const Color.fromARGB(255, 237, 230, 224),
+                            elevation: 2.0,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  8.0), // ปรับขนาดตามที่คุณต้องการ
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              decrement();
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(1),
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Image.network(
+                                widget.image,
+                                width: 100, // กำหนดความกว้างของรูป
+                                height: 100, // กำหนดความสูงของรูป
+                                fit: BoxFit
+                                    .cover, // ตัวเลือกที่จะให้รูปภาพปรับตามขนาดที่กำหนด
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(
+                          "$lable : $callorys แคลอรี่",
+                          style: const TextStyle(fontSize: 25),
                         ),
-                        Text(
-                          '$number ${widget.unitss}',
-                          style: const TextStyle(fontSize: 24.0),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(
+                          // ignore: unnecessary_type_check
+                          "แนะนำสำหรับโรค",
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
                         ),
-                        const SizedBox(
-                          width: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(
+                          // ignore: unnecessary_type_check
+                          "${widget.diseases is List ? widget.diseases.join(', ') : widget.diseases}",
+                          style: const TextStyle(fontSize: 18),
                         ),
-                        Ink(
-                          width: 32,
-                          height: 32,
-                          decoration: ShapeDecoration(
-                            color: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  8.0), // ปรับขนาดตามที่คุณต้องการ
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(
+                          // ignore: unnecessary_type_check
+                          "ไม่แนะนำสำหรับโรค",
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(
+                          // ignore: unnecessary_type_check
+                          "${widget.diseasess is List ? widget.diseasess.join(', ') : widget.diseasess}",
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Ink(
+                            width: 32,
+                            height: 32,
+                            decoration: ShapeDecoration(
+                              color: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // ปรับขนาดตามที่คุณต้องการ
+                              ),
                             ),
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              increment();
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(1),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
+                            child: InkWell(
+                              onTap: () {
+                                decrement();
+                                setState(() {});
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(1),
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            '$number ${widget.unitss}',
+                            style: const TextStyle(fontSize: 24.0),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Ink(
+                            width: 32,
+                            height: 32,
+                            decoration: ShapeDecoration(
+                              color: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // ปรับขนาดตามที่คุณต้องการ
+                              ),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                increment();
+                                setState(() {});
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(1),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final FirebaseAuth auth = FirebaseAuth.instance;
-                      var currentUser = auth.currentUser;
-                      String? useruid = currentUser!.uid;
-
-                      DocumentReference foodTodayDoc = usersCollection
-                          .doc(useruid)
-                          .collection("Foodtoday")
-                          .doc(getCurrentDateTime())
-                          .collection("FoodEvening")
-                          .doc(lable);
-
-                      // เพิ่มข้อมูลลงในเอกสารย่อย
-                      await foodTodayDoc.set({
-                        'Foodname': lable,
-                        'Callory': callorys,
-                        'Number': number,
-                      });
-
-                      // เมื่อข้อมูลถูกเพิ่มเรียบร้อย ให้เปิดหน้า Foodscreen
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(
-                          255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                    const SizedBox(
+                      height: 20,
                     ),
-                    child: const Text(
-                      "ยืนยัน",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                ],
+                    ElevatedButton(
+                      onPressed: () async {
+                        final FirebaseAuth auth = FirebaseAuth.instance;
+                        var currentUser = auth.currentUser;
+                        String? useruid = currentUser!.uid;
+
+                        DocumentReference foodTodayDoc = usersCollection
+                            .doc(useruid)
+                            .collection("Foodtoday")
+                            .doc(getCurrentDateTime())
+                            .collection("FoodEvening")
+                            .doc(lable);
+
+                        // เพิ่มข้อมูลลงในเอกสารย่อย
+                        await foodTodayDoc.set({
+                          'Foodname': lable,
+                          'Callory': callorys,
+                          'Number': number,
+                        });
+
+                        // เมื่อข้อมูลถูกเพิ่มเรียบร้อย ให้เปิดหน้า Foodscreen
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(
+                            255, 86, 167, 89), // กำหนดสีพื้นหลังเป็นสีเขียว
+                      ),
+                      child: const Text(
+                        "ยืนยัน",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -728,13 +733,24 @@ class _MyWidgetState extends State<MyWidget> {
                                   padding: const EdgeInsets.all(1.0),
                                   child: Column(
                                     children: [
-                                      Text(
-                                        widget.textedit,
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
+                                      Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: Text(
+                                            widget.textedit.toString().length >
+                                                    15
+                                                ? widget.textedit
+                                                        .toString()
+                                                        .substring(0, 15) +
+                                                    '...'
+                                                : widget.textedit,
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ))
                                     ],
                                   ),
                                 ),
@@ -745,7 +761,7 @@ class _MyWidgetState extends State<MyWidget> {
                                       Text(
                                         "$colory แคลอรี่",
                                         style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
@@ -754,8 +770,9 @@ class _MyWidgetState extends State<MyWidget> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 25, left: 170, top: 16),
+                                      right: 12, left: 5, top: 16),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       Ink(
                                         width: 32,
@@ -764,16 +781,17 @@ class _MyWidgetState extends State<MyWidget> {
                                           color: const Color.fromARGB(
                                               255, 138, 102, 87),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                8.0), // ปรับขนาดตามที่คุณต้องการ
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                         child: InkWell(
                                           onTap: () {
                                             // increment();
                                             _create(
-                                                callorys: colory,
-                                                lable: widget.textedit);
+                                              callorys: colory,
+                                              lable: widget.textedit,
+                                            );
                                           },
                                           child: const Padding(
                                             padding: EdgeInsets.all(1),
