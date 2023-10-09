@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, use_build_context_synchronously, duplicate_ignore, avoid_print, unused_element, deprecated_member_use
+// ignore_for_file: file_names, use_build_context_synchronously, duplicate_ignore, avoid_print, unused_element, deprecated_member_use, library_private_types_in_public_api, sized_box_for_whitespace
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -204,7 +204,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                         padding: EdgeInsets.all(2),
                         child: Center(
                           child: Text(
-                            "เพิ่มผู้พัฒนา",
+                            "เพิ่มผู้ดูแลระบบ",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -214,7 +214,10 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       boxadmin(fullname, 'กรุณาป้อนชื่อนามสกุลด้วย',
                           'ชื่อนามสกุล', 'กรุณากรอกชื่อ-นามสกุล'),
                       const SizedBox(height: 24),
-                      boxadmin(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
+                      SexDropdownFormField(
+                        controller: sex,
+                      ),
+                      // boxadmin(sex, 'กรุณาป้อนเพศด้วย', 'เพศ', 'กรุณากรอกเพศ'),
                       const SizedBox(height: 24),
                       boxadmin(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมล',
                           'กรุณากรอกอีเมล์'),
@@ -259,6 +262,52 @@ class _AddadminscreenState extends State<Addadminscreen> {
         onPressed: () => _check(),
         backgroundColor: const Color.fromARGB(255, 112, 86, 77),
         child: const Icon(Icons.assignment_turned_in),
+      ),
+    );
+  }
+}
+
+class SexDropdownFormField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const SexDropdownFormField({super.key, required this.controller});
+
+  @override
+  _SexDropdownFormFieldState createState() => _SexDropdownFormFieldState();
+}
+
+class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
+  String selectedGender = 'ชาย'; // ค่าเริ่มต้น
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = selectedGender;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 300,
+        child: DropdownButtonFormField<String>(
+          value: selectedGender,
+          onChanged: (newValue) {
+            setState(() {
+              selectedGender = newValue!;
+              widget.controller.text = newValue;
+            });
+          },
+          decoration: const InputDecoration(
+            labelText: 'เพศ',
+          ),
+          items: <String>['ชาย', 'หญิง'].map((String gender) {
+            return DropdownMenuItem<String>(
+              value: gender,
+              child: Text(gender),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
