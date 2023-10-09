@@ -343,20 +343,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(2),
+            // const Padding(
+            //   padding: EdgeInsets.all(2),
             //   child: Center(
             //     child: Text(
-            //       "ผู้ชาย: พลังงานที่ใช้ต่อวัน = 1,800 - 2,000 แคลอรี่",
+            //       "ผู้ชาย:1,800 - 2,000 แคลอรี่",
             //       style: TextStyle(fontSize: 17, color: Colors.red),
             //     ),
             //   ),
             // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(2),
+            // const Padding(
+            //   padding: EdgeInsets.all(2),
             //   child: Center(
             //     child: Text(
-            //       "ผู้หญิง: พลังงานที่ใช้ต่อวัน = 1,500 - 1,800 แคลอรี่",
+            //       "ผู้หญิง:1,500 - 1,800 แคลอรี่",
             //       style: TextStyle(fontSize: 17, color: Colors.red),
             //     ),
             //   ),
