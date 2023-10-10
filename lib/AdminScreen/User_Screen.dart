@@ -124,7 +124,7 @@ class _UserscreenState extends State<Userscreen> {
                                                             "ชื่อ : $name",
                                                             style:
                                                                 const TextStyle(
-                                                              fontSize: 15,
+                                                              fontSize: 20,
                                                             ),
                                                           )
                                                         ],
@@ -151,7 +151,7 @@ class _UserscreenState extends State<Userscreen> {
                                                                     : email,
                                                                 style:
                                                                     const TextStyle(
-                                                                  fontSize: 15,
+                                                                  fontSize: 16,
                                                                 ),
                                                               ))
                                                         ],

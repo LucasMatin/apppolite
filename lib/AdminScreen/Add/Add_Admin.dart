@@ -3,6 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:polite/AdminScreen/Admin_Screen.dart';
 
 import 'package:polite/Screens/wiget.dart';
@@ -222,7 +224,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                       boxadmin(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมล',
                           'กรุณากรอกอีเมล์'),
                       const SizedBox(height: 24),
-                      telnotbox(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
+                      telnotboxs(telno, 'กรุณาป้อนเบอร์โทรศัพท์ด้วย',
                           'เบอร์โทรศัพท์', 'กรุณากรอกเบอร์โทรศัพท์'),
                       const SizedBox(height: 24),
                       boxadmin(password, 'กรุณาป้อนรหัสผ่านด้วย', 'รหัสผ่าน',
@@ -230,9 +232,10 @@ class _AddadminscreenState extends State<Addadminscreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 25),
                 SizedBox(
                   width: 250,
+                  height: 55,
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
@@ -248,7 +251,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                     child: const Text(
                       'เพิ่มผู้พัฒนา',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -311,4 +314,31 @@ class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
       ),
     );
   }
+}
+
+Widget telnotboxs(
+  controller,
+  String text,
+  String labal,
+  String hint,
+) {
+  return Center(
+    child: Container(
+      width: 300,
+      child: TextFormField(
+        controller: controller,
+        validator: RequiredValidator(errorText: text),
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        ],
+        maxLength: 10,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          hintText: hint,
+          labelText: labal,
+        ),
+      ),
+    ),
+  );
 }

@@ -501,7 +501,7 @@ class _AddarticaleState extends State<Addarticale> {
                                                                   '...'
                                                               : lable1,
                                                           style: const TextStyle(
-                                                              fontSize: 18,
+                                                              fontSize: 23,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),

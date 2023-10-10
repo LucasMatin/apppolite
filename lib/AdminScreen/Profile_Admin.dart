@@ -71,7 +71,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: const Color.fromARGB(
-                                      255, 77, 74, 74), // สีขอบ
+                                      255, 112, 86, 77), // สีขอบ
                                   width: 3.0, // ความหนาขอบ
                                 ),
                               ),
@@ -90,9 +90,9 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                               width: 35,
                               height: 35,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color:
-                                      const Color.fromARGB(255, 196, 164, 153)),
+                                borderRadius: BorderRadius.circular(100),
+                                color: const Color.fromARGB(255, 112, 86, 77),
+                              ),
                               child: InkWell(
                                 onTap: () {
                                   dialogBuilder(context);
@@ -112,7 +112,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(documents['Fullname'],
-                              style: const TextStyle(fontSize: 21)),
+                              style: const TextStyle(fontSize: 23)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -133,6 +133,7 @@ class _ProfiladminescreenState extends State<Profiladminescreen> {
                       const SizedBox(height: 20),
                       SizedBox(
                           width: 200,
+                          height: 60,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(

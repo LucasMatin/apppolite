@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: const Text(
                     'เข้าสู่ระบบ',
-                    style: TextStyle(fontSize: 23),
+                    style: TextStyle(fontSize: 30),
                   ),
                 ),
                 const SizedBox(height: 16),

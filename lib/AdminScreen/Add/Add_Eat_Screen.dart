@@ -302,7 +302,7 @@ class _SaveeatState extends State<Saveeat> {
                                             Text(
                                               title1,
                                               style: const TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 19,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ],

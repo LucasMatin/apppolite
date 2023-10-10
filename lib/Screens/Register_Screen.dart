@@ -293,26 +293,23 @@ class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      decoration: InputDecoration(
+    return DropdownButtonFormField<String>(
+      value: selectedGender,
+      onChanged: (newValue) {
+        setState(() {
+          selectedGender = newValue!;
+          widget.controller.text = newValue;
+        });
+      },
+      decoration: const InputDecoration(
         labelText: 'เพศ',
-        suffixIcon: DropdownButton<String>(
-          value: selectedGender,
-          onChanged: (newValue) {
-            setState(() {
-              selectedGender = newValue!;
-              widget.controller.text = newValue;
-            });
-          },
-          items: <String>['ชาย', 'หญิง'].map((String gender) {
-            return DropdownMenuItem<String>(
-              value: gender,
-              child: Text(gender),
-            );
-          }).toList(),
-        ),
       ),
+      items: <String>['ชาย', 'หญิง'].map((String gender) {
+        return DropdownMenuItem<String>(
+          value: gender,
+          child: Text(gender),
+        );
+      }).toList(),
     );
   }
 }

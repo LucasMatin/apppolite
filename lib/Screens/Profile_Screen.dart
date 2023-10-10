@@ -161,7 +161,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                             child: const Text(
                               "แก้ไขโปรไฟล์",
                               style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: const Color.fromARGB(255, 46, 106,
@@ -183,7 +183,7 @@ class _ProfilescreenState extends State<Profilescreen> {
                             child: const Text(
                               "ออกจากระบบ",
                               style: TextStyle(
-                                  fontSize: 23, fontWeight: FontWeight.bold),
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: const Color.fromARGB(255, 238, 77,
