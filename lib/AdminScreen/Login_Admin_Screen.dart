@@ -146,7 +146,7 @@ class _LoginadminState extends State<Loginadmin> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
-                            hintText: 'บัญชีผู้พัฒนา', labelText: 'บัญชี'),
+                            hintText: 'บัญชีผู้ดูแลระบบ', labelText: 'บัญชี'),
                       ),
                       const SizedBox(height: 24),
                       const SizedBox(height: 12),

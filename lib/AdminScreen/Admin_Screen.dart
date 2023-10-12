@@ -109,7 +109,7 @@ class _AdminuserState extends State<Adminuser> {
           backgroundColor: const Color.fromARGB(255, 112, 86, 77),
           elevation: 0,
           title: const Text(
-            'เช็คแอดมิน',
+            'เช็คผู้ดูแลระบบ',
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           centerTitle: true,
@@ -129,6 +129,7 @@ class _AdminuserState extends State<Adminuser> {
               }
               if (snapshot.hasData) {
                 final documents = snapshot.data!.docs;
+                int userCount = documents.length; // นับจำนวน
                 if (documents.isEmpty) {
                   return const Center(
                     child: Column(
@@ -137,138 +138,183 @@ class _AdminuserState extends State<Adminuser> {
                     ),
                   );
                 }
-                return ListView.builder(
-                  itemCount: documents.length,
-                  itemBuilder: (context, index) {
-                    final document = documents[index];
-                    final email = document['Email'] ?? '';
-                    final name = document['Fullname'] ?? '';
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 75,
+                              color: const Color.fromARGB(255, 228, 203, 184),
+                              child: Center(
+                                child: Text(
+                                  "จำนวนดูแลระบบ: $userCount ",
+                                  style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: documents.length,
+                              itemBuilder: (context, index) {
+                                final document = documents[index];
+                                final email = document['Email'] ?? '';
+                                final name = document['Fullname'] ?? '';
 
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 15,
-                        right: 12,
-                        top: 10,
-                      ),
-                      child: Card(
-                        elevation: 1,
-                        child: SizedBox(
-                          height: 90,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: [
-                                    ListTile(
-                                      isThreeLine: false,
-                                      onTap: () {},
-                                      subtitle: Column(
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                    right: 12,
+                                    top: 10,
+                                  ),
+                                  child: Card(
+                                    elevation: 1,
+                                    child: SizedBox(
+                                      height: 90,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(),
-                                            child: Row(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Stack(
                                               children: [
-                                                Text(
-                                                  "แอดมิน : $name",
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.6,
-                                                    child: Text(
-                                                      email.toString().length >
-                                                              20
-                                                          ? email
-                                                                  .toString()
-                                                                  .substring(
-                                                                      0, 20) +
-                                                              '...'
-                                                          : email,
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
+                                                ListTile(
+                                                  isThreeLine: false,
+                                                  onTap: () {},
+                                                  subtitle: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              "ผู้ดูแลระบบ : $name",
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 16,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ))
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(),
+                                                        child: Row(
+                                                          children: [
+                                                            Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.6,
+                                                                child: Text(
+                                                                  email.toString().length >
+                                                                          20
+                                                                      ? email.toString().substring(
+                                                                              0,
+                                                                              20) +
+                                                                          '...'
+                                                                      : email,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ))
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  trailing: SizedBox(
+                                                    width: 40,
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            InkWell(
+                                                                //TO DO DELETE
+                                                                onTap:
+                                                                    () async {
+                                                                  await _update(
+                                                                      document);
+                                                                },
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .edit)),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            InkWell(
+                                                                //TO DO DELETE
+                                                                onTap:
+                                                                    () async {
+                                                                  final action =
+                                                                      await AlertDialogs.yesorCancel(
+                                                                          context,
+                                                                          'ลบ',
+                                                                          'คุณต้องการลบข้อมูลนี้หรือไม่');
+                                                                  if (action ==
+                                                                      DialogsAction
+                                                                          .yes) {
+                                                                    setState(
+                                                                        () {
+                                                                      FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'AdminID')
+                                                                          .doc(document
+                                                                              .id)
+                                                                          .delete()
+                                                                          .then(
+                                                                              (_) {})
+                                                                          .catchError(
+                                                                              (error) {});
+                                                                    });
+                                                                  }
+                                                                },
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .delete)),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                      trailing: SizedBox(
-                                        width: 40,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                    //TO DO DELETE
-                                                    onTap: () async {
-                                                      await _update(document);
-                                                    },
-                                                    child:
-                                                        const Icon(Icons.edit)),
-                                              ],
-                                            ),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                    //TO DO DELETE
-                                                    onTap: () async {
-                                                      final action =
-                                                          await AlertDialogs
-                                                              .yesorCancel(
-                                                                  context,
-                                                                  'ลบ',
-                                                                  'คุณต้องการลบข้อมูลนี้หรือไม่');
-                                                      if (action ==
-                                                          DialogsAction.yes) {
-                                                        setState(() {
-                                                          FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'AdminID')
-                                                              .doc(document.id)
-                                                              .delete()
-                                                              .then((_) {})
-                                                              .catchError(
-                                                                  (error) {});
-                                                        });
-                                                      }
-                                                    },
-                                                    child: const Icon(
-                                                        Icons.delete)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 );
               }
               return const Text("ไม่มีข้อมูล");

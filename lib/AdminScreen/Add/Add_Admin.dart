@@ -146,7 +146,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
               children: [
                 const Center(
                   child: Text(
-                    "เช็คแอดมิน",
+                    "เช็คผู้ดูแลระบบ",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -249,7 +249,7 @@ class _AddadminscreenState extends State<Addadminscreen> {
                           const Size(double.infinity, 48)),
                     ),
                     child: const Text(
-                      'เพิ่มผู้พัฒนา',
+                      'เพิ่มผู้ดูแลระบบ',
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),

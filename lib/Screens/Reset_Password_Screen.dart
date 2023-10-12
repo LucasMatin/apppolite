@@ -76,7 +76,7 @@ class _resetpassState extends State<resetpass> {
                         const Size(double.infinity, 48)),
                   ),
                   child: const Text(
-                    'ยืนยันอีเมลล์',
+                    'ยืนยันอีเมล',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
