@@ -54,8 +54,8 @@ class _resetpassState extends State<resetpass> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textbox(email, 'กรุณาป้อนอีเมลล์ด้วย', 'อีเมลล์',
-                          'กรุณากรอกอีเมลล์'),
+                      textbox(email, 'กรุณาป้อนอีเมลด้วย', 'อีเมล',
+                          'กรุณากรอกอีเมล'),
                     ],
                   ),
                 ),

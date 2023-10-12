@@ -248,6 +248,10 @@ class _videoscreenState extends State<videoscreen> {
                                                                   .convertUrlToId(
                                                                       url) ??
                                                               '',
+                                                      flags: YoutubePlayerFlags(
+                                                        autoPlay:
+                                                            true, // ตั้งค่าให้วิดีโอเล่นอัตโนมัติ
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
