@@ -250,7 +250,7 @@ class _videoscreenState extends State<videoscreen> {
                                                               '',
                                                       flags: YoutubePlayerFlags(
                                                         autoPlay:
-                                                            true, // ตั้งค่าให้วิดีโอเล่นอัตโนมัติ
+                                                            false, // ตั้งค่าให้วิดีโอเล่นอัตโนมัติ
                                                       ),
                                                     ),
                                                   ),
