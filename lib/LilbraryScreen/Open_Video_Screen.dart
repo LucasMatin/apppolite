@@ -37,7 +37,7 @@ class _OpenvideoscreenState extends State<Openvideoscreen> {
             child: YoutubePlayer(
               controller: YoutubePlayerController(
                 initialVideoId: YoutubePlayer.convertUrlToId(url) ?? '',
-                flags: YoutubePlayerFlags(
+                flags: const YoutubePlayerFlags(
                   autoPlay: false, // ตั้งค่าให้วิดีโอเล่นอัตโนมัติ
                 ),
               ),
