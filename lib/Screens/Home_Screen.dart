@@ -220,11 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.only(),
-                child: Column(
+            Stack(
+              children: [
+                Column(
                   children: <Widget>[
-                    // ignore: avoid_unnecessary_containers
                     Container(
                       child: SfCircularChart(
                         series: <CircularSeries>[
@@ -232,8 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             maximumValue: 3000,
                             gap: '10%',
                             dataSource: <RadialBarData>[
-                              RadialBarData('Consumed',
-                                  totalCalories), // ใช้ค่า totalCalories ที่คำนวณมาแสดง
+                              RadialBarData('Consumed', totalCalories),
                             ],
                             xValueMapper: (RadialBarData data, _) =>
                                 data.category,
@@ -241,18 +239,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             pointColorMapper: (RadialBarData data, _) {
                               if (data.category == 'Consumed') {
                                 if (data.value > 2500) {
-                                  return Colors
-                                      .red; // ถ้าค่า Callory มากกว่า 2500 ให้เป็นสีแดง
+                                  return Colors.red;
                                 } else if (data.value > 2000) {
-                                  return Colors
-                                      .yellow; // ถ้าค่า Callory อยู่ระหว่าง 2500 ถึง 2000 ให้เป็นสีเหลือง
+                                  return Colors.yellow;
                                 } else {
-                                  return Colors
-                                      .green; // ถ้าค่า Callory ต่ำกว่าหรือเท่ากับ 2000 ให้เป็นสีเขียว
+                                  return Colors.green;
                                 }
                               } else {
-                                return Colors
-                                    .grey; // สีสำหรับแท่ง 'Remaining' ที่ไม่ใช่ 'Consumed'
+                                return Colors.grey;
                               }
                             },
                           ),
@@ -267,23 +261,90 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Positioned(
-                      bottom: 16,
-                      left: 16,
-                      child: Text(
-                        _getStatusText(
-                          totalCalories,
-                          gender, // สมมติว่าคุณมีตัวแปร gender ที่เก็บค่าเพศ
-                        ), // ตรวจสอบสถานะและสร้างข้อความ
-                        style: const TextStyle(
-                          color: Colors.black, // สีข้อความสีเขียว
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    // Remove Positioned from here
                   ],
-                )),
+                ),
+                Positioned(
+                  bottom: 16,
+                  left: 16,
+                  child: Text(
+                    _getStatusText(
+                      totalCalories,
+                      gender,
+                    ),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // Padding(
+            //     padding: const EdgeInsets.only(),
+            //     child: Column(
+            //       children: <Widget>[
+            //         // ignore: avoid_unnecessary_containers
+            //         Container(
+            //           child: SfCircularChart(
+            //             series: <CircularSeries>[
+            //               RadialBarSeries<RadialBarData, String>(
+            //                 maximumValue: 3000,
+            //                 gap: '10%',
+            //                 dataSource: <RadialBarData>[
+            //                   RadialBarData('Consumed',
+            //                       totalCalories), // ใช้ค่า totalCalories ที่คำนวณมาแสดง
+            //                 ],
+            //                 xValueMapper: (RadialBarData data, _) =>
+            //                     data.category,
+            //                 yValueMapper: (RadialBarData data, _) => data.value,
+            //                 pointColorMapper: (RadialBarData data, _) {
+            //                   if (data.category == 'Consumed') {
+            //                     if (data.value > 2500) {
+            //                       return Colors
+            //                           .red; // ถ้าค่า Callory มากกว่า 2500 ให้เป็นสีแดง
+            //                     } else if (data.value > 2000) {
+            //                       return Colors
+            //                           .yellow; // ถ้าค่า Callory อยู่ระหว่าง 2500 ถึง 2000 ให้เป็นสีเหลือง
+            //                     } else {
+            //                       return Colors
+            //                           .green; // ถ้าค่า Callory ต่ำกว่าหรือเท่ากับ 2000 ให้เป็นสีเขียว
+            //                     }
+            //                   } else {
+            //                     return Colors
+            //                         .grey; // สีสำหรับแท่ง 'Remaining' ที่ไม่ใช่ 'Consumed'
+            //                   }
+            //                 },
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.all(1),
+            //           child: Text(
+            //             "${totalCalories.toStringAsFixed(totalCalories.truncateToDouble() == totalCalories ? 0 : 2)} / ${gender == 'ชาย' ? '2000' : '1800'} แคลอรี่",
+            //             style: const TextStyle(
+            //                 fontSize: 25, fontWeight: FontWeight.bold),
+            //           ),
+            //         ),
+            //         Positioned(
+            //           bottom: 16,
+            //           left: 16,
+            //           child: Text(
+            //             _getStatusText(
+            //               totalCalories,
+            //               gender, // สมมติว่าคุณมีตัวแปร gender ที่เก็บค่าเพศ
+            //             ), // ตรวจสอบสถานะและสร้างข้อความ
+            //             style: const TextStyle(
+            //               color: Colors.black, // สีข้อความสีเขียว
+            //               fontSize: 20,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     )),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Container(
