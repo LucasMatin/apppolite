@@ -31,6 +31,7 @@ class _editscreenState extends State<editscreen> {
   TextEditingController email = TextEditingController();
 
   TextEditingController telno = TextEditingController();
+  TextEditingController sex = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,7 @@ class _editscreenState extends State<editscreen> {
               fullname.text = userData['Fullname'] ?? '';
               telno.text = userData['Telno'] ?? '';
               password.text = userData['Bisease'] ?? '';
+              sex.text = userData['Sex'] ?? '';
 
               return SingleChildScrollView(
                 child: SafeArea(
@@ -119,6 +121,13 @@ class _editscreenState extends State<editscreen> {
                               const SizedBox(height: 20),
                               SizedBox(
                                 width: 300,
+                                child: SexDropdownFormField(
+                                  controller: sex,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                width: 300,
                                 child: DiseaseDropdownFormField(
                                   controller: password,
                                 ),
@@ -153,12 +162,14 @@ class _editscreenState extends State<editscreen> {
                                 String name = fullname.text;
                                 String phone = telno.text;
                                 String passwords = password.text;
+                                String sexs = sex.text;
 
                                 // สร้าง Map ของข้อมูลที่จะอัพเดทใน Firestore
                                 Map<String, dynamic> updatedData = {
                                   'Fullname': name,
                                   'Telno': phone,
                                   'Bisease': passwords,
+                                  'Sex': sexs,
                                   // เพิ่มข้อมูลอื่น ๆ ที่คุณต้องการอัพเดท
                                 };
 
@@ -216,8 +227,10 @@ class _editscreenState extends State<editscreen> {
 class DiseaseDropdownFormField extends StatefulWidget {
   final TextEditingController controller;
 
-  const DiseaseDropdownFormField({Key? key, required this.controller})
-      : super(key: key);
+  const DiseaseDropdownFormField({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   _DiseaseDropdownFormFieldState createState() =>
@@ -230,13 +243,15 @@ class _DiseaseDropdownFormFieldState extends State<DiseaseDropdownFormField> {
   @override
   void initState() {
     super.initState();
-    widget.controller.text = selectedDisease;
+    selectedDisease = widget.controller.text;
 
     // Set selectedDisease to the first item in the list (if available)
     getDiseases().then((diseases) {
       if (diseases.isNotEmpty) {
         setState(() {
-          selectedDisease = diseases[0];
+          selectedDisease = widget.controller.text.isNotEmpty
+              ? widget.controller.text
+              : diseases[0];
           widget.controller.text = selectedDisease;
         });
       }
@@ -303,6 +318,47 @@ class _DiseaseDropdownFormFieldState extends State<DiseaseDropdownFormField> {
           );
         }
       },
+    );
+  }
+}
+
+class SexDropdownFormField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const SexDropdownFormField({super.key, required this.controller});
+
+  @override
+  _SexDropdownFormFieldState createState() => _SexDropdownFormFieldState();
+}
+
+class _SexDropdownFormFieldState extends State<SexDropdownFormField> {
+  String selectedGender = 'ชาย'; // Default value
+
+  @override
+  void initState() {
+    super.initState();
+    selectedGender = widget.controller.text; // Set the initial value
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      value: selectedGender,
+      onChanged: (newValue) {
+        setState(() {
+          selectedGender = newValue!;
+          widget.controller.text = newValue;
+        });
+      },
+      decoration: const InputDecoration(
+        labelText: 'เพศ',
+      ),
+      items: <String>['ชาย', 'หญิง'].map((String gender) {
+        return DropdownMenuItem<String>(
+          value: gender,
+          child: Text(gender),
+        );
+      }).toList(),
     );
   }
 }

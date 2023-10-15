@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:polite/AdminScreen/Add/Add_Article_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Eat_Screen.dart';
+import 'package:polite/AdminScreen/test.dart';
 import 'package:polite/Test/Add_Nutrition_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Nutritions_Screen.dart';
 import 'package:polite/AdminScreen/Add/Add_Video_Screen.dart';
@@ -123,47 +124,6 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                     ),
                   ),
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => const Addnutrition()));
-                //   },
-                //   child: SizedBox(
-                //     width: 400.0,
-                //     height: 140.0,
-                //     child: Card(
-                //       color: const Color.fromARGB(255, 143, 113, 102),
-                //       elevation: 2.0,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(8.0),
-                //       ),
-                //       child: Center(
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: Column(
-                //             children: [
-                //               Image.asset(
-                //                 "images/nutrition.png",
-                //                 width: 65.0,
-                //               ),
-                //               const SizedBox(height: 10.0),
-                //               const Text(
-                //                 "รายละเอียดของโรค",
-                //                 style: TextStyle(
-                //                   color: Colors.white,
-                //                   fontWeight: FontWeight.bold,
-                //                   fontSize: 25.0,
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -274,6 +234,47 @@ class _HomeadminScreenState extends State<HomeadminScreen> {
                               const SizedBox(height: 10.0),
                               const Text(
                                 "วิดิโอเพื่อสุขภาพ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const testsss()));
+                  },
+                  child: SizedBox(
+                    width: 400.0,
+                    height: 140.0,
+                    child: Card(
+                      color: const Color.fromARGB(255, 143, 113, 102),
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "images/nutrition.png",
+                                width: 65.0,
+                              ),
+                              const SizedBox(height: 10.0),
+                              const Text(
+                                "ประเภทอาหาร",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
