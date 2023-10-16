@@ -117,7 +117,7 @@ class _UserscreenState extends State<Userscreen> {
                             color: const Color.fromARGB(255, 228, 203, 184),
                             child: Center(
                               child: Text(
-                                "จำนวนผู้ใช้: $userCount ",
+                                "จำนวนผู้ใช้: $userCount คน",
                                 style: const TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
@@ -206,8 +206,14 @@ class _UserscreenState extends State<Userscreen> {
                                                             "ชื่อ : $name",
                                                             style:
                                                                 const TextStyle(
-                                                              fontSize: 20,
-                                                            ),
+                                                                    fontSize:
+                                                                        25,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0)),
                                                           )
                                                         ],
                                                       ),
@@ -231,10 +237,15 @@ class _UserscreenState extends State<Userscreen> {
                                                                             20) +
                                                                         '...'
                                                                     : email,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 16,
-                                                                ),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            25,
+                                                                            0,
+                                                                            255)),
                                                               ))
                                                         ],
                                                       ),

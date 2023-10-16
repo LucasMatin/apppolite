@@ -142,6 +142,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return total;
   }
 
+  double maleThreshold = 2000;
+  double femaleThreshold = 1800;
+  bool _isExceeded(double totalCalories, String gender) {
+    double threshold = gender == 'ชาย' ? maleThreshold : femaleThreshold;
+    return totalCalories > threshold;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,11 +231,16 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Column(
                   children: <Widget>[
+                    SizedBox(
+                      height: 15,
+                    ),
                     Container(
                       child: SfCircularChart(
                         series: <CircularSeries>[
                           RadialBarSeries<RadialBarData, String>(
-                            maximumValue: 3000,
+                            maximumValue: gender == 'ชาย'
+                                ? maleThreshold
+                                : femaleThreshold,
                             gap: '10%',
                             dataSource: <RadialBarData>[
                               RadialBarData('Consumed', totalCalories),
@@ -261,24 +273,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    // Remove Positioned from here
                   ],
                 ),
                 Center(
-                  child: Positioned(
-                    bottom: 16,
-                    left: 16,
-                    child: Text(
-                      _getStatusText(
-                        totalCalories,
-                        gender,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Center the content vertically
+
+                    children: [
+                      Text(
+                        _getStatusText(
+                          totalCalories,
+                          gender,
+                        ),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                      if (_isExceeded(
+                          totalCalories, gender)) // ตรวจสอบว่าเกินหรือไม่
+                        Text(
+                          'เกินจำนวน: ${totalCalories - (gender == 'ชาย' ? maleThreshold : femaleThreshold)} แคลอรี่',
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ],

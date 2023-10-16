@@ -90,7 +90,7 @@ class _SexuserState extends State<Sexuser> {
                           color: const Color.fromARGB(255, 228, 203, 184),
                           child: Center(
                             child: Text(
-                              "จำนวนผู้ใช้: $userCount ",
+                              "จำนวนผู้ใช้ : $userCount คน",
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -102,14 +102,14 @@ class _SexuserState extends State<Sexuser> {
                       Padding(
                         padding: const EdgeInsets.all(0),
                         child: Text(
-                          "ชาย: $maleCount",
+                          "ชาย: $maleCount คน",
                           style: const TextStyle(fontSize: 25),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(0),
                         child: Text(
-                          "หญิง: $WomanCount",
+                          "หญิง: $WomanCount คน",
                           style: const TextStyle(fontSize: 25),
                         ),
                       ),
@@ -122,74 +122,75 @@ class _SexuserState extends State<Sexuser> {
                                 legend: Legend(isVisible: true),
                                 series: <CircularSeries>[
                                   PieSeries<ChartData, String>(
-                                      dataSource: <ChartData>[
-                                        ChartData(
-                                            "ชาย",
-                                            (maleCount *
-                                                    100 /
-                                                    (maleCount + WomanCount))
-                                                .round()),
-                                        ChartData(
-                                            "หญิง",
-                                            (WomanCount *
-                                                    100 /
-                                                    (maleCount + WomanCount))
-                                                .round()),
-                                      ],
-                                      xValueMapper: (ChartData data, _) =>
-                                          data.sexman,
-                                      yValueMapper: (ChartData data, _) =>
-                                          data.value,
-                                      dataLabelSettings:
-                                          const DataLabelSettings(
-                                        isVisible: true,
-                                        labelPosition:
-                                            ChartDataLabelPosition.inside,
-                                      ))
+                                    dataSource: <ChartData>[
+                                      ChartData(
+                                        "ชาย",
+                                        maleCount,
+                                      ),
+                                      ChartData(
+                                        "หญิง",
+                                        WomanCount,
+                                      ),
+                                    ],
+                                    xValueMapper: (ChartData data, _) =>
+                                        data.sexman,
+                                    yValueMapper: (ChartData data, _) =>
+                                        data.value,
+                                    dataLabelMapper: (ChartData data, _) =>
+                                        '${(data.value * 100 / (maleCount + WomanCount)).round()}%',
+                                    dataLabelSettings: DataLabelSettings(
+                                      isVisible: true,
+                                      textStyle: TextStyle(
+                                        fontSize:
+                                            25, // You can adjust the font size here
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(),
-                                              child: Text(
-                                                "เพศชาย: ${(maleCount * 100 / (maleCount + WomanCount)).round()} %",
-                                                style: const TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(),
-                                              child: Text(
-                                                "เพศหญิง: ${(WomanCount * 100 / (maleCount + WomanCount)).round()} %",
-                                                style: const TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                            // Padding(
+                            //   padding: const EdgeInsets.all(6),
+                            //   child: Stack(
+                            //     children: [
+                            //       Container(
+                            //         child: Column(
+                            //           children: [
+                            //             Row(
+                            //               children: [
+                            //                 Padding(
+                            //                   padding: const EdgeInsets.only(),
+                            //                   child: Text(
+                            //                     "เพศชาย: ${(maleCount * 100 / (maleCount + WomanCount)).round()} %",
+                            //                     style: const TextStyle(
+                            //                       fontSize: 25,
+                            //                       fontWeight: FontWeight.bold,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //             Row(
+                            //               children: [
+                            //                 Padding(
+                            //                   padding: const EdgeInsets.only(),
+                            //                   child: Text(
+                            //                     "เพศหญิง: ${(WomanCount * 100 / (maleCount + WomanCount)).round()} %",
+                            //                     style: const TextStyle(
+                            //                       fontSize: 25,
+                            //                       fontWeight: FontWeight.bold,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             )
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // )
                           ],
                         ),
                       ),
